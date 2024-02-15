@@ -31,7 +31,8 @@ def eval_model(args):
     disable_torch_init()
     model_path = os.path.expanduser(args.model_path)
     model_name = get_model_name_from_path(model_path)
-    tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, args.model_base, model_name)
+    tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, args.model_base, model_name,
+                                                                           drop_at=args.drop_at, drop_layer_type=args.drop_layer_type)
 
     questions = json.load(open(os.path.expanduser(args.question_file), "r"))
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
@@ -106,6 +107,8 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--answer-prompter", action="store_true")
     parser.add_argument("--single-pred-prompt", action="store_true")
+    parser.add_argument("--drop_at", type=int, default=32)
+    parser.add_argument("--drop_layer_type", type=str, default="vanilla")
     args = parser.parse_args()
 
     eval_model(args)

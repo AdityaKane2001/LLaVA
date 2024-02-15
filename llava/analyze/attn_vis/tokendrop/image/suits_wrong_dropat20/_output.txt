@@ -1,0 +1,7 @@
+<image>
+What is the capital of France? What is it famous for?
+>>> <s> The capital of France is Paris. It is famous for its historical architecture
+, art, fashion, cuisine, and culture. Paris is often referred to as the "City of
+ Lights" due to its romantic atmosphere and the multitude of illuminated streets
+ and buildings. It is also known for its iconic landmarks such as the Eiffel Tow
+er, Notre-Dame Cathedral, and the Louvre Museum.</s>

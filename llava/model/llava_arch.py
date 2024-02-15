@@ -144,12 +144,18 @@ class LlavaMetaForCausalLM(ABC):
 
     def prepare_inputs_labels_for_multimodal(
         self, input_ids, position_ids, attention_mask, past_key_values, labels,
-        images, image_sizes=None
+        images, image_sizes=None, inputs_emb_modalities=None
     ):
         vision_tower = self.get_vision_tower()
-        if vision_tower is None or images is None or input_ids.shape[1] == 1:
-            return input_ids, position_ids, attention_mask, past_key_values, None, labels
+        if vision_tower is None or images is None or input_ids.shape[1] == 1: # generation model
+            if inputs_emb_modalities is not None:
+                for example_idx in range(input_ids.shape[0]):
+                    inputs_emb_modalities[example_idx].append({"text" : 1})
+            else:
+                inputs_emb_modalities = [[{"text": 1}] * input_ids.shape[0]]
+            return input_ids, position_ids, attention_mask, past_key_values, None, labels, inputs_emb_modalities
 
+        # this if-else just encodes all images
         if type(images) is list or images.ndim == 5:
             if type(images) is list:
                 images = [x.unsqueeze(0) if x.ndim == 3 else x for x in images]
@@ -226,25 +232,37 @@ class LlavaMetaForCausalLM(ABC):
         input_ids = [cur_input_ids[cur_attention_mask] for cur_input_ids, cur_attention_mask in zip(input_ids, attention_mask)]
         labels = [cur_labels[cur_attention_mask] for cur_labels, cur_attention_mask in zip(labels, attention_mask)]
 
-        new_input_embeds = []
-        new_labels = []
-        cur_image_idx = 0
+        new_input_embeds = [] # Initialize input embeddings tensor stack
+        new_labels = [] 
+        new_input_embeds_modalities = list() # initialize modality buffer
+        cur_image_idx = 0 # initialize current image index to 0
+        
         for batch_idx, cur_input_ids in enumerate(input_ids):
+            cur_new_input_embeds_modalities = list()
             num_images = (cur_input_ids == IMAGE_TOKEN_INDEX).sum()
             if num_images == 0:
+                # input does not have any images
+                # so get features at the given
                 cur_image_features = image_features[cur_image_idx]
                 cur_input_embeds_1 = self.get_model().embed_tokens(cur_input_ids)
                 cur_input_embeds = torch.cat([cur_input_embeds_1, cur_image_features[0:0]], dim=0)
                 new_input_embeds.append(cur_input_embeds)
                 new_labels.append(labels[batch_idx])
+                cur_new_input_embeds_modalities.append({"text": cur_input_embeds.shape[0]})
                 cur_image_idx += 1
                 continue
-
+            
+            # The logic is as follows
+            # 1. gather all text tokens and get their embeddings
+            # 2. split them according to where image tokens are in between them
+            # 3. stitch the final sequence by including image feats wherever image
+            #    token is encountered
+            # Thus, we append to modality buffer accordingly
             image_token_indices = [-1] + torch.where(cur_input_ids == IMAGE_TOKEN_INDEX)[0].tolist() + [cur_input_ids.shape[0]]
-            cur_input_ids_noim = []
+            cur_input_ids_noim = [] 
             cur_labels = labels[batch_idx]
             cur_labels_noim = []
-            for i in range(len(image_token_indices) - 1):
+            for i in range(len(image_token_indices) - 1): # go through all image tokens
                 cur_input_ids_noim.append(cur_input_ids[image_token_indices[i]+1:image_token_indices[i+1]])
                 cur_labels_noim.append(cur_labels[image_token_indices[i]+1:image_token_indices[i+1]])
             split_sizes = [x.shape[0] for x in cur_labels_noim]
@@ -255,11 +273,13 @@ class LlavaMetaForCausalLM(ABC):
 
             for i in range(num_images + 1):
                 cur_new_input_embeds.append(cur_input_embeds_no_im[i])
+                cur_new_input_embeds_modalities.append({"text": cur_input_embeds_no_im[i].shape[0]})
                 cur_new_labels.append(cur_labels_noim[i])
                 if i < num_images:
                     cur_image_features = image_features[cur_image_idx]
                     cur_image_idx += 1
                     cur_new_input_embeds.append(cur_image_features)
+                    cur_new_input_embeds_modalities.append({"image": cur_image_features.shape[0]})
                     cur_new_labels.append(torch.full((cur_image_features.shape[0],), IGNORE_INDEX, device=cur_labels.device, dtype=cur_labels.dtype))
 
             cur_new_input_embeds = [x.to(self.device) for x in cur_new_input_embeds]
@@ -268,6 +288,7 @@ class LlavaMetaForCausalLM(ABC):
             cur_new_labels = torch.cat(cur_new_labels)
 
             new_input_embeds.append(cur_new_input_embeds)
+            new_input_embeds_modalities.append(cur_new_input_embeds_modalities)
             new_labels.append(cur_new_labels)
 
         # Truncate sequences to max length as image embeddings can make the sequence longer
@@ -321,7 +342,7 @@ class LlavaMetaForCausalLM(ABC):
         if _position_ids is None:
             position_ids = None
 
-        return None, position_ids, attention_mask, past_key_values, new_input_embeds, new_labels
+        return None, position_ids, attention_mask, past_key_values, new_input_embeds, new_labels, new_input_embeds_modalities
 
     def initialize_vision_tokenizer(self, model_args, tokenizer):
         if model_args.mm_use_im_patch_token:

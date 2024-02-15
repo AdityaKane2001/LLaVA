@@ -1,0 +1,3 @@
+<image>
+Is there a woman in this image? Answer in yes or no.
+>>> <s> Yes</s>

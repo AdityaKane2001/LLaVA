@@ -17,7 +17,8 @@ def eval_model(model_name, questions_file, answers_file):
     model_name = os.path.expanduser(model_name)
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
     model = AutoModelForCausalLM.from_pretrained(model_name,
-        torch_dtype=torch.float16).cuda()
+        torch_dtype=torch.float16, 
+        drop_at=args.drop_at, drop_layer_type=args.drop_layer_type).cuda()
 
 
     ques_file = open(os.path.expanduser(questions_file), "r")
@@ -59,6 +60,8 @@ if __name__ == "__main__":
     parser.add_argument("--model-name", type=str, default="facebook/opt-350m")
     parser.add_argument("--question-file", type=str, default="tables/question.jsonl")
     parser.add_argument("--answers-file", type=str, default="answer.jsonl")
+    parser.add_argument("--drop_at", type=int, default=32)
+    parser.add_argument("--drop_layer_type", type=str, default="vanilla")
     args = parser.parse_args()
 
     eval_model(args.model_name, args.question_file, args.answers_file)
