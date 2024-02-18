@@ -90,20 +90,25 @@ class CLIPVisionTower(nn.Module):
                 image_feature = self.feature_select(image_forward_out).to(image.dtype)
                 
                 if self.add_granular_tokens:
+                    # print("Using granular tokens")
+                    
                     # append granular tokens to image_features
                     granular_feature = self.granular_feature_select(image_forward_out)
                     image_feature = torch.concat([granular_feature, image_feature], dim=-2)
                 
+                # print(f"{image_feature.shape=}")
                 image_features.append(image_feature)
         else:
             image_forward_outs = self.vision_tower(images.to(device=self.device, dtype=self.dtype), output_hidden_states=True)
             image_features = self.feature_select(image_forward_outs).to(images.dtype)
             
             if self.add_granular_tokens:
+                # print("Using granular tokens")
                 # append granular tokens to image_features
                 granular_features = self.granular_feature_select(image_forward_outs).to(images.dtype)
                 image_features = torch.concat([granular_features, image_features], dim=-2)
-
+            # print(f"{image_features.shape=}")
+            
         return image_features
 
     @property

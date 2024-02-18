@@ -85,6 +85,7 @@ class LlavaMetaModel:
 
         if getattr(self, 'mm_projector', None) is None:
             self.mm_projector = build_vision_projector(self.config)
+            self.granular_mm_projector = build_vision_projector(self.config)
             
 
             if 'unpad' in mm_patch_merge_type:
@@ -223,6 +224,7 @@ class LlavaMetaForCausalLM(ABC):
         else:
             image_features = self.encode_images(images)
 
+        print(f"{image_features.shape=}")
         # TODO: image start / end is not implemented here to support pretraining.
         if getattr(self.config, 'tune_mm_mlp_adapter', False) and getattr(self.config, 'mm_use_im_start_end', False):
             raise NotImplementedError
