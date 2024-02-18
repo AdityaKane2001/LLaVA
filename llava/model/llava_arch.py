@@ -34,6 +34,7 @@ class LlavaMetaModel:
         if hasattr(config, "mm_vision_tower"):
             self.vision_tower = build_vision_tower(config, delay_load=True)
             self.mm_projector = build_vision_projector(config)
+            self.granular_mm_projector = build_vision_projector(config)
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
@@ -52,6 +53,9 @@ class LlavaMetaModel:
         mm_vision_select_feature = model_args.mm_vision_select_feature
         pretrain_mm_mlp_adapter = model_args.pretrain_mm_mlp_adapter
         mm_patch_merge_type = model_args.mm_patch_merge_type
+        mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
+        mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
+        mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
 
         self.config.mm_vision_tower = vision_tower
 
@@ -75,9 +79,13 @@ class LlavaMetaModel:
         self.config.mm_vision_select_layer = mm_vision_select_layer
         self.config.mm_vision_select_feature = mm_vision_select_feature
         self.config.mm_patch_merge_type = mm_patch_merge_type
+        self.config.mm_vision_use_granular_tokens = mm_vision_use_granular_tokens
+        self.config.mm_vision_granular_tokens_per_layer = mm_vision_granular_tokens_per_layer
+        self.config.mm_vision_granular_select_layers = mm_vision_granular_select_layers
 
         if getattr(self, 'mm_projector', None) is None:
             self.mm_projector = build_vision_projector(self.config)
+            
 
             if 'unpad' in mm_patch_merge_type:
                 embed_std = 1 / torch.sqrt(torch.tensor(self.config.hidden_size, dtype=self.dtype))
@@ -95,6 +103,13 @@ class LlavaMetaModel:
                 return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
 
             self.mm_projector.load_state_dict(get_w(mm_projector_weights, 'mm_projector'))
+            
+            if self.config.mm_vision_use_granular_tokens:
+                granular_mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
+                def get_w(weights, keyword):
+                    return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
+
+                self.granular_mm_projector.load_state_dict(get_w(granular_mm_projector_weights, 'mm_projector'))
 
 
 def unpad_image(tensor, original_size):
@@ -139,7 +154,14 @@ class LlavaMetaForCausalLM(ABC):
 
     def encode_images(self, images):
         image_features = self.get_model().get_vision_tower()(images)
-        image_features = self.get_model().mm_projector(image_features)
+        
+        if hasattr(self.get_model(), "granular_mm_projector"):
+            num_tokens = image_features.shape[-2]
+            granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
+            image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
+            image_features = torch.concat([granular_image_features, image_features], dim=-2)
+        else:
+            image_features = self.get_model().mm_projector(image_features)
         return image_features
 
     def prepare_inputs_labels_for_multimodal(

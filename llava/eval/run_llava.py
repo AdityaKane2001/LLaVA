@@ -24,6 +24,13 @@ from PIL import Image
 from io import BytesIO
 import re
 
+torch.cuda.set_device("cuda:0")
+
+import transformers
+
+transformers.set_seed(42)
+torch.cuda.manual_seed_all(42)
+
 
 def image_parser(args):
     out = args.image_file.split(args.sep)
@@ -53,7 +60,7 @@ def eval_model(args):
 
     model_name = get_model_name_from_path(args.model_path)
     tokenizer, model, image_processor, context_len = load_pretrained_model(
-        args.model_path, args.model_base, model_name
+        args.model_path, args.model_base, model_name,
     )
 
     qs = args.query
@@ -112,6 +119,14 @@ def eval_model(args):
     )
 
     with torch.inference_mode():
+        
+        # print(model.get_model().mm_projector[0].weight)
+        # print(model.get_model().granular_mm_projector[0].weight)
+        
+        # model.get_model().granular_mm_projector[0].weight.data = model.get_model().mm_projector[0].weight.data
+        # model.get_model().granular_mm_projector[0].bias.data = model.get_model().mm_projector[0].bias.data
+        
+                
         output_ids = model.generate(
             input_ids,
             images=images_tensor,
@@ -130,10 +145,10 @@ def eval_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="facebook/opt-350m")
+    parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.5-7b")
     parser.add_argument("--model-base", type=str, default=None)
-    parser.add_argument("--image-file", type=str, required=True)
-    parser.add_argument("--query", type=str, required=True)
+    parser.add_argument("--image-file", type=str, default="../serve/examples/extreme_ironing.jpg")
+    parser.add_argument("--query", type=str, default="What is odd about this image?")
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")
     parser.add_argument("--temperature", type=float, default=0.2)

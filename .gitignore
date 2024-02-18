@@ -33,3 +33,7 @@ ckpts*
 
 # Demo
 serve_images/
+
+# Custom
+playground/data/eval
+playground/data

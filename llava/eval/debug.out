@@ -1,0 +1,14 @@
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.02s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.49s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.57s/it]
+Some weights of LlavaLlamaForCausalLM were not initialized from the model checkpoint at liuhaotian/llava-v1.5-7b and are newly initialized: ['model.granular_mm_projector.0.bias', 'model.granular_mm_projector.0.weight', 'model.granular_mm_projector.2.bias', 'model.granular_mm_projector.2.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+The man is wearing about this image.
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  1.99s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.17s/it]
+Some weights of LlavaLlamaForCausalLM were not initialized from the model checkpoint at liuhaotian/llava-v1.5-7b and are newly initialized: ['model.granular_mm_projector.0.bias', 'model.granular_mm_projector.0.weight', 'model.granular_mm_projector.2.bias', 'model.granular_mm_projector.2.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+

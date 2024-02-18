@@ -64,6 +64,8 @@ class ModelArguments:
     mm_use_im_patch_token: bool = field(default=True)
     mm_patch_merge_type: Optional[str] = field(default='flat')
     mm_vision_select_feature: Optional[str] = field(default="patch")
+    mm_vision_granular_select_layers: Optional[str] = field(default="")
+    mm_vision_granular_tokens_per_layer: Optional[int] = field(default=0)
 
 
 @dataclass
