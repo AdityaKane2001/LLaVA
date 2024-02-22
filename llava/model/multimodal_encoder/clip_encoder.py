@@ -15,15 +15,22 @@ class CLIPVisionTower(nn.Module):
 
         self.vision_tower_name = vision_tower
         self.select_layer = args.mm_vision_select_layer
-        self.add_granular_tokens = False
-        self.granular_layers = args.mm_vision_granular_select_layers
-        self.granular_tokens_per_layer = args.mm_vision_granular_tokens_per_layer
-        self.granular_tokens_strategy = args.mm_vision_granular_tokens_strategy
         self.select_feature = getattr(args, 'mm_vision_select_feature', 'patch')
         
-        if (len(self.granular_layers) != 0 and
-            self.granular_tokens_per_layer != 0):
-            self.add_granular_tokens = True
+        try: 
+            self.use_granular_tokens = args.mm_vision_use_granular_tokens
+            self.granular_layers = args.mm_vision_granular_select_layers
+            self.granular_tokens_per_layer = args.mm_vision_granular_tokens_per_layer
+            self.granular_tokens_strategy = args.mm_vision_granular_tokens_strategy
+            print("Granular tokens config loaded!")
+        except:
+            self.use_granular_tokens = False
+            self.granular_layers = ""
+            self.granular_tokens_per_layer = 0
+            self.granular_tokens_strategy = None
+            print("Granular tokens config not found, falling back to not "
+                  "using granular tokens.")
+            
 
         if not delay_load:
             self.load_model()
@@ -89,7 +96,7 @@ class CLIPVisionTower(nn.Module):
                 image_forward_out = self.vision_tower(image.to(device=self.device, dtype=self.dtype).unsqueeze(0), output_hidden_states=True)
                 image_feature = self.feature_select(image_forward_out).to(image.dtype)
                 
-                if self.add_granular_tokens:
+                if self.use_granular_tokens:
                     # print("Using granular tokens")
                     
                     # append granular tokens to image_features
@@ -102,9 +109,7 @@ class CLIPVisionTower(nn.Module):
             image_forward_outs = self.vision_tower(images.to(device=self.device, dtype=self.dtype), output_hidden_states=True)
             image_features = self.feature_select(image_forward_outs).to(images.dtype)
             
-            if self.add_granular_tokens:
-                # print("Using granular tokens")
-                # append granular tokens to image_features
+            if self.use_granular_tokens:
                 granular_features = self.granular_feature_select(image_forward_outs).to(images.dtype)
                 image_features = torch.concat([granular_features, image_features], dim=-2)
             # print(f"{image_features.shape=}")

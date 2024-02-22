@@ -24,7 +24,7 @@ from PIL import Image
 from io import BytesIO
 import re
 
-torch.cuda.set_device("cuda:0")
+# torch.cuda.set_device("cuda:0")
 
 import transformers
 
@@ -58,7 +58,8 @@ def eval_model(args):
     # Model
     disable_torch_init()
 
-    model_name = get_model_name_from_path(args.model_path)
+    model_name = "llava-v1.5-7b" # get_model_name_from_path(args.model_path)
+    # print(model_name)
     tokenizer, model, image_processor, context_len = load_pretrained_model(
         args.model_path, args.model_base, model_name,
     )
@@ -117,16 +118,14 @@ def eval_model(args):
         .unsqueeze(0)
         .cuda()
     )
-
+    
     with torch.inference_mode():
         
-        # print(model.get_model().mm_projector[0].weight)
-        # print(model.get_model().granular_mm_projector[0].weight)
+        print(model.get_vision_tower().vision_tower.vision_model.encoder.layers[0].mlp.fc1.weight)
         
         # model.get_model().granular_mm_projector[0].weight.data = model.get_model().mm_projector[0].weight.data
         # model.get_model().granular_mm_projector[0].bias.data = model.get_model().mm_projector[0].bias.data
         
-                
         output_ids = model.generate(
             input_ids,
             images=images_tensor,
@@ -145,9 +144,9 @@ def eval_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.5-7b")
+    parser.add_argument("--model-path", type=str, default="/data/data1/akane/checkpoints/old/grllava-v1.5-7b/checkpoints") # /data/data1/akane/grllava-v1.5-7b/checkpoints # /data/data1/akane/grllava-v1.5-7b/checkpoints
     parser.add_argument("--model-base", type=str, default=None)
-    parser.add_argument("--image-file", type=str, default="../serve/examples/extreme_ironing.jpg")
+    parser.add_argument("--image-file", type=str, default="/home/akane38/LLaVA/llava/serve/examples/extreme_ironing.jpg")
     parser.add_argument("--query", type=str, default="What is odd about this image?")
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")

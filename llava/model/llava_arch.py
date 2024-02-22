@@ -35,6 +35,7 @@ class LlavaMetaModel:
             self.vision_tower = build_vision_tower(config, delay_load=True)
             self.mm_projector = build_vision_projector(config)
             self.granular_mm_projector = build_vision_projector(config)
+            print("Built vision tower and projector!")
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
@@ -56,6 +57,7 @@ class LlavaMetaModel:
         mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
         mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
         mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
+        mm_vision_granular_tokens_strategy = model_args.mm_vision_granular_tokens_strategy
 
         self.config.mm_vision_tower = vision_tower
 
@@ -82,12 +84,12 @@ class LlavaMetaModel:
         self.config.mm_vision_use_granular_tokens = mm_vision_use_granular_tokens
         self.config.mm_vision_granular_tokens_per_layer = mm_vision_granular_tokens_per_layer
         self.config.mm_vision_granular_select_layers = mm_vision_granular_select_layers
+        self.config.mm_vision_granular_tokens_strategy = mm_vision_granular_tokens_strategy
 
         if getattr(self, 'mm_projector', None) is None:
             self.mm_projector = build_vision_projector(self.config)
             self.granular_mm_projector = build_vision_projector(self.config)
             
-
             if 'unpad' in mm_patch_merge_type:
                 embed_std = 1 / torch.sqrt(torch.tensor(self.config.hidden_size, dtype=self.dtype))
                 self.image_newline = nn.Parameter(
@@ -156,7 +158,7 @@ class LlavaMetaForCausalLM(ABC):
     def encode_images(self, images):
         image_features = self.get_model().get_vision_tower()(images)
         
-        if hasattr(self.get_model(), "granular_mm_projector"):
+        if hasattr(self.config, "mm_vision_use_granular_tokens") and self.config.mm_vision_use_granular_tokens:
             num_tokens = image_features.shape[-2]
             granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
             image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
@@ -224,7 +226,7 @@ class LlavaMetaForCausalLM(ABC):
         else:
             image_features = self.encode_images(images)
 
-        print(f"{image_features.shape=}")
+        # print(f"{image_features.shape=}")
         # TODO: image start / end is not implemented here to support pretraining.
         if getattr(self.config, 'tune_mm_mlp_adapter', False) and getattr(self.config, 'mm_use_im_start_end', False):
             raise NotImplementedError
