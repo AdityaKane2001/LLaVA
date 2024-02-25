@@ -32,6 +32,12 @@ class OldLlavaConfig(LlamaConfig):
 
 class LlavaConfig(LlamaConfig):
     model_type = "llava_llama"
+    # mm_vision_use_additional_adapter = True
+    # mm_vision_use_global_tokens = False
+    # mm_vision_use_granular_tokens = True
+    # mm_vision_granular_tokens_per_layer = 576 // 3
+    # mm_vision_granular_select_layers = "6 12 18"
+    # mm_vision_granular_tokens_strategy = "pool"
 
 
 class LlavaLlamaModel(LlavaMetaModel, LlamaModel):

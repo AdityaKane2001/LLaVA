@@ -121,7 +121,7 @@ def eval_model(args):
     
     with torch.inference_mode():
         
-        print(model.get_vision_tower().vision_tower.vision_model.encoder.layers[0].mlp.fc1.weight)
+        # print(model.get_vision_tower().vision_tower.vision_model.encoder.layers[0].mlp.fc1.weight)
         
         # model.get_model().granular_mm_projector[0].weight.data = model.get_model().mm_projector[0].weight.data
         # model.get_model().granular_mm_projector[0].bias.data = model.get_model().mm_projector[0].bias.data
@@ -144,7 +144,7 @@ def eval_model(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="/data/data1/akane/checkpoints/old/grllava-v1.5-7b/checkpoints") # /data/data1/akane/grllava-v1.5-7b/checkpoints # /data/data1/akane/grllava-v1.5-7b/checkpoints
+    parser.add_argument("--model-path", type=str, default="/data/data0/akane/dupl-glbltok-grllava-v1.5-7b/checkpoints/") # /data/data1/akane/grllava-v1.5-7b/checkpoints # /data/data1/akane/grllava-v1.5-7b/checkpoints
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-file", type=str, default="/home/akane38/LLaVA/llava/serve/examples/extreme_ironing.jpg")
     parser.add_argument("--query", type=str, default="What is odd about this image?")

@@ -54,6 +54,8 @@ class LlavaMetaModel:
         mm_vision_select_feature = model_args.mm_vision_select_feature
         pretrain_mm_mlp_adapter = model_args.pretrain_mm_mlp_adapter
         mm_patch_merge_type = model_args.mm_patch_merge_type
+        mm_vision_use_additional_adapter = model_args.mm_vision_use_additional_adapter
+        mm_vision_use_global_tokens = model_args.mm_vision_use_global_tokens
         mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
         mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
         mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
@@ -81,6 +83,8 @@ class LlavaMetaModel:
         self.config.mm_vision_select_layer = mm_vision_select_layer
         self.config.mm_vision_select_feature = mm_vision_select_feature
         self.config.mm_patch_merge_type = mm_patch_merge_type
+        self.config.mm_vision_use_additional_adapter = mm_vision_use_additional_adapter
+        self.config.mm_vision_use_global_tokens = mm_vision_use_global_tokens
         self.config.mm_vision_use_granular_tokens = mm_vision_use_granular_tokens
         self.config.mm_vision_granular_tokens_per_layer = mm_vision_granular_tokens_per_layer
         self.config.mm_vision_granular_select_layers = mm_vision_granular_select_layers
@@ -107,12 +111,20 @@ class LlavaMetaModel:
 
             self.mm_projector.load_state_dict(get_w(mm_projector_weights, 'mm_projector'))
             
-            if self.config.mm_vision_use_granular_tokens:
+            if self.config.mm_vision_use_additional_adapter and self.config.mm_vision_use_granular_tokens:
                 granular_mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
                 def get_w(weights, keyword):
                     return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
 
                 self.granular_mm_projector.load_state_dict(get_w(granular_mm_projector_weights, 'mm_projector'))
+
+            
+            # if self.config.mm_vision_use_additional_adapter and self.config.mm_vision_use_granular_tokens:
+            #     granular_mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
+            #     def get_w(weights, keyword):
+            #         return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
+
+            #     self.granular_mm_projector.load_state_dict(get_w(granular_mm_projector_weights, 'mm_projector'))
 
 
 def unpad_image(tensor, original_size):
@@ -158,13 +170,22 @@ class LlavaMetaForCausalLM(ABC):
     def encode_images(self, images):
         image_features = self.get_model().get_vision_tower()(images)
         
-        if hasattr(self.config, "mm_vision_use_granular_tokens") and self.config.mm_vision_use_granular_tokens:
+        if hasattr(self.config, "mm_vision_use_granular_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
+            and self.config.mm_vision_use_granular_tokens and self.config.mm_vision_use_additional_adapter:
             num_tokens = image_features.shape[-2]
             granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
             image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
             image_features = torch.concat([granular_image_features, image_features], dim=-2)
+        elif hasattr(self.config, "mm_vision_use_global_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
+            and self.config.mm_vision_use_global_tokens and self.config.mm_vision_use_additional_adapter:
+            num_tokens = image_features.shape[-2]
+            granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
+            image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
+            image_features = torch.concat([granular_image_features, image_features], dim=-2)
+            print(image_features.shape)
         else:
             image_features = self.get_model().mm_projector(image_features)
+        
         return image_features
 
     def prepare_inputs_labels_for_multimodal(
@@ -226,7 +247,6 @@ class LlavaMetaForCausalLM(ABC):
         else:
             image_features = self.encode_images(images)
 
-        # print(f"{image_features.shape=}")
         # TODO: image start / end is not implemented here to support pretraining.
         if getattr(self.config, 'tune_mm_mlp_adapter', False) and getattr(self.config, 'mm_use_im_start_end', False):
             raise NotImplementedError
