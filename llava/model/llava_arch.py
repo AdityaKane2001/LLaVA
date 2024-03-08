@@ -17,6 +17,7 @@ from abc import ABC, abstractmethod
 
 import torch
 import torch.nn as nn
+from torch.nn import functional as F
 
 from .multimodal_encoder.builder import build_vision_tower
 from .multimodal_projector.builder import build_vision_projector
@@ -24,6 +25,9 @@ from .multimodal_projector.builder import build_vision_projector
 from llava.constants import IGNORE_INDEX, IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
 
 from llava.mm_utils import get_anyres_image_grid_shape
+
+
+
 
 
 class LlavaMetaModel:
@@ -36,6 +40,9 @@ class LlavaMetaModel:
             self.mm_projector = build_vision_projector(config)
             self.granular_mm_projector = build_vision_projector(config)
             print("Built vision tower and projector!")
+            
+            if hasattr(config, "mm_vision_use_scaled_residual_granular_tokens") and config.mm_vision_use_scaled_residual_granular_tokens:
+                self.granular_tokens_scaler = nn.Parameter(torch.zeros(config.mm_vision_num_tokens_per_layer), requires_grad=True)            
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
@@ -54,9 +61,14 @@ class LlavaMetaModel:
         mm_vision_select_feature = model_args.mm_vision_select_feature
         pretrain_mm_mlp_adapter = model_args.pretrain_mm_mlp_adapter
         mm_patch_merge_type = model_args.mm_patch_merge_type
+        
+        mm_vision_num_tokens_per_layer = model_args.mm_vision_num_tokens_per_layer
         mm_vision_use_additional_adapter = model_args.mm_vision_use_additional_adapter
+        mm_vision_use_pretrained_additional_adapter = model_args.mm_vision_use_pretrained_additional_adapter
         mm_vision_use_global_tokens = model_args.mm_vision_use_global_tokens
         mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
+        mm_vision_use_scaled_residual_granular_tokens = model_args.mm_vision_use_scaled_residual_granular_tokens
+        mm_vision_use_residual_scaler = model_args.mm_vision_use_residual_scaler
         mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
         mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
         mm_vision_granular_tokens_strategy = model_args.mm_vision_granular_tokens_strategy
@@ -83,9 +95,14 @@ class LlavaMetaModel:
         self.config.mm_vision_select_layer = mm_vision_select_layer
         self.config.mm_vision_select_feature = mm_vision_select_feature
         self.config.mm_patch_merge_type = mm_patch_merge_type
+        
+        self.config.mm_vision_num_tokens_per_layer = mm_vision_num_tokens_per_layer
         self.config.mm_vision_use_additional_adapter = mm_vision_use_additional_adapter
+        self.config.mm_vision_use_pretrained_additional_adapter = mm_vision_use_pretrained_additional_adapter
         self.config.mm_vision_use_global_tokens = mm_vision_use_global_tokens
         self.config.mm_vision_use_granular_tokens = mm_vision_use_granular_tokens
+        self.config.mm_vision_use_scaled_residual_granular_tokens = mm_vision_use_scaled_residual_granular_tokens
+        self.config.mm_vision_use_residual_scaler = mm_vision_use_residual_scaler
         self.config.mm_vision_granular_tokens_per_layer = mm_vision_granular_tokens_per_layer
         self.config.mm_vision_granular_select_layers = mm_vision_granular_select_layers
         self.config.mm_vision_granular_tokens_strategy = mm_vision_granular_tokens_strategy
@@ -94,6 +111,12 @@ class LlavaMetaModel:
             self.mm_projector = build_vision_projector(self.config)
             self.granular_mm_projector = build_vision_projector(self.config)
             
+            if hasattr(self.config, "mm_vision_use_residual_scaler") and self.config.mm_vision_use_residual_scaler:
+                print("`mm_vision_use_residual_scaler` is set, initializing scaler")
+                self.granular_tokens_scaler = nn.Parameter(torch.zeros(self.config.mm_vision_num_tokens_per_layer), requires_grad=True)
+            else:
+                print("mm_vision_use_residual_scaler not found or is False!")
+                
             if 'unpad' in mm_patch_merge_type:
                 embed_std = 1 / torch.sqrt(torch.tensor(self.config.hidden_size, dtype=self.dtype))
                 self.image_newline = nn.Parameter(
@@ -105,19 +128,24 @@ class LlavaMetaModel:
                 p.requires_grad = True
 
         if pretrain_mm_mlp_adapter is not None:
+            print("`pretrain_mm_mlp_adapter` is not None, loading weights into adapter")
             mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
             def get_w(weights, keyword):
                 return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
 
             self.mm_projector.load_state_dict(get_w(mm_projector_weights, 'mm_projector'))
             
-            if self.config.mm_vision_use_additional_adapter and self.config.mm_vision_use_granular_tokens:
+            if self.config.mm_vision_use_additional_adapter and self.config.mm_vision_use_pretrained_additional_adapter:
+                print("Additional adapter is set to be pretrained, loading pretrained weights to granular adapter")
+                
                 granular_mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
                 def get_w(weights, keyword):
                     return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
 
                 self.granular_mm_projector.load_state_dict(get_w(granular_mm_projector_weights, 'mm_projector'))
-
+            else:
+                print("Additional adapter is set to be scratch, skipping weight loading")
+                
             
             # if self.config.mm_vision_use_additional_adapter and self.config.mm_vision_use_granular_tokens:
             #     granular_mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
@@ -166,7 +194,22 @@ class LlavaMetaForCausalLM(ABC):
 
     def get_vision_tower(self):
         return self.get_model().get_vision_tower()
-
+    
+    def _compress_granular_features(self, tokens, target_num, strategy="pool"):
+        num_tokens = tokens.shape[-2]
+        assert num_tokens % target_num == 0, \
+        f"Compressed tokens per layer should divide number "\
+        f"of tokens, got {tokens.shape[-2]=}, {target_num=}."
+        
+        if strategy == "pool":
+            step = num_tokens // target_num
+            compressed = F.avg_pool1d(tokens.transpose(1, 2), kernel_size=step).transpose(1, 2)
+        elif strategy == "uncompressed":
+            return tokens
+        else:
+            raise ValueError(f"Token compression strategy not implemented: {strategy}")
+        return compressed
+    
     def encode_images(self, images):
         image_features = self.get_model().get_vision_tower()(images)
         
@@ -182,7 +225,43 @@ class LlavaMetaForCausalLM(ABC):
             granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
             image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
             image_features = torch.concat([granular_image_features, image_features], dim=-2)
-            print(image_features.shape)
+        elif hasattr(self.config, "mm_vision_use_scaled_residual_granular_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
+            and self.config.mm_vision_use_scaled_residual_granular_tokens and self.config.mm_vision_use_additional_adapter:
+            
+            # clip returns [(intermediate tokens 1, intermediate tokens 2, ...) | final layer outputs tokens]
+            num_tokens = image_features.shape[-2]
+            num_granular_layers = len(list(map(lambda x: int(x), self.config.mm_vision_granular_select_layers.split())))
+            per_layer_tokens = num_tokens // (num_granular_layers + 1)
+
+            original_image_tokens = image_features[..., num_granular_layers * per_layer_tokens:, :]
+            
+            granular_tokens = image_features[..., :num_granular_layers * per_layer_tokens, :]
+            
+            granular_image_features = self.get_model().granular_mm_projector(granular_tokens)
+            # print(f"{granular_image_features.shape=}")
+            
+            compressed_feats = list()            
+            for layer_idx in range(num_granular_layers):
+                compressed = self._compress_granular_features(
+                        tokens=granular_image_features[..., layer_idx * per_layer_tokens: (layer_idx + 1) * per_layer_tokens, :],
+                        target_num=self.config.mm_vision_granular_tokens_per_layer,
+                        strategy=self.config.mm_vision_granular_tokens_strategy
+                    )
+                compressed_feats.append(compressed)
+                # print(f"{layer_idx=}; {compressed.shape=}")
+            granular_image_features = torch.concat(compressed_feats, dim=-2)
+            # print(f"{granular_image_features.shape=}")
+            
+            if self.config.mm_vision_use_residual_scaler:
+                granular_image_features = granular_image_features * self.get_model().granular_tokens_scaler.view(1, -1, 1)
+            else:
+                pass
+            
+            image_features = self.get_model().mm_projector(original_image_tokens)
+            
+            image_features = image_features + granular_image_features
+            # print(f"{image_features.shape=}")
+            # image_features = torch.concat([granular_image_features, image_features], dim=-2)
         else:
             image_features = self.get_model().mm_projector(image_features)
         

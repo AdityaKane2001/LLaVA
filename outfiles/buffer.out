@@ -9,3 +9,11 @@ pwd
 /data/data1/akane/grllava-v1.5-7b/checkpoints
 /data/data1/akane/LLaVA/data
 /data/data0/akane/dupl-glbltok-grllava-v1.5-7b/checkpoints
+
+/data/data0/akane/dupl-glbltok-pretrained-grllava-v1.5-7b
+/data/data0/akane/residual-grllava-pretrained-v1.5-7b
+
+/data/data0/akane/dupl-glbltok-pretrained-grllava-v1.5-7b/checkpoints
+/data/data0/akane/dupl-glbltok-scratch-grllava-v1.5-7b/checkpoints
+/data/data0/akane/noscaling-residual-grllava-pretrained-v1.5-7b/checkpoints
+/data/data0/akane/residual-grllava-pretrained-v1.5-7b/checkpoints

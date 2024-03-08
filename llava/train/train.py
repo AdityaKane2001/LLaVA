@@ -65,6 +65,10 @@ class ModelArguments:
     mm_patch_merge_type: Optional[str] = field(default='flat')
     mm_vision_select_feature: Optional[str] = field(default="patch")
     mm_vision_use_additional_adapter: Optional[bool] = field(default=False)
+    mm_vision_use_pretrained_additional_adapter: Optional[bool] = field(default=False)
+    mm_vision_use_scaled_residual_granular_tokens: Optional[bool] = field(default=False)
+    mm_vision_use_residual_scaler: Optional[bool] = field(default=False)
+    mm_vision_num_tokens_per_layer: Optional[int] = field(default=576)
     mm_vision_use_global_tokens: Optional[bool] = field(default=False)
     mm_vision_use_granular_tokens: Optional[bool] = field(default=False)
     mm_vision_granular_select_layers: Optional[str] = field(default="6 12 18")
@@ -916,8 +920,12 @@ def train(attn_implementation=None):
     if model_args.vision_tower is not None:
         print("Merged granular config!")
         model.config.mm_vision_use_additional_adapter = model_args.mm_vision_use_additional_adapter
+        model.config.mm_vision_use_pretrained_additional_adapter = model_args.mm_vision_use_pretrained_additional_adapter
         model.config.mm_vision_use_global_tokens = model_args.mm_vision_use_global_tokens
         model.config.mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
+        model.config.mm_vision_use_scaled_residual_granular_tokens = model_args.mm_vision_use_scaled_residual_granular_tokens
+        model.config.mm_vision_use_residual_scaler = model_args.mm_vision_use_residual_scaler
+        model.config.mm_vision_num_tokens_per_layer = model_args.mm_vision_num_tokens_per_layer
         model.config.mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
         model.config.mm_vision_granular_tokens_strategy = model_args.mm_vision_granular_tokens_strategy
         model.config.mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 SPLIT="mmbench_dev_en_20231003"
-CKPT="dupl-glbltok-grllava-v1.5-7b"
- #/data/data1/akane/grllava-v1.5-7b/checkpoints \
+CKPT="residual-grllava-pretrained-v1.5-7b"
+
 python -m llava.eval.model_vqa_mmbench \
-    --model-path /data/data0/akane/dupl-glbltok-grllava-v1.5-7b/checkpoints \
+    --model-path /data/data0/akane/$CKPT/checkpoints \
     --question-file /data/data1/akane/LLaVA/data/eval/mmbench/$SPLIT.tsv \
     --answers-file /data/data1/akane/LLaVA/data/eval/mmbench/answers/$SPLIT/$CKPT.jsonl \
     --single-pred-prompt \

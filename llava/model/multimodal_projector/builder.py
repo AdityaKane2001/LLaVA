@@ -51,6 +51,7 @@ class SimpleResBlock(nn.Module):
 
 #     raise ValueError(f'Unknown projector type: {projector_type}')
 
+
 def build_vision_projector(config, delay_load=False, **kwargs):
     projector_type = getattr(config, 'mm_projector_type', 'linear')
 

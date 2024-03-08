@@ -19,22 +19,31 @@ class CLIPVisionTower(nn.Module):
         
         try: 
             self.use_additional_adapter = args.mm_vision_use_additional_adapter
+            self.use_pretrained_additional_adapter = args.mm_vision_use_pretrained_additional_adapter
             self.use_global_tokens = args.mm_vision_use_global_tokens
             self.use_granular_tokens = args.mm_vision_use_granular_tokens
+            self.use_scaled_residual_granular_tokens = args.mm_vision_use_scaled_residual_granular_tokens
+            self.num_tokens_per_layer = args.mm_vision_num_tokens_per_layer
             self.granular_layers = args.mm_vision_granular_select_layers
             self.granular_tokens_per_layer = args.mm_vision_granular_tokens_per_layer
             self.granular_tokens_strategy = args.mm_vision_granular_tokens_strategy
             print("Granular tokens config loaded!")
             print(f"{self.use_additional_adapter=}")
+            print(f"{self.use_pretrained_additional_adapter=}")
             print(f"{self.use_global_tokens=}")
             print(f"{self.use_granular_tokens=}")
+            print(f"{self.use_scaled_residual_granular_tokens=}")
+            print(f"{self.num_tokens_per_layer=}")
             print(f"{self.granular_layers=}")
             print(f"{self.granular_tokens_per_layer=}")
             print(f"{self.granular_tokens_strategy=}")
         except:
             self.use_additional_adapter = False
+            self.use_pretrained_additional_adapter = False
             self.use_global_tokens = False
             self.use_granular_tokens = False
+            self.use_scaled_residual_granular_tokens = False
+            self.num_tokens_per_layer = 576
             self.granular_layers = ""
             self.granular_tokens_per_layer = 0
             self.granular_tokens_strategy = None
@@ -71,20 +80,35 @@ class CLIPVisionTower(nn.Module):
             raise ValueError(f'Unexpected select feature: {self.select_feature}')
         return image_features
 
-    def compress_granular_features(self, tokens, target_num, strategy="pool"):
+    def compress_granular_features(self, tokens, target_num, strategy="pool", select_feature="patch"):
         num_tokens = tokens.shape[-2]
-        assert num_tokens % target_num, \
-        f"Compressed tokens per layer should divide number "\
-        f"of tokens, got {tokens.shape[-2]=}, {target_num=}."
+        if select_feature == "cls_patch":
+            assert num_tokens % target_num == 0, \
+            f"Compressed tokens per layer should divide number "\
+            f"of tokens, got {tokens.shape[-2]=}, {target_num=}."
+        elif select_feature == "cls_patch":
+            assert num_tokens % (target_num - 1) == 0, \
+            f"Compressed tokens per layer should divide number "\
+            f"of tokens, got {tokens.shape[-2]=}, {target_num=}."
+        
         
         if strategy == "pool":
-            step = num_tokens // target_num
-            compressed = F.avg_pool1d(tokens.transpose(1, 2), kernel_size=step).transpose(1, 2)
+            if select_feature == "patch":
+                step = num_tokens // target_num
+                compressed = F.avg_pool1d(tokens[..., 1:, :].transpose(1, 2), kernel_size=step).transpose(1, 2)
+            elif select_feature == "cls_patch":
+                step = num_tokens // target_num
+                compressed = F.avg_pool1d(tokens[..., 1:, :].transpose(1, 2), kernel_size=step).transpose(1, 2)
+        elif strategy == "uncompressed":
+            if select_feature == "patch":
+                return tokens[..., 1:, :]
+            elif select_feature == "cls_patch":
+                return tokens
         else:
             raise ValueError(f"Token compression strategy not implemented: {strategy}")
         return compressed
 
-    def granular_feature_select(self, image_forward_outs):
+    def granular_feature_select(self, image_forward_outs, strategy=None):
         features = list()
         layer_indices = list(map(lambda x: int(x), self.granular_layers.split()))
         for layer_idx in layer_indices:
@@ -92,7 +116,8 @@ class CLIPVisionTower(nn.Module):
             compressed_feats = self.compress_granular_features(
                 _feats,
                 target_num=self.granular_tokens_per_layer,
-                strategy=self.granular_tokens_strategy
+                strategy=strategy if strategy is not None else self.granular_tokens_strategy,
+                select_feature=self.select_feature
             )
             features.append(compressed_feats)
         features = torch.concat(features, dim=-2)
@@ -107,11 +132,13 @@ class CLIPVisionTower(nn.Module):
                 image_feature = self.feature_select(image_forward_out).to(image.dtype)
                 
                 if self.use_additional_adapter and self.use_granular_tokens:
-                    # print("Using granular tokens")                    
-                    # append granular tokens to image_features
                     granular_feature = self.granular_feature_select(image_forward_out)
                     image_feature = torch.concat([granular_feature, image_feature], dim=-2)
                 
+                elif self.use_additional_adapter and self.use_scaled_residual_granular_tokens:
+                    granular_feature = self.granular_feature_select(image_forward_out, strategy="uncompressed")
+                    image_feature = torch.concat([granular_feature, image_feature], dim=-2)
+                    
                 elif self.use_additional_adapter and self.use_global_tokens:
                     global_feature = self.feature_select(image_forward_out)
                     image_feature = torch.concat([global_feature, image_feature], dim=-2)
@@ -123,6 +150,10 @@ class CLIPVisionTower(nn.Module):
             
             if self.use_additional_adapter and self.use_granular_tokens:
                 granular_features = self.granular_feature_select(image_forward_outs).to(images.dtype)
+                image_features = torch.concat([granular_features, image_features], dim=-2)
+            
+            elif self.use_additional_adapter and self.use_scaled_residual_granular_tokens:
+                granular_features = self.granular_feature_select(image_forward_outs, strategy="uncompressed").to(images.dtype)
                 image_features = torch.concat([granular_features, image_features], dim=-2)
             
             elif self.use_additional_adapter and self.use_global_tokens:
