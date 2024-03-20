@@ -1,0 +1,131 @@
+[2024-03-20 18:30:52,278] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+########### What is the capital of France?
+Granular tokens config not found, falling back to not using granular tokens.
+Built vision tower and projector!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:  50%|█████     | 1/2 [00:04<00:04,  4.86s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  2.95s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:06<00:00,  3.24s/it]
+Some weights of LlavaLlamaForCausalLM were not initialized from the model checkpoint at liuhaotian/llava-v1.5-7b and are newly initialized: ['model.granular_mm_projector.0.bias', 'model.granular_mm_projector.0.weight', 'model.granular_mm_projector.2.bias', 'model.granular_mm_projector.2.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:393: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:398: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `None` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+LlamaModel is using LlamaSdpaAttention, but `torch.nn.functional.scaled_dot_product_attention` does not support `output_attentions=True`. Falling back to the manual attention implementation, but specifying the manual implementation will be required from Transformers version v5.0.0 onwards. This warning can be removed using the argument `attn_implementation="eager"` when loading the model.
+You are using a model of type llava to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+loaded model
+llava-v1.5-7b
+Checking if llava in model name
+in vision tower init code
+torch.Size([1, 9])
+The capital of France is Paris.
+########### What is odd about this image?
+Granular tokens config not found, falling back to not using granular tokens.
+Built vision tower and projector!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:02<00:02,  2.48s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.56s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:03<00:00,  1.69s/it]
+Some weights of LlavaLlamaForCausalLM were not initialized from the model checkpoint at liuhaotian/llava-v1.5-7b and are newly initialized: ['model.granular_mm_projector.0.bias', 'model.granular_mm_projector.0.weight', 'model.granular_mm_projector.2.bias', 'model.granular_mm_projector.2.weight']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+loaded model
+llava-v1.5-7b
+Checking if llava in model name
+in vision tower init code
+torch.Size([1, 89])
+The odd aspect of this image is that a man is sitting on a folding chair, which is attached to the back of a yellow taxi. This is unconventional because taxis are typically used for transportation purposes and not for carrying furniture or equipment like a folding chair. The man's presence on the folding chair in the back of the taxi adds an unusual and unexpected element to the scene.
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+first seq len: 632
+second seq len: 712
+Layerwise (img, text) similarities between the queries: 'What is the capital of France?' and 'What is odd about this image?'
+	 Layer 0: (1.0, 0.5576171875)
+	 Layer 1: (1.0, 0.48486328125)
+	 Layer 2: (1.0, 0.466552734375)
+	 Layer 3: (1.0, 0.46630859375)
+	 Layer 4: (1.0, 0.412353515625)
+	 Layer 5: (1.0, 0.375)
+	 Layer 6: (1.0, 0.366455078125)
+	 Layer 7: (1.0, 0.345458984375)
+	 Layer 8: (1.0, 0.367919921875)
+	 Layer 9: (1.0, 0.30908203125)
+	 Layer 10: (1.0, 0.322021484375)
+	 Layer 11: (1.0, 0.334228515625)
+	 Layer 12: (1.0, 0.288818359375)
+	 Layer 13: (1.0, 0.29052734375)
+	 Layer 14: (1.0, 0.25341796875)
+	 Layer 15: (1.0, 0.2626953125)
+	 Layer 16: (1.0, 0.2335205078125)
+	 Layer 17: (1.0, 0.2222900390625)
+	 Layer 18: (1.0, 0.2127685546875)
+	 Layer 19: (1.0, 0.2275390625)
+	 Layer 20: (1.0, 0.2357177734375)
+	 Layer 21: (1.0, 0.2440185546875)
+	 Layer 22: (1.0, 0.291748046875)
+	 Layer 23: (1.0, 0.31396484375)
+	 Layer 24: (1.0, 0.359375)
+	 Layer 25: (1.0, 0.37890625)
+	 Layer 26: (1.0, 0.431884765625)
+	 Layer 27: (1.0, 0.444091796875)
+	 Layer 28: (1.0, 0.46875)
+	 Layer 29: (1.0, 0.5068359375)
+	 Layer 30: (1.0, 0.5029296875)
+	 Layer 31: (1.0, 0.484130859375)

@@ -19,6 +19,7 @@ from llava.mm_utils import (
 from llava.model.llava_arch import ModalityBuffer
 
 from PIL import Image
+import os
 
 import requests
 from PIL import Image
@@ -35,16 +36,18 @@ torch.cuda.manual_seed_all(42)
 from get_attn_maps import plot_attn_vis
 
 
-MODALITY = "image" # one of "image", "video"
-ATTN_TYPE = "vanilla" # one of "vanilla", "sepemb", or any other description
-EXP = "man_ironing" # experiment description
-HAS_MOD = "tokendrop" not in ATTN_TYPE
 
 def add_forward_hooks(model, cache, key_prefix=""):
     def get_llama_attn_maps(name):
         cache[key_prefix + name] = list()
         def hook(model, input, output):
             cache[key_prefix + name].append(output[1].detach())
+        return hook
+    
+    def get_llama_acts(name):
+        cache[key_prefix + name] = list()
+        def hook(model, input, output):
+            cache[key_prefix + name].append(output[0].detach())
         return hook
 
     def get_clip_attn_maps(name):
@@ -60,14 +63,19 @@ def add_forward_hooks(model, cache, key_prefix=""):
         all_hooks.append(model.model.layers[block_idx].self_attn.register_forward_hook(
                 get_llama_attn_maps(f"llama_attn_{block_idx}")
             )
-        )   
+        ) 
+        all_hooks.append(
+            model.model.layers[block_idx].register_forward_hook(
+                get_llama_acts(f"llama_acts_{block_idx}")
+            )
+        ) 
     
     # add hooks from image tower
-    for block_idx in range(len(model.model.image_tower.image_tower.encoder.layers)):
-        all_hooks.append(model.model.image_tower.image_tower.encoder.layers[block_idx].self_attn.register_forward_hook(
-                get_clip_attn_maps(f"clip_attn_{block_idx}")
-            )
-        )
+    # for block_idx in range(len(model.model.image_tower.image_tower.encoder.layers)):
+    #     all_hooks.append(model.model.image_tower.image_tower.encoder.layers[block_idx].self_attn.register_forward_hook(
+    #             get_clip_attn_maps(f"clip_attn_{block_idx}")
+    #         )
+    #     )
     
     return model, all_hooks
 
@@ -95,6 +103,19 @@ def load_images(image_files):
 
 
 def eval_model(args):
+    
+    
+    checkpoint2name = {
+        "/data/data0/akane/dupl-glbltok-pretrained-grllava-v1.5-7b/checkpoints": "dupl-glbltok-pretrained-grllava",
+        "/data/data0/akane/dupl-glbltok-scratch-grllava-v1.5-7b/checkpoints": "dupl-glbltok-scratch-grllava",
+        "/data/data0/akane/noscaling-residual-grllava-pretrained-v1.5-7b/checkpoints": "noscaling-residual-grllava-pretrained",
+        "/data/data0/akane/residual-grllava-pretrained-v1.5-7b/checkpoints": "residual-grllava-pretrained",
+        "/data/data1/akane/grllava-pretrained-v1.5-7b/checkpoints": "grllava-pretrained",
+        "liuhaotian/llava-v1.5-7b": "llava-v1.5-7b"
+    }
+    
+    MODEL = checkpoint2name[args.model_path] # one of "image", "video"
+    EXP = "man_ironing_noprompt" # experiment description
     # Model
     disable_torch_init()
 
@@ -178,18 +199,27 @@ def eval_model(args):
             top_p=args.top_p,
             num_beams=args.num_beams,
             max_new_tokens=args.max_new_tokens,
-            use_cache=True,
+            use_cache=False,
+            output_attentions=True,
+            output_hidden_states=True,
+            return_dict=True
         )
-
-    torch.save(hook_cache, f"./attn_tensors/{MODALITY}_{ATTN_TYPE}_{EXP}.pt")
-    torch.save(ModalityBuffer.inputs_emb_modalities, f"./attn_tensors/{MODALITY}_{ATTN_TYPE}_{EXP}_modalities.pt")
+    
+    os.makedirs(f"/data/data0/akane/attn_tensors/", exist_ok=True)
+    torch.save(hook_cache, f"/data/data0/akane/attn_tensors/{MODEL}_{EXP}.pt")
+    torch.save(ModalityBuffer.inputs_emb_modalities, f"/data/data0/akane/attn_tensors/{MODEL}_{EXP}_modalities.pt")
     for hook in all_hooks:
         hook.remove()
     
+    print(output_ids)
+    try:
+        output_ids.keys()
+    except:
+        print(output_ids.shape)
     outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
     print(outputs)
     
-    plot_attn_vis(MODALITY, ATTN_TYPE, EXP, q=qs, ans=outputs, has_modality=HAS_MOD)
+    plot_attn_vis(MODEL, EXP, q=qs, ans=outputs, has_modality=True)
 
 
 if __name__ == "__main__":
@@ -199,11 +229,13 @@ if __name__ == "__main__":
     # /data/data0/akane/dupl-glbltok-scratch-grllava-v1.5-7b/checkpoints
     # /data/data0/akane/noscaling-residual-grllava-pretrained-v1.5-7b/checkpoints
     # /data/data0/akane/residual-grllava-pretrained-v1.5-7b/checkpoints
+    # /data/data1/akane/grllava-pretrained-v1.5-7b/checkpoints
+    # liuhaotian/llava-v1.5-7b
     
-    parser.add_argument("--model-path", type=str, default="/data/data0/akane/dupl-glbltok-grllava-v1.5-7b/checkpoints/")
+    parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.5-7b")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-file", type=str, default="/home/akane38/LLaVA/llava/serve/examples/extreme_ironing.jpg")
-    parser.add_argument("--query", type=str, default="What is odd about this image?")
+    parser.add_argument("--query", type=str, default="") # What is odd about this image?
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")
     parser.add_argument("--temperature", type=float, default=0.)

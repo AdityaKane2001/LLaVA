@@ -27,6 +27,65 @@ from llava.constants import IGNORE_INDEX, IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_PATCH
 from llava.mm_utils import get_anyres_image_grid_shape
 
 
+class ModalityBuffer:
+    inputs_emb_modalities = None
+    num_text_tokens = 0
+    num_image_tokens = 0
+    num_video_tokens = 0
+    init_seq_len = 0
+    
+    @staticmethod
+    def reset():
+        ModalityBuffer.inputs_emb_modalities = None
+        ModalityBuffer.num_text_tokens = 0
+        ModalityBuffer.num_image_tokens = 0
+        ModalityBuffer.num_video_tokens = 0
+        ModalityBuffer.init_seq_len = 0
+    
+    @staticmethod
+    def calculate_modality_indices(bsz, seq_len):
+        
+        # bsz, num_heads, q_len, kv_len = attn_weights.size()
+        
+        image_attn_mask = torch.zeros(bsz, seq_len)
+        video_attn_mask = torch.zeros(bsz, seq_len)
+        text_attn_mask = torch.zeros(bsz, seq_len)
+        
+        mask_map = dict(
+            text=text_attn_mask,
+            image=image_attn_mask,
+            video=video_attn_mask
+        )
+        
+        modalities_buffer = ModalityBuffer.inputs_emb_modalities
+        # List[List[Dict['modality': num_tokens]]]
+        
+        for example_idx in range(len(modalities_buffer)):
+            example_buffer = modalities_buffer[example_idx]
+            running_tok_idx = 0
+            for chunk_idx in range(len(example_buffer)):
+                chunk_modality = list(example_buffer[chunk_idx].keys())[0]
+                chunk_tokens = list(example_buffer[chunk_idx].values())[0]
+                mask_map[chunk_modality][example_idx, running_tok_idx : running_tok_idx + chunk_tokens] = 1
+                running_tok_idx += chunk_tokens
+        
+        _num_img_tok = image_attn_mask.sum().item()
+        _num_vid_tok = video_attn_mask.sum().item()
+        _num_text_tok = text_attn_mask.sum().item()
+        
+        if ModalityBuffer.init_seq_len < seq_len:
+            ModalityBuffer.init_seq_len = seq_len
+        
+        if ModalityBuffer.num_text_tokens < _num_text_tok:
+            ModalityBuffer.num_text_tokens = _num_text_tok
+        
+        if ModalityBuffer.num_image_tokens < _num_img_tok:
+            ModalityBuffer.num_image_tokens = _num_img_tok
+        
+        if ModalityBuffer.num_video_tokens < _num_vid_tok:
+            ModalityBuffer.num_video_tokens = _num_vid_tok
+                
+        return image_attn_mask, video_attn_mask, text_attn_mask
 
 
 
@@ -42,7 +101,10 @@ class LlavaMetaModel:
             print("Built vision tower and projector!")
             
             if hasattr(config, "mm_vision_use_scaled_residual_granular_tokens") and config.mm_vision_use_scaled_residual_granular_tokens:
-                self.granular_tokens_scaler = nn.Parameter(torch.zeros(config.mm_vision_num_tokens_per_layer), requires_grad=True)            
+                self.granular_tokens_scaler = nn.Parameter(torch.zeros(config.mm_vision_num_tokens_per_layer), requires_grad=True)  
+            
+            if hasattr(config, "mm_vision_use_static_scaled_residual_granular_tokens") and config.mm_vision_use_static_scaled_residual_granular_tokens:
+                self.granular_tokens_scaler = nn.Parameter(torch.zeros((1,)), requires_grad=True)            
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
@@ -68,7 +130,9 @@ class LlavaMetaModel:
         mm_vision_use_global_tokens = model_args.mm_vision_use_global_tokens
         mm_vision_use_granular_tokens = model_args.mm_vision_use_granular_tokens
         mm_vision_use_scaled_residual_granular_tokens = model_args.mm_vision_use_scaled_residual_granular_tokens
+        mm_vision_use_static_scaled_residual_granular_tokens = model_args.mm_vision_use_static_scaled_residual_granular_tokens
         mm_vision_use_residual_scaler = model_args.mm_vision_use_residual_scaler
+        mm_vision_use_static_residual_scaler = model_args.mm_vision_use_static_residual_scaler
         mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
         mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
         mm_vision_granular_tokens_strategy = model_args.mm_vision_granular_tokens_strategy
@@ -102,7 +166,9 @@ class LlavaMetaModel:
         self.config.mm_vision_use_global_tokens = mm_vision_use_global_tokens
         self.config.mm_vision_use_granular_tokens = mm_vision_use_granular_tokens
         self.config.mm_vision_use_scaled_residual_granular_tokens = mm_vision_use_scaled_residual_granular_tokens
+        self.config.mm_vision_use_static_scaled_residual_granular_tokens = mm_vision_use_static_scaled_residual_granular_tokens
         self.config.mm_vision_use_residual_scaler = mm_vision_use_residual_scaler
+        self.config.mm_vision_use_static_residual_scaler = mm_vision_use_static_residual_scaler
         self.config.mm_vision_granular_tokens_per_layer = mm_vision_granular_tokens_per_layer
         self.config.mm_vision_granular_select_layers = mm_vision_granular_select_layers
         self.config.mm_vision_granular_tokens_strategy = mm_vision_granular_tokens_strategy
@@ -116,7 +182,13 @@ class LlavaMetaModel:
                 self.granular_tokens_scaler = nn.Parameter(torch.zeros(self.config.mm_vision_num_tokens_per_layer), requires_grad=True)
             else:
                 print("mm_vision_use_residual_scaler not found or is False!")
-                
+            
+            if hasattr(self.config, "mm_vision_use_static_scaled_residual_granular_tokens") and self.config.mm_vision_use_static_scaled_residual_granular_tokens:
+                self.granular_tokens_scaler = nn.Parameter(torch.zeros((1,)), requires_grad=True)
+                print("Creating static scaler")
+            else:
+                print("Static scaler config not found, skipping.")
+            
             if 'unpad' in mm_patch_merge_type:
                 embed_std = 1 / torch.sqrt(torch.tensor(self.config.hidden_size, dtype=self.dtype))
                 self.image_newline = nn.Parameter(
@@ -215,18 +287,26 @@ class LlavaMetaForCausalLM(ABC):
         
         if hasattr(self.config, "mm_vision_use_granular_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
             and self.config.mm_vision_use_granular_tokens and self.config.mm_vision_use_additional_adapter:
+            # Use additional adapter and granular tokens
+            
             num_tokens = image_features.shape[-2]
             granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
             image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
             image_features = torch.concat([granular_image_features, image_features], dim=-2)
         elif hasattr(self.config, "mm_vision_use_global_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
             and self.config.mm_vision_use_global_tokens and self.config.mm_vision_use_additional_adapter:
+            # Use assitional adapter and global (duplicated) tokens
+                
             num_tokens = image_features.shape[-2]
             granular_image_features = self.get_model().granular_mm_projector(image_features[..., :num_tokens//2, :])
             image_features = self.get_model().mm_projector(image_features[..., num_tokens//2:, :])
             image_features = torch.concat([granular_image_features, image_features], dim=-2)
         elif hasattr(self.config, "mm_vision_use_scaled_residual_granular_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
             and self.config.mm_vision_use_scaled_residual_granular_tokens and self.config.mm_vision_use_additional_adapter:
+            # 1. Get granular tokens from ViT layers
+            # 2. Pass them through second adapter
+            # 3. Pool them
+            # 4. Add them with scaling parameter to the original tokens
             
             # clip returns [(intermediate tokens 1, intermediate tokens 2, ...) | final layer outputs tokens]
             num_tokens = image_features.shape[-2]
@@ -262,6 +342,33 @@ class LlavaMetaForCausalLM(ABC):
             image_features = image_features + granular_image_features
             # print(f"{image_features.shape=}")
             # image_features = torch.concat([granular_image_features, image_features], dim=-2)
+        elif hasattr(self.config, "mm_vision_use_static_scaled_residual_granular_tokens") and hasattr(self.config, "mm_vision_use_additional_adapter") \
+            and self.config.mm_vision_use_static_scaled_residual_granular_tokens and not self.config.mm_vision_use_additional_adapter:
+            # Don't use additional adapter, just have one scaling parameter which 
+            # scales the tokens from the earlier layers and adds them to the 
+            # global tokens
+            
+            
+            num_tokens = image_features.shape[-2]
+            num_granular_layers = len(list(map(lambda x: int(x), self.config.mm_vision_granular_select_layers.split())))
+            per_layer_tokens = num_tokens // (num_granular_layers + 1)
+
+            original_image_tokens = image_features[..., num_granular_layers * per_layer_tokens:, :]
+            
+            granular_tokens = image_features[..., :num_granular_layers * per_layer_tokens, :]
+            
+            granular_tokens = granular_tokens * self.get_model().granular_tokens_scaler
+            
+            B, N, C = granular_tokens.shape
+
+            granular_tokens = granular_tokens.view(B, num_granular_layers, N // num_granular_layers, C)
+            granular_tokens = torch.mean(granular_tokens, dim=1)
+            
+            feats = self.get_model().mm_projector(granular_tokens + original_image_tokens)
+            
+            print(feats.shape)
+            
+            return  feats
         else:
             image_features = self.get_model().mm_projector(image_features)
         
@@ -269,11 +376,17 @@ class LlavaMetaForCausalLM(ABC):
 
     def prepare_inputs_labels_for_multimodal(
         self, input_ids, position_ids, attention_mask, past_key_values, labels,
-        images, image_sizes=None
+        images, image_sizes=None, inputs_emb_modalities=None
     ):
         vision_tower = self.get_vision_tower()
-        if vision_tower is None or images is None or input_ids.shape[1] == 1:
-            return input_ids, position_ids, attention_mask, past_key_values, None, labels
+        if vision_tower is None or images is None or input_ids.shape[1] == 1: # generation model
+            if inputs_emb_modalities is not None:
+                for example_idx in range(input_ids.shape[0]):
+                    inputs_emb_modalities[example_idx].append({"text" : 1})
+            else:
+                inputs_emb_modalities = [[{"text": 1}] * input_ids.shape[0]]
+            return input_ids, position_ids, attention_mask, past_key_values, None, labels, inputs_emb_modalities
+
 
         if type(images) is list or images.ndim == 5:
             if type(images) is list:
@@ -351,20 +464,32 @@ class LlavaMetaForCausalLM(ABC):
         input_ids = [cur_input_ids[cur_attention_mask] for cur_input_ids, cur_attention_mask in zip(input_ids, attention_mask)]
         labels = [cur_labels[cur_attention_mask] for cur_labels, cur_attention_mask in zip(labels, attention_mask)]
 
-        new_input_embeds = []
+        new_input_embeds = [] # Initialize input embeddings tensor stack
         new_labels = []
-        cur_image_idx = 0
+        cur_image_idx = 0 # initialize current image index to 0
+        new_input_embeds_modalities = list()# initialize modality buffer
+        
         for batch_idx, cur_input_ids in enumerate(input_ids):
+            cur_new_input_embeds_modalities = list()
             num_images = (cur_input_ids == IMAGE_TOKEN_INDEX).sum()
             if num_images == 0:
+                # input does not have any images
+                # so get features at the given
                 cur_image_features = image_features[cur_image_idx]
                 cur_input_embeds_1 = self.get_model().embed_tokens(cur_input_ids)
                 cur_input_embeds = torch.cat([cur_input_embeds_1, cur_image_features[0:0]], dim=0)
                 new_input_embeds.append(cur_input_embeds)
                 new_labels.append(labels[batch_idx])
+                cur_new_input_embeds_modalities.append({"text": cur_input_embeds.shape[0]})
                 cur_image_idx += 1
                 continue
-
+            
+            # The logic is as follows
+            # 1. gather all text tokens and get their embeddings
+            # 2. split them according to where image tokens are in between them
+            # 3. stitch the final sequence by including image feats wherever image
+            #    token is encountered
+            # Thus, we append to modality buffer accordingly
             image_token_indices = [-1] + torch.where(cur_input_ids == IMAGE_TOKEN_INDEX)[0].tolist() + [cur_input_ids.shape[0]]
             cur_input_ids_noim = []
             cur_labels = labels[batch_idx]
@@ -380,11 +505,13 @@ class LlavaMetaForCausalLM(ABC):
 
             for i in range(num_images + 1):
                 cur_new_input_embeds.append(cur_input_embeds_no_im[i])
+                cur_new_input_embeds_modalities.append({"text": cur_input_embeds_no_im[i].shape[0]})
                 cur_new_labels.append(cur_labels_noim[i])
                 if i < num_images:
                     cur_image_features = image_features[cur_image_idx]
                     cur_image_idx += 1
                     cur_new_input_embeds.append(cur_image_features)
+                    cur_new_input_embeds_modalities.append({"image": cur_image_features.shape[0]})
                     cur_new_labels.append(torch.full((cur_image_features.shape[0],), IGNORE_INDEX, device=cur_labels.device, dtype=cur_labels.dtype))
 
             cur_new_input_embeds = [x.to(self.device) for x in cur_new_input_embeds]
@@ -393,6 +520,7 @@ class LlavaMetaForCausalLM(ABC):
             cur_new_labels = torch.cat(cur_new_labels)
 
             new_input_embeds.append(cur_new_input_embeds)
+            new_input_embeds_modalities.append(cur_new_input_embeds_modalities)
             new_labels.append(cur_new_labels)
 
         # Truncate sequences to max length as image embeddings can make the sequence longer
@@ -446,8 +574,8 @@ class LlavaMetaForCausalLM(ABC):
         if _position_ids is None:
             position_ids = None
 
-        return None, position_ids, attention_mask, past_key_values, new_input_embeds, new_labels
-
+        return None, position_ids, attention_mask, past_key_values, new_input_embeds, new_labels, new_input_embeds_modalities
+    
     def initialize_vision_tokenizer(self, model_args, tokenizer):
         if model_args.mm_use_im_patch_token:
             tokenizer.add_tokens([DEFAULT_IMAGE_PATCH_TOKEN], special_tokens=True)

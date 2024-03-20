@@ -24,7 +24,7 @@ from transformers import AutoConfig, AutoModelForCausalLM, \
 from transformers.modeling_outputs import CausalLMOutputWithPast
 from transformers.generation.utils import GenerateOutput
 
-from ..llava_arch import LlavaMetaModel, LlavaMetaForCausalLM
+from ..llava_arch import LlavaMetaModel, LlavaMetaForCausalLM, ModalityBuffer
 
 
 class OldLlavaConfig(LlamaConfig):
@@ -58,6 +58,7 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
         self.pretraining_tp = config.pretraining_tp
         self.vocab_size = config.vocab_size
         self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.inputs_emb_modalities = None
 
         # Initialize weights and apply final processing
         self.post_init()
@@ -88,7 +89,8 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
                 attention_mask,
                 past_key_values,
                 inputs_embeds,
-                labels
+                labels,
+                inputs_emb_modalities
             ) = self.prepare_inputs_labels_for_multimodal(
                 input_ids,
                 position_ids,
@@ -96,8 +98,11 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
                 past_key_values,
                 labels,
                 images,
-                image_sizes
+                image_sizes,
+                inputs_emb_modalities=self.inputs_emb_modalities
             )
+            self.inputs_emb_modalities = inputs_emb_modalities
+            ModalityBuffer.inputs_emb_modalities = inputs_emb_modalities
 
         return super().forward(
             input_ids=input_ids,
@@ -132,7 +137,8 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
                 attention_mask,
                 _,
                 inputs_embeds,
-                _
+                _,
+                inputs_emb_modalities
             ) = self.prepare_inputs_labels_for_multimodal(
                 inputs,
                 position_ids,
@@ -140,10 +146,15 @@ class LlavaLlamaForCausalLM(LlamaForCausalLM, LlavaMetaForCausalLM):
                 None,
                 None,
                 images,
-                image_sizes=image_sizes
+                image_sizes=image_sizes,
+                inputs_emb_modalities=self.inputs_emb_modalities
             )
+            self.inputs_emb_modalities = inputs_emb_modalities
+            ModalityBuffer.inputs_emb_modalities = inputs_emb_modalities
         else:
             inputs_embeds = self.get_model().embed_tokens(inputs)
+            self.inputs_emb_modalities = [{"text": 1} * inputs.shape[-1]]
+            ModalityBuffer.inputs_emb_modalities = inputs_emb_modalities
 
         # print(inputs_embeds.shape)
         return super().generate(

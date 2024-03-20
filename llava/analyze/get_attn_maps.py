@@ -80,52 +80,114 @@ def combine_all_layers(attns):
     return attns
 
 
+def compute_token_sims(MODEL, EXP1, EXP2, q1=None, q2=None, ans=None, has_modality=True, modality="image"):
+    payload1 = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP1}.pt")
+    modalities1 = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP1}_modalities.pt")
+    
+    payload2 = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP2}.pt")
+    modalities2 = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP2}_modalities.pt")
+    
+    image_sims = list()
+    text_sims = list()
+    
+    for layer_idx in range(32):
+        _layer_tokens1 = payload1[f"llama_acts_{layer_idx}"]
+        layer_tokens1 = torch.cat(_layer_tokens1, dim=-2)
+        # for item in layer_tokens1:
+        #     print(item.shape)
+        
+        print(f"first seq len: {layer_tokens1.shape}")
+        
+        img_mask1, vid_mask1, text_mask1 = calculate_modality_indices(modalities1, seq_len=layer_tokens1.shape[-2])
+        
+        _layer_tokens2 = payload2[f"llama_acts_{layer_idx}"]
+        layer_tokens2 = torch.cat(_layer_tokens2, dim=-2)
+        
+        print(f"second seq len: {layer_tokens2.shape}")
+        
+        
+        img_mask2, vid_mask2, text_mask2 = calculate_modality_indices(modalities2, seq_len=layer_tokens2.shape[-2])
+        
+        assert img_mask1.sum() == img_mask2.sum(), "both models have different "\
+            "number of image tokens, check model args and try again"
+        
 
-def plot_attn_vis(MODALITY, ATTN_TYPE, EXP, q=None, ans=None, has_modality=True):
-    attns = torch.load(f"./attn_tensors/{MODALITY}_{ATTN_TYPE}_{EXP}.pt")
-    modalities = torch.load(f"./attn_tensors/{MODALITY}_{ATTN_TYPE}_{EXP}_modalities.pt")
+        image_tokens1 = layer_tokens1[img_mask1.bool()]
+        image_tokens2 = layer_tokens2[img_mask2.bool()]
+        
+        # print(image_tokens1[..., :3, :5])
+        # print(image_tokens2[..., :3, :5])
+        
+        
+        
+        text_tokens1 = torch.cat(_layer_tokens1[1:], dim=-2)
+        text_tokens2 = torch.cat(_layer_tokens2[1:], dim=-2)
+        
+        print(text_tokens1.shape)
+        print(text_tokens2.shape)
+        
+        min_len = min(text_tokens1.shape[-2], text_tokens2.shape[-2])
+        
+        text_tokens1 = text_tokens1[..., :min_len, :]
+        text_tokens2 = text_tokens2[..., :min_len, :]
+        
+        image_sims.append(torch.mean(torch.nn.functional.cosine_similarity(image_tokens1, image_tokens2, dim=-1)).cpu().numpy().item())
+        text_sims.append(torch.mean(torch.nn.functional.cosine_similarity(text_tokens1, text_tokens2, dim=-1)).cpu().numpy().item())
+    
+    return image_sims, text_sims
+        
+        
+        
+
+def plot_attn_vis(MODEL, EXP, q=None, ans=None, has_modality=True, modality="image"):
+    attns = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP}.pt")
+    modalities = torch.load(f"/data/data0/akane/attn_tensors/{MODEL}_{EXP}_modalities.pt")
     
     all_images = list()
     
     for layer_idx in range(32):
         combined_attn, num_generated_tokens = combine_attention(attns[f"llama_attn_{layer_idx}"])
         pooled_combined_attn = torch.mean(combined_attn, dim=1)
+        # print(pooled_combined_attn.shape)
         text_attn_wrt_gen_tokens = pooled_combined_attn[..., -num_generated_tokens:, -num_generated_tokens:].cpu()
         
         if has_modality:
             img_mask, vid_mask, text_mask = calculate_modality_indices(modalities, seq_len=combined_attn.shape[-1])
 
-            if MODALITY == "image":
+            if modality == "image":
                 img_attn_wrt_gen_tokens = pooled_combined_attn[..., -num_generated_tokens:, img_mask[0].to(torch.bool)].cpu()
-                modality_tokens = 256
+                modality_tokens = int(torch.sum(img_mask).cpu().item())
             else:
                 img_attn_wrt_gen_tokens = pooled_combined_attn[..., -num_generated_tokens:, vid_mask[0].to(torch.bool)].cpu()
-                modality_tokens = 2048
+                modality_tokens = int(torch.sum(vid_mask).cpu().item())
 
             num_tokens = 4
             
             step = modality_tokens // num_tokens
-            avg_img_attn = torch.nn.functional.avg_pool1d(img_attn_wrt_gen_tokens.float(), kernel_size=step, stride=step) * (modality_tokens / num_tokens)
-        
+            avg_img_attn = torch.nn.functional.avg_pool1d(img_attn_wrt_gen_tokens.float(), kernel_size=step, stride=step) * step
+            # avg_img_attn = img_attn_wrt_gen_tokens.float()
         else:
             avg_img_attn = torch.zeros(list(text_attn_wrt_gen_tokens.shape)[:-1] + [0,])
           
         pooled_combined_attn = torch.concat([avg_img_attn, text_attn_wrt_gen_tokens], dim=-1)
         pooled_combined_attn = pooled_combined_attn.permute(1,2,0).cpu().numpy()
         
+        # print(pooled_combined_attn[:20, :20])
+        
         score_map = torch.tensor(np.uint8(255 * pooled_combined_attn)).to(torch.float32).permute(2, 0, 1) / 255.
+        # print(score_map[..., -10:])
         # plt.plot(score_map.numpy()[0])
         plt.xticks([])
         plt.yticks([])
         plt.imshow(score_map.permute(1, 2 ,0).numpy(), cmap='viridis', interpolation='nearest')
-        os.makedirs(f"./attn_vis/{ATTN_TYPE}/{MODALITY}/{EXP}", exist_ok=True)
-        plt.savefig(f"./attn_vis/{ATTN_TYPE}/{MODALITY}/{EXP}/attn_wrt_gen_tokens_{layer_idx}.png",  bbox_inches='tight', pad_inches=0.0)
+        os.makedirs(f"/data/data0/akane/attn_vis/{MODEL}_{EXP}", exist_ok=True)
+        plt.savefig(f"/data/data0/akane/attn_vis/{MODEL}_{EXP}/attn_wrt_gen_tokens_{layer_idx}.png",  bbox_inches='tight', pad_inches=0.0)
         
         all_images.append(score_map.permute(1, 2 ,0).numpy())
         
         
             
-        with open(f"./attn_vis/{ATTN_TYPE}/{MODALITY}/{EXP}/_output.txt", "w+") as f:
+        with open(f"/data/data0/akane/attn_vis/{MODEL}_{EXP}/_output.txt", "w+") as f:
             if q is not None:
                 f.write(q)
                             
@@ -138,7 +200,7 @@ def plot_attn_vis(MODALITY, ATTN_TYPE, EXP, q=None, ans=None, has_modality=True)
     plt.xticks([])
     plt.yticks([])
     plt.imshow(grid, cmap="viridis", interpolation="nearest")
-    plt.savefig(f"./attn_vis/{ATTN_TYPE}/{MODALITY}/{EXP}/_grid.png", bbox_inches='tight', pad_inches=0.)
+    plt.savefig(f"/data/data0/akane/attn_vis/{MODEL}_{EXP}/_grid.png", bbox_inches='tight', pad_inches=0.)
 
 
 

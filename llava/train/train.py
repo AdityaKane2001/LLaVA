@@ -74,6 +74,8 @@ class ModelArguments:
     mm_vision_granular_select_layers: Optional[str] = field(default="6 12 18")
     mm_vision_granular_tokens_strategy: Optional[str] = field(default="pool")
     mm_vision_granular_tokens_per_layer: Optional[int] = field(default=192)
+    mm_vision_use_static_scaled_residual_granular_tokens: Optional[bool] = field(default=False)
+    mm_vision_use_static_residual_scaler: Optional[bool] = field(default=False)
 
 
 @dataclass
@@ -929,6 +931,8 @@ def train(attn_implementation=None):
         model.config.mm_vision_granular_select_layers = model_args.mm_vision_granular_select_layers
         model.config.mm_vision_granular_tokens_strategy = model_args.mm_vision_granular_tokens_strategy
         model.config.mm_vision_granular_tokens_per_layer = model_args.mm_vision_granular_tokens_per_layer
+        model.config.mm_vision_use_static_scaled_residual_granular_tokens = model_args.mm_vision_use_static_scaled_residual_granular_tokens
+        model.config.mm_vision_use_static_residual_scaler = model_args.mm_vision_use_static_scaled_residual_granular_tokens
         
         model.get_model().initialize_vision_modules(
             model_args=model_args,

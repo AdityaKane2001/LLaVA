@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODEL_NAME="residual-grllava-pretrained-v1.5-7b"
+MODEL_NAME="static-residual-grllava-pretrained-v1.5-7b"
 
 python -m llava.eval.model_vqa_loader \
     --model-path /data/data0/akane/$MODEL_NAME/checkpoints \

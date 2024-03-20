@@ -23,26 +23,19 @@ class CLIPVisionTower(nn.Module):
             self.use_global_tokens = args.mm_vision_use_global_tokens
             self.use_granular_tokens = args.mm_vision_use_granular_tokens
             self.use_scaled_residual_granular_tokens = args.mm_vision_use_scaled_residual_granular_tokens
+            self.use_static_scaled_residual_granular_tokens = args.mm_vision_use_static_scaled_residual_granular_tokens
             self.num_tokens_per_layer = args.mm_vision_num_tokens_per_layer
             self.granular_layers = args.mm_vision_granular_select_layers
             self.granular_tokens_per_layer = args.mm_vision_granular_tokens_per_layer
             self.granular_tokens_strategy = args.mm_vision_granular_tokens_strategy
             print("Granular tokens config loaded!")
-            print(f"{self.use_additional_adapter=}")
-            print(f"{self.use_pretrained_additional_adapter=}")
-            print(f"{self.use_global_tokens=}")
-            print(f"{self.use_granular_tokens=}")
-            print(f"{self.use_scaled_residual_granular_tokens=}")
-            print(f"{self.num_tokens_per_layer=}")
-            print(f"{self.granular_layers=}")
-            print(f"{self.granular_tokens_per_layer=}")
-            print(f"{self.granular_tokens_strategy=}")
         except:
             self.use_additional_adapter = False
             self.use_pretrained_additional_adapter = False
             self.use_global_tokens = False
             self.use_granular_tokens = False
             self.use_scaled_residual_granular_tokens = False
+            self.use_static_scaled_residual_granular_tokens = False
             self.num_tokens_per_layer = 576
             self.granular_layers = ""
             self.granular_tokens_per_layer = 0
@@ -143,6 +136,14 @@ class CLIPVisionTower(nn.Module):
                     global_feature = self.feature_select(image_forward_out)
                     image_feature = torch.concat([global_feature, image_feature], dim=-2)
 
+                elif self.use_additional_adapter and self.use_scaled_residual_granular_tokens:
+                    granular_feature = self.granular_feature_select(image_forward_out, strategy="uncompressed")
+                    image_feature = torch.concat([granular_feature, image_feature], dim=-2)
+                   
+                elif self.use_static_scaled_residual_granular_tokens:
+                    granular_feature = self.granular_feature_select(image_forward_out, strategy="uncompressed")
+                    image_feature = torch.concat([granular_feature, image_feature], dim=-2)
+
                 image_features.append(image_feature)
         else:
             image_forward_outs = self.vision_tower(images.to(device=self.device, dtype=self.dtype), output_hidden_states=True)
@@ -160,6 +161,10 @@ class CLIPVisionTower(nn.Module):
                 global_features = self.feature_select(image_forward_outs).to(images.dtype)
                 image_features = torch.concat([global_features, image_features], dim=-2)
 
+            elif self.use_static_scaled_residual_granular_tokens:
+                granular_features = self.granular_feature_select(image_forward_outs, strategy="uncompressed").to(images.dtype)
+                image_features = torch.concat([granular_features, image_features], dim=-2)
+            
             
         return image_features
 

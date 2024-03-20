@@ -1,0 +1,771 @@
+[2024-03-14 15:31:55,651] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Granular tokens config loaded!
+Built vision tower and projector!
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:05,  2.53s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.41s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.18s/it]
+Some weights of the model checkpoint at /data/data0/akane/static-residual-grllava-pretrained-v1.5-7b/checkpoints were not used when initializing LlavaLlamaForCausalLM: ['model.vision_tower.vision_tower.vision_model.embeddings.class_embedding', 'model.vision_tower.vision_tower.vision_model.embeddings.patch_embedding.weight', 'model.vision_tower.vision_tower.vision_model.embeddings.position_embedding.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.post_layernorm.bias', 'model.vision_tower.vision_tower.vision_model.post_layernorm.weight', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.bias', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.weight']
+- This IS expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+loaded model
+llava-v1.5-7b
+Checking if llava in model name
+in vision tower init code
+  0%|          | 0/8910 [00:00<?, ?it/s]/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:393: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:398: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `None` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+  0%|          | 1/8910 [00:02<4:57:32,  2.00s/it]  0%|          | 2/8910 [00:02<2:14:06,  1.11it/s]  0%|          | 3/8910 [00:02<1:21:48,  1.81it/s]  0%|          | 4/8910 [00:02<56:36,  2.62it/s]    0%|          | 5/8910 [00:02<42:52,  3.46it/s]  0%|          | 6/8910 [00:02<34:25,  4.31it/s]  0%|          | 7/8910 [00:02<29:12,  5.08it/s]  0%|          | 8/8910 [00:02<25:42,  5.77it/s]  0%|          | 9/8910 [00:03<23:20,  6.35it/s]  0%|          | 10/8910 [00:03<21:44,  6.82it/s]  0%|          | 11/8910 [00:03<20:43,  7.16it/s]  0%|          | 12/8910 [00:03<19:53,  7.45it/s]  0%|          | 13/8910 [00:03<19:32,  7.59it/s]  0%|          | 14/8910 [00:03<19:10,  7.73it/s]  0%|          | 15/8910 [00:03<18:53,  7.85it/s]  0%|          | 16/8910 [00:03<18:42,  7.93it/s]  0%|          | 17/8910 [00:03<18:40,  7.94it/s]  0%|          | 18/8910 [00:04<18:26,  8.04it/s]  0%|          | 19/8910 [00:04<18:17,  8.10it/s]  0%|          | 20/8910 [00:04<18:14,  8.13it/s]  0%|          | 21/8910 [00:04<18:15,  8.11it/s]  0%|          | 22/8910 [00:04<18:16,  8.10it/s]  0%|          | 23/8910 [00:04<18:19,  8.08it/s]  0%|          | 24/8910 [00:04<18:13,  8.13it/s]  0%|          | 25/8910 [00:04<18:14,  8.12it/s]  0%|          | 26/8910 [00:05<18:16,  8.10it/s]  0%|          | 27/8910 [00:05<18:19,  8.08it/s]  0%|          | 28/8910 [00:05<18:12,  8.13it/s]  0%|          | 29/8910 [00:05<18:10,  8.14it/s]  0%|          | 30/8910 [00:05<18:07,  8.16it/s]  0%|          | 31/8910 [00:05<18:06,  8.17it/s]  0%|          | 32/8910 [00:05<18:07,  8.16it/s]  0%|          | 33/8910 [00:05<18:07,  8.16it/s]  0%|          | 34/8910 [00:06<18:20,  8.06it/s]  0%|          | 35/8910 [00:06<18:16,  8.09it/s]  0%|          | 36/8910 [00:06<18:22,  8.05it/s]  0%|          | 37/8910 [00:06<18:35,  7.95it/s]  0%|          | 38/8910 [00:06<18:23,  8.04it/s]  0%|          | 39/8910 [00:06<18:17,  8.08it/s]  0%|          | 40/8910 [00:06<18:33,  7.96it/s]  0%|          | 41/8910 [00:06<18:26,  8.02it/s]  0%|          | 42/8910 [00:07<18:38,  7.93it/s]  0%|          | 43/8910 [00:07<18:27,  8.00it/s]  0%|          | 44/8910 [00:07<18:17,  8.08it/s]  1%|          | 45/8910 [00:07<18:12,  8.11it/s]  1%|          | 46/8910 [00:07<18:07,  8.15it/s]  1%|          | 47/8910 [00:07<18:05,  8.17it/s]  1%|          | 48/8910 [00:07<18:02,  8.18it/s]  1%|          | 49/8910 [00:07<18:25,  8.02it/s]  1%|          | 50/8910 [00:08<18:17,  8.08it/s]  1%|          | 51/8910 [00:08<18:29,  7.98it/s]  1%|          | 52/8910 [00:08<18:18,  8.06it/s]  1%|          | 53/8910 [00:08<18:12,  8.11it/s]  1%|          | 54/8910 [00:08<18:07,  8.15it/s]  1%|          | 55/8910 [00:08<18:08,  8.14it/s]  1%|          | 56/8910 [00:08<18:03,  8.17it/s]  1%|          | 57/8910 [00:08<18:04,  8.17it/s]  1%|          | 58/8910 [00:09<18:02,  8.18it/s]  1%|          | 59/8910 [00:09<18:20,  8.04it/s]  1%|          | 60/8910 [00:09<18:19,  8.05it/s]  1%|          | 61/8910 [00:09<18:13,  8.09it/s]  1%|          | 62/8910 [00:09<18:07,  8.14it/s]  1%|          | 63/8910 [00:09<18:25,  8.00it/s]  1%|          | 64/8910 [00:09<18:16,  8.06it/s]  1%|          | 65/8910 [00:09<18:11,  8.10it/s]  1%|          | 66/8910 [00:10<18:04,  8.16it/s]  1%|          | 67/8910 [00:10<18:24,  8.01it/s]  1%|          | 68/8910 [00:10<18:20,  8.04it/s]  1%|          | 69/8910 [00:10<18:16,  8.06it/s]  1%|          | 70/8910 [00:10<18:10,  8.11it/s]  1%|          | 71/8910 [00:10<18:25,  7.99it/s]  1%|          | 72/8910 [00:10<18:17,  8.05it/s]  1%|          | 73/8910 [00:10<18:25,  8.00it/s]  1%|          | 74/8910 [00:11<18:36,  7.92it/s]  1%|          | 75/8910 [00:11<18:42,  7.87it/s]  1%|          | 76/8910 [00:11<18:49,  7.82it/s]  1%|          | 77/8910 [00:11<18:37,  7.91it/s]  1%|          | 78/8910 [00:11<18:44,  7.86it/s]  1%|          | 79/8910 [00:11<18:34,  7.92it/s]  1%|          | 80/8910 [00:11<18:45,  7.84it/s]  1%|          | 81/8910 [00:11<18:34,  7.92it/s]  1%|          | 82/8910 [00:12<18:38,  7.89it/s]  1%|          | 83/8910 [00:12<18:26,  7.98it/s]  1%|          | 84/8910 [00:12<18:27,  7.97it/s]  1%|          | 85/8910 [00:12<18:21,  8.01it/s]  1%|          | 86/8910 [00:12<18:12,  8.07it/s]  1%|          | 87/8910 [00:12<18:08,  8.11it/s]  1%|          | 88/8910 [00:12<18:05,  8.13it/s]  1%|          | 89/8910 [00:12<18:04,  8.13it/s]  1%|          | 90/8910 [00:13<18:01,  8.16it/s]  1%|          | 91/8910 [00:13<17:59,  8.17it/s]  1%|          | 92/8910 [00:13<17:56,  8.19it/s]  1%|          | 93/8910 [00:13<17:57,  8.19it/s]  1%|          | 94/8910 [00:13<17:56,  8.19it/s]  1%|          | 95/8910 [00:13<18:15,  8.05it/s]  1%|          | 96/8910 [00:13<18:08,  8.10it/s]  1%|          | 97/8910 [00:13<18:04,  8.12it/s]  1%|          | 98/8910 [00:14<18:18,  8.02it/s]  1%|          | 99/8910 [00:14<18:13,  8.06it/s]  1%|          | 100/8910 [00:14<18:07,  8.10it/s]  1%|          | 101/8910 [00:14<18:25,  7.96it/s]  1%|          | 102/8910 [00:14<18:18,  8.02it/s]  1%|          | 103/8910 [00:14<18:32,  7.92it/s]  1%|          | 104/8910 [00:14<18:36,  7.89it/s]  1%|          | 105/8910 [00:14<18:26,  7.96it/s]  1%|          | 106/8910 [00:15<18:14,  8.04it/s]  1%|          | 107/8910 [00:15<18:09,  8.08it/s]  1%|          | 108/8910 [00:15<18:03,  8.13it/s]  1%|          | 109/8910 [00:15<17:59,  8.15it/s]  1%|          | 110/8910 [00:15<17:56,  8.18it/s]  1%|          | 111/8910 [00:15<17:54,  8.19it/s]  1%|▏         | 112/8910 [00:15<18:16,  8.02it/s]  1%|▏         | 113/8910 [00:15<18:11,  8.06it/s]  1%|▏         | 114/8910 [00:16<18:07,  8.09it/s]  1%|▏         | 115/8910 [00:16<18:03,  8.12it/s]  1%|▏         | 116/8910 [00:16<17:59,  8.15it/s]  1%|▏         | 117/8910 [00:16<17:57,  8.16it/s]  1%|▏         | 118/8910 [00:16<17:54,  8.19it/s]  1%|▏         | 119/8910 [00:16<17:53,  8.19it/s]  1%|▏         | 120/8910 [00:16<17:51,  8.20it/s]  1%|▏         | 121/8910 [00:16<18:11,  8.05it/s]  1%|▏         | 122/8910 [00:17<18:20,  7.98it/s]  1%|▏         | 123/8910 [00:17<18:12,  8.05it/s]  1%|▏         | 124/8910 [00:17<18:22,  7.97it/s]  1%|▏         | 125/8910 [00:17<18:16,  8.01it/s]  1%|▏         | 126/8910 [00:17<18:27,  7.93it/s]  1%|▏         | 127/8910 [00:17<18:18,  7.99it/s]  1%|▏         | 128/8910 [00:17<18:28,  7.92it/s]  1%|▏         | 129/8910 [00:17<18:19,  7.99it/s]  1%|▏         | 130/8910 [00:18<18:13,  8.03it/s]  1%|▏         | 131/8910 [00:18<18:09,  8.06it/s]  1%|▏         | 132/8910 [00:18<18:02,  8.11it/s]  1%|▏         | 133/8910 [00:18<18:03,  8.10it/s]  2%|▏         | 134/8910 [00:18<18:03,  8.10it/s]  2%|▏         | 135/8910 [00:18<18:03,  8.10it/s]  2%|▏         | 136/8910 [00:18<18:17,  8.00it/s]  2%|▏         | 137/8910 [00:18<18:28,  7.91it/s]  2%|▏         | 138/8910 [00:19<18:39,  7.84it/s]  2%|▏         | 139/8910 [00:19<18:25,  7.94it/s]  2%|▏         | 140/8910 [00:19<18:13,  8.02it/s]  2%|▏         | 141/8910 [00:19<18:10,  8.04it/s]  2%|▏         | 142/8910 [00:19<18:02,  8.10it/s]  2%|▏         | 143/8910 [00:19<17:58,  8.13it/s]  2%|▏         | 144/8910 [00:19<17:53,  8.17it/s]  2%|▏         | 145/8910 [00:19<18:11,  8.03it/s]  2%|▏         | 146/8910 [00:19<18:02,  8.09it/s]  2%|▏         | 147/8910 [00:20<18:06,  8.06it/s]  2%|▏         | 148/8910 [00:20<18:01,  8.10it/s]  2%|▏         | 149/8910 [00:20<18:18,  7.98it/s]  2%|▏         | 150/8910 [00:20<18:14,  8.00it/s]  2%|▏         | 151/8910 [00:20<18:18,  7.97it/s]  2%|▏         | 152/8910 [00:20<18:08,  8.04it/s]  2%|▏         | 153/8910 [00:20<18:04,  8.07it/s]  2%|▏         | 154/8910 [00:20<18:03,  8.08it/s]  2%|▏         | 155/8910 [00:21<18:10,  8.03it/s]  2%|▏         | 156/8910 [00:21<18:10,  8.03it/s]  2%|▏         | 157/8910 [00:21<18:28,  7.90it/s]  2%|▏         | 158/8910 [00:21<18:24,  7.92it/s]  2%|▏         | 159/8910 [00:21<18:16,  7.98it/s]  2%|▏         | 160/8910 [00:21<18:13,  8.00it/s]  2%|▏         | 161/8910 [00:21<18:07,  8.05it/s]  2%|▏         | 162/8910 [00:21<18:03,  8.08it/s]  2%|▏         | 163/8910 [00:22<18:02,  8.08it/s]  2%|▏         | 164/8910 [00:22<17:59,  8.10it/s]  2%|▏         | 165/8910 [00:22<17:57,  8.11it/s]  2%|▏         | 166/8910 [00:22<18:11,  8.01it/s]  2%|▏         | 167/8910 [00:22<18:23,  7.92it/s]  2%|▏         | 168/8910 [00:22<18:23,  7.92it/s]  2%|▏         | 169/8910 [00:22<18:16,  7.97it/s]  2%|▏         | 170/8910 [00:22<18:09,  8.02it/s]  2%|▏         | 171/8910 [00:23<18:06,  8.05it/s]  2%|▏         | 172/8910 [00:23<18:00,  8.09it/s]  2%|▏         | 173/8910 [00:23<18:03,  8.07it/s]  2%|▏         | 174/8910 [00:23<18:07,  8.04it/s]  2%|▏         | 175/8910 [00:23<18:03,  8.06it/s]  2%|▏         | 176/8910 [00:23<18:03,  8.06it/s]  2%|▏         | 177/8910 [00:23<18:07,  8.03it/s]  2%|▏         | 178/8910 [00:23<18:04,  8.05it/s]  2%|▏         | 179/8910 [00:24<18:03,  8.06it/s]  2%|▏         | 180/8910 [00:24<17:56,  8.11it/s]  2%|▏         | 181/8910 [00:24<18:03,  8.05it/s]  2%|▏         | 182/8910 [00:24<17:58,  8.09it/s]  2%|▏         | 183/8910 [00:24<17:56,  8.11it/s]  2%|▏         | 184/8910 [00:24<17:53,  8.13it/s]  2%|▏         | 185/8910 [00:24<18:10,  8.00it/s]  2%|▏         | 186/8910 [00:24<18:05,  8.04it/s]  2%|▏         | 187/8910 [00:25<18:05,  8.04it/s]  2%|▏         | 188/8910 [00:25<18:15,  7.96it/s]  2%|▏         | 189/8910 [00:25<18:26,  7.88it/s]  2%|▏         | 190/8910 [00:25<18:32,  7.84it/s]  2%|▏         | 191/8910 [00:25<18:30,  7.85it/s]  2%|▏         | 192/8910 [00:25<18:33,  7.83it/s]  2%|▏         | 193/8910 [00:25<18:36,  7.80it/s]  2%|▏         | 194/8910 [00:25<18:25,  7.89it/s]  2%|▏         | 195/8910 [00:26<18:31,  7.84it/s]  2%|▏         | 196/8910 [00:26<18:17,  7.94it/s]  2%|▏         | 197/8910 [00:26<18:12,  7.98it/s]  2%|▏         | 198/8910 [00:26<18:03,  8.04it/s]  2%|▏         | 199/8910 [00:26<18:06,  8.02it/s]  2%|▏         | 200/8910 [00:26<18:08,  8.00it/s]  2%|▏         | 201/8910 [00:26<18:23,  7.89it/s]  2%|▏         | 202/8910 [00:27<18:21,  7.91it/s]  2%|▏         | 203/8910 [00:27<18:13,  7.96it/s]  2%|▏         | 204/8910 [00:27<18:04,  8.03it/s]  2%|▏         | 205/8910 [00:27<18:13,  7.96it/s]  2%|▏         | 206/8910 [00:27<18:19,  7.91it/s]  2%|▏         | 207/8910 [00:27<18:23,  7.89it/s]  2%|▏         | 208/8910 [00:27<18:18,  7.92it/s]  2%|▏         | 209/8910 [00:27<18:27,  7.86it/s]  2%|▏         | 210/8910 [00:28<18:12,  7.96it/s]  2%|▏         | 211/8910 [00:28<18:08,  7.99it/s]  2%|▏         | 212/8910 [00:28<17:57,  8.07it/s]  2%|▏         | 213/8910 [00:28<17:58,  8.06it/s]  2%|▏         | 214/8910 [00:28<18:10,  7.97it/s]  2%|▏         | 215/8910 [00:28<18:18,  7.92it/s]  2%|▏         | 216/8910 [00:28<18:02,  8.03it/s]  2%|▏         | 217/8910 [00:28<17:50,  8.12it/s]  2%|▏         | 218/8910 [00:28<17:39,  8.20it/s]  2%|▏         | 219/8910 [00:29<17:30,  8.27it/s]  2%|▏         | 220/8910 [00:29<17:21,  8.34it/s]  2%|▏         | 221/8910 [00:29<17:13,  8.41it/s]  2%|▏         | 222/8910 [00:29<17:05,  8.47it/s]  3%|▎         | 223/8910 [00:29<17:02,  8.49it/s]  3%|▎         | 224/8910 [00:29<16:57,  8.53it/s]  3%|▎         | 225/8910 [00:29<16:54,  8.56it/s]  3%|▎         | 226/8910 [00:29<16:49,  8.60it/s]  3%|▎         | 227/8910 [00:30<16:49,  8.61it/s]  3%|▎         | 228/8910 [00:30<16:45,  8.63it/s]  3%|▎         | 229/8910 [00:30<16:44,  8.64it/s]  3%|▎         | 230/8910 [00:30<16:46,  8.62it/s]  3%|▎         | 231/8910 [00:30<16:50,  8.59it/s]  3%|▎         | 232/8910 [00:30<16:50,  8.59it/s]  3%|▎         | 233/8910 [00:30<16:55,  8.54it/s]  3%|▎         | 234/8910 [00:30<16:59,  8.51it/s]  3%|▎         | 235/8910 [00:30<17:09,  8.43it/s]  3%|▎         | 236/8910 [00:31<17:28,  8.27it/s]  3%|▎         | 237/8910 [00:31<17:27,  8.28it/s]  3%|▎         | 238/8910 [00:31<17:46,  8.13it/s]  3%|▎         | 239/8910 [00:31<18:10,  7.95it/s]  3%|▎         | 240/8910 [00:31<18:00,  8.02it/s]  3%|▎         | 241/8910 [00:31<17:53,  8.07it/s]  3%|▎         | 242/8910 [00:31<17:54,  8.07it/s]  3%|▎         | 243/8910 [00:31<18:08,  7.96it/s]  3%|▎         | 244/8910 [00:32<18:14,  7.92it/s]  3%|▎         | 245/8910 [00:32<18:07,  7.97it/s]  3%|▎         | 246/8910 [00:32<17:58,  8.03it/s]  3%|▎         | 247/8910 [00:32<17:54,  8.07it/s]  3%|▎         | 248/8910 [00:32<17:46,  8.12it/s]  3%|▎         | 249/8910 [00:32<17:44,  8.13it/s]  3%|▎         | 250/8910 [00:32<17:42,  8.15it/s]  3%|▎         | 251/8910 [00:32<17:42,  8.15it/s]  3%|▎         | 252/8910 [00:33<17:37,  8.19it/s]  3%|▎         | 253/8910 [00:33<17:35,  8.21it/s]  3%|▎         | 254/8910 [00:33<17:36,  8.19it/s]  3%|▎         | 255/8910 [00:33<17:37,  8.19it/s]  3%|▎         | 256/8910 [00:33<17:51,  8.08it/s]  3%|▎         | 257/8910 [00:33<17:47,  8.10it/s]  3%|▎         | 258/8910 [00:33<17:46,  8.11it/s]  3%|▎         | 259/8910 [00:33<17:47,  8.10it/s]  3%|▎         | 260/8910 [00:34<18:01,  8.00it/s]  3%|▎         | 261/8910 [00:34<17:52,  8.06it/s]  3%|▎         | 262/8910 [00:34<17:51,  8.07it/s]  3%|▎         | 263/8910 [00:34<17:52,  8.06it/s]  3%|▎         | 264/8910 [00:34<17:46,  8.10it/s]  3%|▎         | 265/8910 [00:34<17:46,  8.10it/s]  3%|▎         | 266/8910 [00:34<17:44,  8.12it/s]  3%|▎         | 267/8910 [00:34<17:47,  8.10it/s]  3%|▎         | 268/8910 [00:35<18:02,  7.98it/s]  3%|▎         | 269/8910 [00:35<18:13,  7.90it/s]  3%|▎         | 270/8910 [00:35<18:03,  7.97it/s]  3%|▎         | 271/8910 [00:35<17:55,  8.03it/s]  3%|▎         | 272/8910 [00:35<18:06,  7.95it/s]  3%|▎         | 273/8910 [00:35<17:57,  8.02it/s]  3%|▎         | 274/8910 [00:35<18:07,  7.94it/s]  3%|▎         | 275/8910 [00:35<18:20,  7.85it/s]  3%|▎         | 276/8910 [00:36<18:11,  7.91it/s]  3%|▎         | 277/8910 [00:36<18:18,  7.86it/s]  3%|▎         | 278/8910 [00:36<18:05,  7.95it/s]  3%|▎         | 279/8910 [00:36<17:58,  8.00it/s]  3%|▎         | 280/8910 [00:36<17:51,  8.05it/s]  3%|▎         | 281/8910 [00:36<17:46,  8.09it/s]  3%|▎         | 282/8910 [00:36<17:39,  8.15it/s]  3%|▎         | 283/8910 [00:36<17:37,  8.16it/s]  3%|▎         | 284/8910 [00:37<17:35,  8.17it/s]  3%|▎         | 285/8910 [00:37<17:36,  8.16it/s]  3%|▎         | 286/8910 [00:37<17:39,  8.14it/s]  3%|▎         | 287/8910 [00:37<17:39,  8.14it/s]  3%|▎         | 288/8910 [00:37<17:55,  8.02it/s]  3%|▎         | 289/8910 [00:37<17:49,  8.06it/s]  3%|▎         | 290/8910 [00:37<17:43,  8.10it/s]  3%|▎         | 291/8910 [00:37<17:41,  8.12it/s]  3%|▎         | 292/8910 [00:38<17:39,  8.14it/s]  3%|▎         | 293/8910 [00:38<17:38,  8.14it/s]  3%|▎         | 294/8910 [00:38<17:38,  8.14it/s]  3%|▎         | 295/8910 [00:38<17:35,  8.16it/s]  3%|▎         | 296/8910 [00:38<17:46,  8.08it/s]  3%|▎         | 297/8910 [00:38<17:43,  8.10it/s]  3%|▎         | 298/8910 [00:38<17:56,  8.00it/s]  3%|▎         | 299/8910 [00:38<17:51,  8.04it/s]  3%|▎         | 300/8910 [00:39<17:43,  8.09it/s]  3%|▎         | 301/8910 [00:39<17:40,  8.12it/s]  3%|▎         | 302/8910 [00:39<17:42,  8.10it/s]  3%|▎         | 303/8910 [00:39<17:40,  8.11it/s]torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+torch.Size([1, 576, 4096])
+  3%|▎         | 304/8910 [00:39<17:41,  8.10it/s]  3%|▎         | 305/8910 [00:39<17:55,  8.00it/s]  3%|▎         | 306/8910 [00:39<18:07,  7.91it/s]  3%|▎         | 307/8910 [00:39<18:15,  7.85it/s]  3%|▎         | 308/8910 [00:40<18:02,  7.95it/s]  3%|▎         | 309/8910 [00:40<17:55,  8.00it/s]  3%|▎         | 310/8910 [00:40<18:00,  7.96it/s]  3%|▎         | 311/8910 [00:40<18:13,  7.87it/s]  4%|▎         | 312/8910 [00:40<18:01,  7.95it/s]  4%|▎         | 313/8910 [00:40<17:53,  8.01it/s]  4%|▎         | 314/8910 [00:40<18:02,  7.94it/s]  4%|▎         | 315/8910 [00:40<17:54,  8.00it/s]  4%|▎         | 316/8910 [00:41<17:45,  8.07it/s]  4%|▎         | 317/8910 [00:41<17:41,  8.10it/s]  4%|▎         | 318/8910 [00:41<17:39,  8.11it/s]  4%|▎         | 319/8910 [00:41<17:37,  8.12it/s]  4%|▎         | 320/8910 [00:41<17:34,  8.15it/s]  4%|▎         | 321/8910 [00:41<17:33,  8.15it/s]  4%|▎         | 322/8910 [00:41<17:31,  8.16it/s]  4%|▎         | 323/8910 [00:41<17:32,  8.16it/s]Terminated
+Category: random, # samples: 0
+Traceback (most recent call last):
+  File "/home/akane38/LLaVA/llava/eval/eval_pope.py", line 80, in <module>
+    eval_pope(cur_answers, os.path.join(args.annotation_dir, file))
+  File "/home/akane38/LLaVA/llava/eval/eval_pope.py", line 37, in eval_pope
+    yes_ratio = pred_list.count(1) / len(pred_list)
+ZeroDivisionError: division by zero
+[2024-03-14 15:34:15,061] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+Granular tokens config loaded!
+Built vision tower and projector!
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:02<00:04,  2.48s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:04<00:02,  2.39s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.09s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:06<00:00,  2.18s/it]
+Some weights of the model checkpoint at /data/data0/akane/static-residual-grllava-pretrained-v1.5-7b/checkpoints were not used when initializing LlavaLlamaForCausalLM: ['model.vision_tower.vision_tower.vision_model.embeddings.class_embedding', 'model.vision_tower.vision_tower.vision_model.embeddings.patch_embedding.weight', 'model.vision_tower.vision_tower.vision_model.embeddings.position_embedding.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.0.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.1.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.10.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.11.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.12.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.13.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.14.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.15.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.16.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.17.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.18.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.19.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.2.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.20.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.21.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.22.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.23.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.3.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.4.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.5.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.6.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.7.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.8.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.layer_norm2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc1.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.mlp.fc2.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.k_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.out_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.q_proj.weight', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.bias', 'model.vision_tower.vision_tower.vision_model.encoder.layers.9.self_attn.v_proj.weight', 'model.vision_tower.vision_tower.vision_model.post_layernorm.bias', 'model.vision_tower.vision_tower.vision_model.post_layernorm.weight', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.bias', 'model.vision_tower.vision_tower.vision_model.pre_layrnorm.weight']
+- This IS expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing LlavaLlamaForCausalLM from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+loaded model
+llava-v1.5-7b
+Checking if llava in model name
+in vision tower init code
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+  0%|          | 0/8910 [00:00<?, ?it/s]torch.Size([1, 576, 4096])
+/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:393: UserWarning: `do_sample` is set to `False`. However, `temperature` is set to `0.0` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `temperature`.
+  warnings.warn(
+/home/akane38/LLaVA/transformers/src/transformers/generation/configuration_utils.py:398: UserWarning: `do_sample` is set to `False`. However, `top_p` is set to `None` -- this flag is only used in sample-based generation modes. You should set `do_sample=True` or unset `top_p`.
+  warnings.warn(
+  0%|          | 1/8910 [00:00<2:15:20,  1.10it/s]torch.Size([1, 576, 4096])
+  0%|          | 2/8910 [00:01<1:07:09,  2.21it/s]torch.Size([1, 576, 4096])
+  0%|          | 3/8910 [00:01<44:39,  3.32it/s]  torch.Size([1, 576, 4096])
+  0%|          | 4/8910 [00:01<33:59,  4.37it/s]torch.Size([1, 576, 4096])
+  0%|          | 5/8910 [00:01<28:19,  5.24it/s]torch.Size([1, 576, 4096])
+  0%|          | 6/8910 [00:01<24:38,  6.02it/s]torch.Size([1, 576, 4096])
+  0%|          | 7/8910 [00:01<22:12,  6.68it/s]torch.Size([1, 576, 4096])
+  0%|          | 8/8910 [00:01<20:34,  7.21it/s]torch.Size([1, 576, 4096])
+  0%|          | 9/8910 [00:01<19:33,  7.59it/s]torch.Size([1, 576, 4096])
+  0%|          | 10/8910 [00:01<18:53,  7.86it/s]torch.Size([1, 576, 4096])
+  0%|          | 11/8910 [00:02<18:43,  7.92it/s]torch.Size([1, 576, 4096])
+  0%|          | 12/8910 [00:02<18:28,  8.03it/s]torch.Size([1, 576, 4096])
+  0%|          | 13/8910 [00:02<18:16,  8.11it/s]torch.Size([1, 576, 4096])
+  0%|          | 14/8910 [00:02<18:12,  8.14it/s]torch.Size([1, 576, 4096])
+  0%|          | 15/8910 [00:02<18:07,  8.18it/s]torch.Size([1, 576, 4096])
+  0%|          | 16/8910 [00:02<17:48,  8.33it/s]torch.Size([1, 576, 4096])
+  0%|          | 17/8910 [00:02<17:38,  8.40it/s]torch.Size([1, 576, 4096])
+  0%|          | 18/8910 [00:02<17:50,  8.31it/s]torch.Size([1, 576, 4096])
+  0%|          | 19/8910 [00:03<17:45,  8.34it/s]torch.Size([1, 576, 4096])
+  0%|          | 20/8910 [00:03<17:39,  8.39it/s]torch.Size([1, 576, 4096])
+  0%|          | 21/8910 [00:03<17:32,  8.45it/s]torch.Size([1, 576, 4096])
+  0%|          | 22/8910 [00:03<17:24,  8.51it/s]torch.Size([1, 576, 4096])
+  0%|          | 23/8910 [00:03<17:24,  8.51it/s]torch.Size([1, 576, 4096])
+  0%|          | 24/8910 [00:03<17:21,  8.53it/s]torch.Size([1, 576, 4096])
+  0%|          | 25/8910 [00:03<17:23,  8.51it/s]torch.Size([1, 576, 4096])
+  0%|          | 26/8910 [00:03<17:22,  8.52it/s]torch.Size([1, 576, 4096])
+  0%|          | 27/8910 [00:04<17:21,  8.53it/s]torch.Size([1, 576, 4096])
+  0%|          | 28/8910 [00:04<17:18,  8.55it/s]torch.Size([1, 576, 4096])
+  0%|          | 29/8910 [00:04<17:19,  8.54it/s]torch.Size([1, 576, 4096])
+  0%|          | 30/8910 [00:04<17:25,  8.49it/s]torch.Size([1, 576, 4096])
+  0%|          | 31/8910 [00:04<17:21,  8.52it/s]torch.Size([1, 576, 4096])
+  0%|          | 32/8910 [00:04<17:17,  8.55it/s]torch.Size([1, 576, 4096])
+  0%|          | 33/8910 [00:04<17:37,  8.40it/s]torch.Size([1, 576, 4096])
+  0%|          | 34/8910 [00:04<17:28,  8.47it/s]torch.Size([1, 576, 4096])
+  0%|          | 35/8910 [00:04<17:23,  8.51it/s]torch.Size([1, 576, 4096])
+  0%|          | 36/8910 [00:05<17:20,  8.53it/s]torch.Size([1, 576, 4096])
+  0%|          | 37/8910 [00:05<17:28,  8.46it/s]torch.Size([1, 576, 4096])
+  0%|          | 38/8910 [00:05<17:46,  8.32it/s]torch.Size([1, 576, 4096])
+  0%|          | 39/8910 [00:05<17:43,  8.34it/s]torch.Size([1, 576, 4096])
+  0%|          | 40/8910 [00:05<17:35,  8.40it/s]torch.Size([1, 576, 4096])
+  0%|          | 41/8910 [00:05<17:50,  8.29it/s]torch.Size([1, 576, 4096])
+  0%|          | 42/8910 [00:05<17:47,  8.31it/s]torch.Size([1, 576, 4096])
+  0%|          | 43/8910 [00:05<17:49,  8.29it/s]torch.Size([1, 576, 4096])
+  0%|          | 44/8910 [00:06<17:38,  8.38it/s]torch.Size([1, 576, 4096])
+  1%|          | 45/8910 [00:06<17:32,  8.43it/s]torch.Size([1, 576, 4096])
+  1%|          | 46/8910 [00:06<17:25,  8.48it/s]torch.Size([1, 576, 4096])
+  1%|          | 47/8910 [00:06<17:22,  8.50it/s]torch.Size([1, 576, 4096])
+  1%|          | 48/8910 [00:06<17:35,  8.40it/s]torch.Size([1, 576, 4096])
+  1%|          | 49/8910 [00:06<17:30,  8.43it/s]torch.Size([1, 576, 4096])
+  1%|          | 50/8910 [00:06<17:27,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 51/8910 [00:06<17:26,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 52/8910 [00:06<17:23,  8.49it/s]torch.Size([1, 576, 4096])
+  1%|          | 53/8910 [00:07<17:24,  8.48it/s]torch.Size([1, 576, 4096])
+  1%|          | 54/8910 [00:07<17:34,  8.40it/s]torch.Size([1, 576, 4096])
+  1%|          | 55/8910 [00:07<17:27,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 56/8910 [00:07<17:19,  8.52it/s]torch.Size([1, 576, 4096])
+  1%|          | 57/8910 [00:07<17:15,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|          | 58/8910 [00:07<17:28,  8.45it/s]torch.Size([1, 576, 4096])
+  1%|          | 59/8910 [00:07<17:22,  8.49it/s]torch.Size([1, 576, 4096])
+  1%|          | 60/8910 [00:07<17:34,  8.39it/s]torch.Size([1, 576, 4096])
+  1%|          | 61/8910 [00:08<17:31,  8.42it/s]torch.Size([1, 576, 4096])
+  1%|          | 62/8910 [00:08<17:25,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 63/8910 [00:08<17:25,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 64/8910 [00:08<17:23,  8.48it/s]torch.Size([1, 576, 4096])
+  1%|          | 65/8910 [00:08<17:37,  8.36it/s]torch.Size([1, 576, 4096])
+  1%|          | 66/8910 [00:08<17:25,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 67/8910 [00:08<17:19,  8.51it/s]torch.Size([1, 576, 4096])
+  1%|          | 68/8910 [00:08<17:18,  8.51it/s]torch.Size([1, 576, 4096])
+  1%|          | 69/8910 [00:08<17:25,  8.45it/s]torch.Size([1, 576, 4096])
+  1%|          | 70/8910 [00:09<17:24,  8.47it/s]torch.Size([1, 576, 4096])
+  1%|          | 71/8910 [00:09<17:37,  8.36it/s]torch.Size([1, 576, 4096])
+  1%|          | 72/8910 [00:09<17:46,  8.29it/s]torch.Size([1, 576, 4096])
+  1%|          | 73/8910 [00:09<17:39,  8.34it/s]torch.Size([1, 576, 4096])
+  1%|          | 74/8910 [00:09<17:32,  8.40it/s]torch.Size([1, 576, 4096])
+  1%|          | 75/8910 [00:09<17:26,  8.44it/s]torch.Size([1, 576, 4096])
+  1%|          | 76/8910 [00:09<17:36,  8.36it/s]torch.Size([1, 576, 4096])
+  1%|          | 77/8910 [00:09<17:45,  8.29it/s]torch.Size([1, 576, 4096])
+  1%|          | 78/8910 [00:10<17:31,  8.40it/s]torch.Size([1, 576, 4096])
+  1%|          | 79/8910 [00:10<17:30,  8.41it/s]torch.Size([1, 576, 4096])
+  1%|          | 80/8910 [00:10<17:25,  8.45it/s]torch.Size([1, 576, 4096])
+  1%|          | 81/8910 [00:10<17:24,  8.45it/s]torch.Size([1, 576, 4096])
+  1%|          | 82/8910 [00:10<17:33,  8.38it/s]torch.Size([1, 576, 4096])
+  1%|          | 83/8910 [00:10<17:43,  8.30it/s]torch.Size([1, 576, 4096])
+  1%|          | 84/8910 [00:10<17:49,  8.26it/s]torch.Size([1, 576, 4096])
+  1%|          | 85/8910 [00:10<17:44,  8.29it/s]torch.Size([1, 576, 4096])
+  1%|          | 86/8910 [00:11<17:29,  8.41it/s]torch.Size([1, 576, 4096])
+  1%|          | 87/8910 [00:11<17:42,  8.30it/s]torch.Size([1, 576, 4096])
+  1%|          | 88/8910 [00:11<17:48,  8.26it/s]torch.Size([1, 576, 4096])
+  1%|          | 89/8910 [00:11<17:55,  8.20it/s]torch.Size([1, 576, 4096])
+  1%|          | 90/8910 [00:11<17:37,  8.34it/s]torch.Size([1, 576, 4096])
+  1%|          | 91/8910 [00:11<17:25,  8.44it/s]torch.Size([1, 576, 4096])
+  1%|          | 92/8910 [00:11<17:15,  8.51it/s]torch.Size([1, 576, 4096])
+  1%|          | 93/8910 [00:11<17:10,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|          | 94/8910 [00:11<17:06,  8.59it/s]torch.Size([1, 576, 4096])
+  1%|          | 95/8910 [00:12<17:05,  8.59it/s]torch.Size([1, 576, 4096])
+  1%|          | 96/8910 [00:12<17:02,  8.62it/s]torch.Size([1, 576, 4096])
+  1%|          | 97/8910 [00:12<17:01,  8.62it/s]torch.Size([1, 576, 4096])
+  1%|          | 98/8910 [00:12<16:59,  8.65it/s]torch.Size([1, 576, 4096])
+  1%|          | 99/8910 [00:12<17:01,  8.63it/s]torch.Size([1, 576, 4096])
+  1%|          | 100/8910 [00:12<16:58,  8.65it/s]torch.Size([1, 576, 4096])
+  1%|          | 101/8910 [00:12<17:10,  8.54it/s]torch.Size([1, 576, 4096])
+  1%|          | 102/8910 [00:12<17:09,  8.56it/s]torch.Size([1, 576, 4096])
+  1%|          | 103/8910 [00:13<17:06,  8.58it/s]torch.Size([1, 576, 4096])
+  1%|          | 104/8910 [00:13<17:03,  8.60it/s]torch.Size([1, 576, 4096])
+  1%|          | 105/8910 [00:13<17:02,  8.61it/s]torch.Size([1, 576, 4096])
+  1%|          | 106/8910 [00:13<17:06,  8.58it/s]torch.Size([1, 576, 4096])
+  1%|          | 107/8910 [00:13<17:08,  8.56it/s]torch.Size([1, 576, 4096])
+  1%|          | 108/8910 [00:13<17:06,  8.58it/s]torch.Size([1, 576, 4096])
+  1%|          | 109/8910 [00:13<17:19,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 110/8910 [00:13<17:19,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|          | 111/8910 [00:13<17:33,  8.35it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 112/8910 [00:14<17:22,  8.44it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 113/8910 [00:14<17:14,  8.50it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 114/8910 [00:14<17:08,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 115/8910 [00:14<17:04,  8.58it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 116/8910 [00:14<17:18,  8.47it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 117/8910 [00:14<17:10,  8.53it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 118/8910 [00:14<17:05,  8.57it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 119/8910 [00:14<17:27,  8.40it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 120/8910 [00:15<17:19,  8.46it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 121/8910 [00:15<17:14,  8.50it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 122/8910 [00:15<17:08,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 123/8910 [00:15<17:04,  8.57it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 124/8910 [00:15<16:59,  8.62it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 125/8910 [00:15<16:55,  8.65it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 126/8910 [00:15<17:11,  8.52it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 127/8910 [00:15<17:06,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 128/8910 [00:15<17:04,  8.57it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 129/8910 [00:16<17:06,  8.55it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 130/8910 [00:16<16:59,  8.61it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 131/8910 [00:16<16:55,  8.65it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 132/8910 [00:16<16:53,  8.66it/s]torch.Size([1, 576, 4096])
+  1%|▏         | 133/8910 [00:16<16:54,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 134/8910 [00:16<16:50,  8.68it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 135/8910 [00:16<16:50,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 136/8910 [00:16<16:49,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 137/8910 [00:16<16:51,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 138/8910 [00:17<16:50,  8.68it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 139/8910 [00:17<16:52,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 140/8910 [00:17<16:50,  8.68it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 141/8910 [00:17<16:48,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 142/8910 [00:17<16:47,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 143/8910 [00:17<16:46,  8.71it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 144/8910 [00:17<16:53,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 145/8910 [00:17<16:55,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 146/8910 [00:18<16:56,  8.62it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 147/8910 [00:18<17:00,  8.59it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 148/8910 [00:18<17:18,  8.44it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 149/8910 [00:18<17:36,  8.29it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 150/8910 [00:18<17:29,  8.35it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 151/8910 [00:18<17:32,  8.32it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 152/8910 [00:18<17:23,  8.39it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 153/8910 [00:18<17:19,  8.43it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 154/8910 [00:18<17:12,  8.48it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 155/8910 [00:19<17:04,  8.54it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 156/8910 [00:19<17:03,  8.55it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 157/8910 [00:19<16:58,  8.59it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 158/8910 [00:19<16:53,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 159/8910 [00:19<16:51,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 160/8910 [00:19<16:47,  8.68it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 161/8910 [00:19<16:49,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 162/8910 [00:19<16:45,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 163/8910 [00:20<16:46,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 164/8910 [00:20<16:44,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 165/8910 [00:20<16:44,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 166/8910 [00:20<16:44,  8.71it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 167/8910 [00:20<16:53,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 168/8910 [00:20<16:52,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 169/8910 [00:20<16:58,  8.58it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 170/8910 [00:20<16:56,  8.60it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 171/8910 [00:20<16:54,  8.61it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 172/8910 [00:21<16:51,  8.64it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 173/8910 [00:21<16:50,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 174/8910 [00:21<16:47,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 175/8910 [00:21<16:47,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 176/8910 [00:21<16:45,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 177/8910 [00:21<16:47,  8.66it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 178/8910 [00:21<16:50,  8.64it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 179/8910 [00:21<16:49,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 180/8910 [00:21<17:03,  8.53it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 181/8910 [00:22<16:57,  8.58it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 182/8910 [00:22<16:56,  8.59it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 183/8910 [00:22<16:54,  8.60it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 184/8910 [00:22<16:48,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 185/8910 [00:22<16:50,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 186/8910 [00:22<16:50,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 187/8910 [00:22<16:49,  8.64it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 188/8910 [00:22<16:47,  8.66it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 189/8910 [00:23<16:50,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 190/8910 [00:23<16:45,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 191/8910 [00:23<16:43,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 192/8910 [00:23<16:42,  8.69it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 193/8910 [00:23<16:46,  8.66it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 194/8910 [00:23<16:45,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 195/8910 [00:23<16:44,  8.67it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 196/8910 [00:23<16:41,  8.70it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 197/8910 [00:23<16:48,  8.64it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 198/8910 [00:24<16:46,  8.66it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 199/8910 [00:24<17:04,  8.50it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 200/8910 [00:24<16:57,  8.56it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 201/8910 [00:24<17:15,  8.41it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 202/8910 [00:24<17:23,  8.35it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 203/8910 [00:24<17:14,  8.42it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 204/8910 [00:24<17:04,  8.50it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 205/8910 [00:24<17:04,  8.49it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 206/8910 [00:25<16:57,  8.55it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 207/8910 [00:25<16:59,  8.54it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 208/8910 [00:25<17:04,  8.50it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 209/8910 [00:25<17:24,  8.33it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 210/8910 [00:25<17:12,  8.43it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 211/8910 [00:25<17:08,  8.46it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 212/8910 [00:25<17:02,  8.50it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 213/8910 [00:25<17:03,  8.50it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 214/8910 [00:25<16:56,  8.56it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 215/8910 [00:26<16:50,  8.60it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 216/8910 [00:26<16:45,  8.65it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 217/8910 [00:26<16:52,  8.59it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 218/8910 [00:26<16:47,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 219/8910 [00:26<16:50,  8.60it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 220/8910 [00:26<16:48,  8.62it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 221/8910 [00:26<16:46,  8.63it/s]torch.Size([1, 576, 4096])
+  2%|▏         | 222/8910 [00:26<16:45,  8.64it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 223/8910 [00:26<16:48,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 224/8910 [00:27<16:50,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 225/8910 [00:27<16:57,  8.54it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 226/8910 [00:27<16:54,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 227/8910 [00:27<16:49,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 228/8910 [00:27<16:45,  8.63it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 229/8910 [00:27<16:45,  8.64it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 230/8910 [00:27<16:43,  8.65it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 231/8910 [00:27<17:01,  8.49it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 232/8910 [00:28<16:57,  8.53it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 233/8910 [00:28<16:53,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 234/8910 [00:28<17:09,  8.42it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 235/8910 [00:28<17:03,  8.48it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 236/8910 [00:28<16:58,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 237/8910 [00:28<16:52,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 238/8910 [00:28<16:47,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 239/8910 [00:28<16:58,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 240/8910 [00:28<16:57,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 241/8910 [00:29<16:56,  8.53it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 242/8910 [00:29<16:51,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 243/8910 [00:29<16:51,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 244/8910 [00:29<16:49,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 245/8910 [00:29<17:06,  8.44it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 246/8910 [00:29<17:02,  8.47it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 247/8910 [00:29<17:01,  8.48it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 248/8910 [00:29<17:03,  8.47it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 249/8910 [00:30<17:03,  8.46it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 250/8910 [00:30<16:58,  8.50it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 251/8910 [00:30<16:56,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 252/8910 [00:30<16:50,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 253/8910 [00:30<17:06,  8.43it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 254/8910 [00:30<16:57,  8.51it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 255/8910 [00:30<16:55,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 256/8910 [00:30<16:54,  8.53it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 257/8910 [00:30<16:56,  8.51it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 258/8910 [00:31<16:51,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 259/8910 [00:31<16:49,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 260/8910 [00:31<16:45,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 261/8910 [00:31<16:45,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 262/8910 [00:31<16:44,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 263/8910 [00:31<16:45,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 264/8910 [00:31<16:43,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 265/8910 [00:31<16:46,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 266/8910 [00:32<16:42,  8.62it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 267/8910 [00:32<16:45,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 268/8910 [00:32<16:44,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 269/8910 [00:32<16:44,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 270/8910 [00:32<16:38,  8.65it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 271/8910 [00:32<16:40,  8.64it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 272/8910 [00:32<16:41,  8.63it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 273/8910 [00:32<17:00,  8.46it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 274/8910 [00:32<16:55,  8.51it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 275/8910 [00:33<16:50,  8.54it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 276/8910 [00:33<16:46,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 277/8910 [00:33<16:48,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 278/8910 [00:33<16:46,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 279/8910 [00:33<16:44,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 280/8910 [00:33<16:44,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 281/8910 [00:33<16:45,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 282/8910 [00:33<16:42,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 283/8910 [00:34<16:46,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 284/8910 [00:34<16:43,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 285/8910 [00:34<16:44,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 286/8910 [00:34<16:43,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 287/8910 [00:34<16:45,  8.58it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 288/8910 [00:34<16:48,  8.55it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 289/8910 [00:34<16:57,  8.47it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 290/8910 [00:34<16:51,  8.52it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 291/8910 [00:34<16:47,  8.56it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 292/8910 [00:35<16:44,  8.58it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 293/8910 [00:35<16:41,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 294/8910 [00:35<16:40,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 295/8910 [00:35<16:40,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 296/8910 [00:35<16:41,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 297/8910 [00:35<16:41,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 298/8910 [00:35<16:41,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 299/8910 [00:35<16:45,  8.57it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 300/8910 [00:35<16:40,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 301/8910 [00:36<16:42,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 302/8910 [00:36<16:42,  8.59it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 303/8910 [00:36<16:39,  8.61it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 304/8910 [00:36<16:42,  8.58it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 305/8910 [00:36<16:54,  8.48it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 306/8910 [00:36<16:48,  8.53it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 307/8910 [00:36<16:46,  8.55it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 308/8910 [00:36<16:39,  8.60it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 309/8910 [00:37<16:36,  8.63it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 310/8910 [00:37<16:34,  8.65it/s]torch.Size([1, 576, 4096])
+  3%|▎         | 311/8910 [00:37<16:34,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 312/8910 [00:37<16:41,  8.59it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 313/8910 [00:37<16:49,  8.51it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 314/8910 [00:37<16:46,  8.54it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 315/8910 [00:37<16:45,  8.55it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 316/8910 [00:37<16:40,  8.59it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 317/8910 [00:37<16:40,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 318/8910 [00:38<16:36,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 319/8910 [00:38<16:37,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 320/8910 [00:38<16:47,  8.53it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 321/8910 [00:38<16:46,  8.54it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 322/8910 [00:38<16:45,  8.54it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 323/8910 [00:38<16:42,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 324/8910 [00:38<16:40,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 325/8910 [00:38<16:56,  8.44it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 326/8910 [00:39<16:53,  8.47it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 327/8910 [00:39<16:47,  8.52it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 328/8910 [00:39<16:42,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 329/8910 [00:39<16:40,  8.57it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 330/8910 [00:39<16:36,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 331/8910 [00:39<16:57,  8.43it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 332/8910 [00:39<16:50,  8.49it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 333/8910 [00:39<16:45,  8.53it/s]torch.Size([1, 576, 4096])
+  4%|▎         | 334/8910 [00:39<16:42,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 335/8910 [00:40<16:39,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 336/8910 [00:40<16:34,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 337/8910 [00:40<16:34,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 338/8910 [00:40<16:32,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 339/8910 [00:40<16:29,  8.66it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 340/8910 [00:40<16:52,  8.46it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 341/8910 [00:40<16:46,  8.52it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 342/8910 [00:40<16:38,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 343/8910 [00:41<16:36,  8.59it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 344/8910 [00:41<16:50,  8.47it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 345/8910 [00:41<16:48,  8.49it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 346/8910 [00:41<16:40,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 347/8910 [00:41<16:36,  8.59it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 348/8910 [00:41<16:31,  8.63it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 349/8910 [00:41<16:32,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 350/8910 [00:41<16:31,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 351/8910 [00:41<16:32,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 352/8910 [00:42<16:28,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 353/8910 [00:42<16:28,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 354/8910 [00:42<16:44,  8.52it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 355/8910 [00:42<16:40,  8.55it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 356/8910 [00:42<16:42,  8.53it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 357/8910 [00:42<16:38,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 358/8910 [00:42<16:37,  8.57it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 359/8910 [00:42<16:54,  8.43it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 360/8910 [00:42<16:45,  8.50it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 361/8910 [00:43<16:40,  8.54it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 362/8910 [00:43<16:36,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 363/8910 [00:43<16:35,  8.59it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 364/8910 [00:43<16:32,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 365/8910 [00:43<16:31,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 366/8910 [00:43<16:28,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 367/8910 [00:43<16:28,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 368/8910 [00:43<16:30,  8.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 369/8910 [00:44<16:28,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 370/8910 [00:44<16:35,  8.58it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 371/8910 [00:44<16:37,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 372/8910 [00:44<16:31,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 373/8910 [00:44<16:32,  8.60it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 374/8910 [00:44<20:33,  6.92it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 375/8910 [00:44<19:41,  7.22it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 376/8910 [00:44<18:40,  7.62it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 377/8910 [00:45<17:59,  7.91it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 378/8910 [00:45<17:29,  8.13it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 379/8910 [00:45<17:09,  8.29it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 380/8910 [00:45<16:56,  8.39it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 381/8910 [00:45<16:50,  8.44it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 382/8910 [00:45<16:41,  8.51it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 383/8910 [00:45<16:36,  8.56it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 384/8910 [00:45<16:30,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 385/8910 [00:45<16:29,  8.61it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 386/8910 [00:46<16:25,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 387/8910 [00:46<16:25,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 388/8910 [00:46<16:23,  8.66it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 389/8910 [00:46<16:25,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 390/8910 [00:46<16:21,  8.68it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 391/8910 [00:46<16:21,  8.68it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 392/8910 [00:46<16:20,  8.69it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 393/8910 [00:46<16:21,  8.68it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 394/8910 [00:47<16:21,  8.68it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 395/8910 [00:47<16:24,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 396/8910 [00:47<16:21,  8.67it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 397/8910 [00:47<16:26,  8.63it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 398/8910 [00:47<16:23,  8.65it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 399/8910 [00:47<16:25,  8.64it/s]torch.Size([1, 576, 4096])
+  4%|▍         | 400/8910 [00:47<16:22,  8.66it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 401/8910 [00:47<16:24,  8.64it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 402/8910 [00:47<16:21,  8.67it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 403/8910 [00:48<16:19,  8.68it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 404/8910 [00:48<16:19,  8.69it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 405/8910 [00:48<16:21,  8.67it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 406/8910 [00:48<16:20,  8.68it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 407/8910 [00:48<16:20,  8.67it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 408/8910 [00:48<16:21,  8.66it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 409/8910 [00:48<16:41,  8.49it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 410/8910 [00:48<16:41,  8.49it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 411/8910 [00:48<16:35,  8.54it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 412/8910 [00:49<16:28,  8.59it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 413/8910 [00:49<16:28,  8.60it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 414/8910 [00:49<16:23,  8.64it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 415/8910 [00:49<16:20,  8.66it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 416/8910 [00:49<16:19,  8.68it/s]torch.Size([1, 576, 4096])
+  5%|▍         | 417/8910 [00:49<16:20,  8.66it/s]torch.Size([1, 576, 4096])
+Terminated
+Category: random, # samples: 0
+Traceback (most recent call last):
+  File "/home/akane38/LLaVA/llava/eval/eval_pope.py", line 80, in <module>
+    eval_pope(cur_answers, os.path.join(args.annotation_dir, file))
+  File "/home/akane38/LLaVA/llava/eval/eval_pope.py", line 37, in eval_pope
+    yes_ratio = pred_list.count(1) / len(pred_list)
+ZeroDivisionError: division by zero

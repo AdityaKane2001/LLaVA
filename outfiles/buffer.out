@@ -17,3 +17,5 @@ pwd
 /data/data0/akane/dupl-glbltok-scratch-grllava-v1.5-7b/checkpoints
 /data/data0/akane/noscaling-residual-grllava-pretrained-v1.5-7b/checkpoints
 /data/data0/akane/residual-grllava-pretrained-v1.5-7b/checkpoints
+/data/data1/akane/grllava-pretrained-v1.5-7b/checkpoints
+/data/data0/akane/static-residual-grllava-pretrained-v1.5-7b

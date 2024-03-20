@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SPLIT="mmbench_dev_en_20231003"
-CKPT="residual-grllava-pretrained-v1.5-7b"
+CKPT="static-residual-grllava-pretrained-v1.5-7b"
 
 python -m llava.eval.model_vqa_mmbench \
     --model-path /data/data0/akane/$CKPT/checkpoints \
