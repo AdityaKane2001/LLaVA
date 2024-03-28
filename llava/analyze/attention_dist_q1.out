@@ -1,0 +1,694 @@
+################## Prompt + Image + Question + Gen #############################
+
+#### Prompt: ` A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. USER: <image>
+What is odd about this image? ASSISTANT: `
+
+The odd aspect of this image is that a man is sitting on a clothesline attached to a yellow car, which is driving down a busy street. It is unusual to see someone sitting on a clothesline, especially while the car is in motion. This scene is not only unconventional but also potentially dangerous, as the man's position on the clothesline could pose a risk to his safety and the safety of others on the road.
+
+****** Layer 0
+Total attn of first token wrt gen tokens (avged per gen query) for layer 0: 0.0020060221354166667
+Total image attn by gen tokens (avged per gen query) for layer 0: 0.6018204159206815
+Total question text attn by gen tokens (avged per gen query) for layer 0: 0.03764049212137858
+Total prompt text attn by gen tokens (avged per gen query) for layer 0: 0.05759548611111111
+Total gen text attn by gen tokens (avged per gen query) for layer 0: 0.2709315405951606
+
+****** Layer 1
+Total attn of first token wrt gen tokens (avged per gen query) for layer 1: 0.006852213541666667
+Total image attn by gen tokens (avged per gen query) for layer 1: 0.2557687335544162
+Total question text attn by gen tokens (avged per gen query) for layer 1: 0.043782371944851343
+Total prompt text attn by gen tokens (avged per gen query) for layer 1: 0.16111111111111112
+Total gen text attn by gen tokens (avged per gen query) for layer 1: 0.441537348429362
+
+****** Layer 2
+Total attn of first token wrt gen tokens (avged per gen query) for layer 2: 0.3269097222222222
+Total image attn by gen tokens (avged per gen query) for layer 2: 0.050034056769476996
+Total question text attn by gen tokens (avged per gen query) for layer 2: 0.004192874828974406
+Total prompt text attn by gen tokens (avged per gen query) for layer 2: 0.5024305555555556
+Total gen text attn by gen tokens (avged per gen query) for layer 2: 0.11222706900702582
+
+****** Layer 3
+Total attn of first token wrt gen tokens (avged per gen query) for layer 3: 0.396875
+Total image attn by gen tokens (avged per gen query) for layer 3: 0.02220638593037923
+Total question text attn by gen tokens (avged per gen query) for layer 3: 0.004306948184967041
+Total prompt text attn by gen tokens (avged per gen query) for layer 3: 0.49201388888888886
+Total gen text attn by gen tokens (avged per gen query) for layer 3: 0.08208270072937011
+
+****** Layer 4
+Total attn of first token wrt gen tokens (avged per gen query) for layer 4: 0.39166666666666666
+Total image attn by gen tokens (avged per gen query) for layer 4: 0.02208434740702311
+Total question text attn by gen tokens (avged per gen query) for layer 4: 0.008430980973773532
+Total prompt text attn by gen tokens (avged per gen query) for layer 4: 0.4534722222222222
+Total gen text attn by gen tokens (avged per gen query) for layer 4: 0.11952759424845377
+
+****** Layer 5
+Total attn of first token wrt gen tokens (avged per gen query) for layer 5: 0.384375
+Total image attn by gen tokens (avged per gen query) for layer 5: 0.030278958214653862
+Total question text attn by gen tokens (avged per gen query) for layer 5: 0.008855605125427246
+Total prompt text attn by gen tokens (avged per gen query) for layer 5: 0.4114583333333333
+Total gen text attn by gen tokens (avged per gen query) for layer 5: 0.15698607762654623
+
+****** Layer 6
+Total attn of first token wrt gen tokens (avged per gen query) for layer 6: 0.39861111111111114
+Total image attn by gen tokens (avged per gen query) for layer 6: 0.031633332040574814
+Total question text attn by gen tokens (avged per gen query) for layer 6: 0.01696852578057183
+Total prompt text attn by gen tokens (avged per gen query) for layer 6: 0.4107638888888889
+Total gen text attn by gen tokens (avged per gen query) for layer 6: 0.13284246656629775
+
+****** Layer 7
+Total attn of first token wrt gen tokens (avged per gen query) for layer 7: 0.3909722222222222
+Total image attn by gen tokens (avged per gen query) for layer 7: 0.03378717369503445
+Total question text attn by gen tokens (avged per gen query) for layer 7: 0.013210867510901557
+Total prompt text attn by gen tokens (avged per gen query) for layer 7: 0.39166666666666666
+Total gen text attn by gen tokens (avged per gen query) for layer 7: 0.15893257988823783
+
+****** Layer 8
+Total attn of first token wrt gen tokens (avged per gen query) for layer 8: 0.3614583333333333
+Total image attn by gen tokens (avged per gen query) for layer 8: 0.041338814629448786
+Total question text attn by gen tokens (avged per gen query) for layer 8: 0.019213742680019803
+Total prompt text attn by gen tokens (avged per gen query) for layer 8: 0.3645833333333333
+Total gen text attn by gen tokens (avged per gen query) for layer 8: 0.1984310574001736
+
+****** Layer 9
+Total attn of first token wrt gen tokens (avged per gen query) for layer 9: 0.3482638888888889
+Total image attn by gen tokens (avged per gen query) for layer 9: 0.04938607745700412
+Total question text attn by gen tokens (avged per gen query) for layer 9: 0.01392307546403673
+Total prompt text attn by gen tokens (avged per gen query) for layer 9: 0.3296875
+Total gen text attn by gen tokens (avged per gen query) for layer 9: 0.2419457965426975
+
+****** Layer 10
+Total attn of first token wrt gen tokens (avged per gen query) for layer 10: 0.3104166666666667
+Total image attn by gen tokens (avged per gen query) for layer 10: 0.052620580461290145
+Total question text attn by gen tokens (avged per gen query) for layer 10: 0.018076497978634306
+Total prompt text attn by gen tokens (avged per gen query) for layer 10: 0.2887152777777778
+Total gen text attn by gen tokens (avged per gen query) for layer 10: 0.3007838779025608
+
+****** Layer 11
+Total attn of first token wrt gen tokens (avged per gen query) for layer 11: 0.33611111111111114
+Total image attn by gen tokens (avged per gen query) for layer 11: 0.06766157150268555
+Total question text attn by gen tokens (avged per gen query) for layer 11: 0.01765060822168986
+Total prompt text attn by gen tokens (avged per gen query) for layer 11: 0.30885416666666665
+Total gen text attn by gen tokens (avged per gen query) for layer 11: 0.24710928599039714
+
+****** Layer 12
+Total attn of first token wrt gen tokens (avged per gen query) for layer 12: 0.3173611111111111
+Total image attn by gen tokens (avged per gen query) for layer 12: 0.049049064848158096
+Total question text attn by gen tokens (avged per gen query) for layer 12: 0.01757907337612576
+Total prompt text attn by gen tokens (avged per gen query) for layer 12: 0.29010416666666666
+Total gen text attn by gen tokens (avged per gen query) for layer 12: 0.3021464453803168
+
+****** Layer 13
+Total attn of first token wrt gen tokens (avged per gen query) for layer 13: 0.3217013888888889
+Total image attn by gen tokens (avged per gen query) for layer 13: 0.05759809282090929
+Total question text attn by gen tokens (avged per gen query) for layer 13: 0.01601779328452216
+Total prompt text attn by gen tokens (avged per gen query) for layer 13: 0.29583333333333334
+Total gen text attn by gen tokens (avged per gen query) for layer 13: 0.27796192169189454
+
+****** Layer 14
+Total attn of first token wrt gen tokens (avged per gen query) for layer 14: 0.2795138888888889
+Total image attn by gen tokens (avged per gen query) for layer 14: 0.08552204767862956
+Total question text attn by gen tokens (avged per gen query) for layer 14: 0.021508856614430746
+Total prompt text attn by gen tokens (avged per gen query) for layer 14: 0.25972222222222224
+Total gen text attn by gen tokens (avged per gen query) for layer 14: 0.330457517835829
+
+****** Layer 15
+Total attn of first token wrt gen tokens (avged per gen query) for layer 15: 0.26545138888888886
+Total image attn by gen tokens (avged per gen query) for layer 15: 0.07064454820421007
+Total question text attn by gen tokens (avged per gen query) for layer 15: 0.01937195195092095
+Total prompt text attn by gen tokens (avged per gen query) for layer 15: 0.26145833333333335
+Total gen text attn by gen tokens (avged per gen query) for layer 15: 0.35399723052978516
+
+****** Layer 16
+Total attn of first token wrt gen tokens (avged per gen query) for layer 16: 0.28975694444444444
+Total image attn by gen tokens (avged per gen query) for layer 16: 0.07054893705579969
+Total question text attn by gen tokens (avged per gen query) for layer 16: 0.01911824941635132
+Total prompt text attn by gen tokens (avged per gen query) for layer 16: 0.2833333333333333
+Total gen text attn by gen tokens (avged per gen query) for layer 16: 0.31155912611219616
+
+****** Layer 17
+Total attn of first token wrt gen tokens (avged per gen query) for layer 17: 0.32795138888888886
+Total image attn by gen tokens (avged per gen query) for layer 17: 0.07345089382595486
+Total question text attn by gen tokens (avged per gen query) for layer 17: 0.013330413235558404
+Total prompt text attn by gen tokens (avged per gen query) for layer 17: 0.3362847222222222
+Total gen text attn by gen tokens (avged per gen query) for layer 17: 0.23389648861355253
+
+****** Layer 18
+Total attn of first token wrt gen tokens (avged per gen query) for layer 18: 0.3611111111111111
+Total image attn by gen tokens (avged per gen query) for layer 18: 0.051807996961805554
+Total question text attn by gen tokens (avged per gen query) for layer 18: 0.011463403701782227
+Total prompt text attn by gen tokens (avged per gen query) for layer 18: 0.3663194444444444
+Total gen text attn by gen tokens (avged per gen query) for layer 18: 0.19638733334011502
+
+****** Layer 19
+Total attn of first token wrt gen tokens (avged per gen query) for layer 19: 0.36666666666666664
+Total image attn by gen tokens (avged per gen query) for layer 19: 0.06471113628811306
+Total question text attn by gen tokens (avged per gen query) for layer 19: 0.007008408175574409
+Total prompt text attn by gen tokens (avged per gen query) for layer 19: 0.36736111111111114
+Total gen text attn by gen tokens (avged per gen query) for layer 19: 0.18143270280626084
+
+****** Layer 20
+Total attn of first token wrt gen tokens (avged per gen query) for layer 20: 0.3645833333333333
+Total image attn by gen tokens (avged per gen query) for layer 20: 0.08337450557284885
+Total question text attn by gen tokens (avged per gen query) for layer 20: 0.013956413004133436
+Total prompt text attn by gen tokens (avged per gen query) for layer 20: 0.36180555555555555
+Total gen text attn by gen tokens (avged per gen query) for layer 20: 0.15893723169962565
+
+****** Layer 21
+Total attn of first token wrt gen tokens (avged per gen query) for layer 21: 0.4059027777777778
+Total image attn by gen tokens (avged per gen query) for layer 21: 0.06831540001763238
+Total question text attn by gen tokens (avged per gen query) for layer 21: 0.0077504396438598635
+Total prompt text attn by gen tokens (avged per gen query) for layer 21: 0.3958333333333333
+Total gen text attn by gen tokens (avged per gen query) for layer 21: 0.11646767722235786
+
+****** Layer 22
+Total attn of first token wrt gen tokens (avged per gen query) for layer 22: 0.41180555555555554
+Total image attn by gen tokens (avged per gen query) for layer 22: 0.06667208671569824
+Total question text attn by gen tokens (avged per gen query) for layer 22: 0.00563297536638048
+Total prompt text attn by gen tokens (avged per gen query) for layer 22: 0.384375
+Total gen text attn by gen tokens (avged per gen query) for layer 22: 0.12493673960367839
+
+****** Layer 23
+Total attn of first token wrt gen tokens (avged per gen query) for layer 23: 0.4375
+Total image attn by gen tokens (avged per gen query) for layer 23: 0.04375033113691542
+Total question text attn by gen tokens (avged per gen query) for layer 23: 0.005587430132759942
+Total prompt text attn by gen tokens (avged per gen query) for layer 23: 0.3951388888888889
+Total gen text attn by gen tokens (avged per gen query) for layer 23: 0.11284234788682726
+
+****** Layer 24
+Total attn of first token wrt gen tokens (avged per gen query) for layer 24: 0.41180555555555554
+Total image attn by gen tokens (avged per gen query) for layer 24: 0.07684861289130317
+Total question text attn by gen tokens (avged per gen query) for layer 24: 0.006824441088570489
+Total prompt text attn by gen tokens (avged per gen query) for layer 24: 0.36527777777777776
+Total gen text attn by gen tokens (avged per gen query) for layer 24: 0.12161958482530381
+
+****** Layer 25
+Total attn of first token wrt gen tokens (avged per gen query) for layer 25: 0.47881944444444446
+Total image attn by gen tokens (avged per gen query) for layer 25: 0.035640030437045625
+Total question text attn by gen tokens (avged per gen query) for layer 25: 0.00318944255510966
+Total prompt text attn by gen tokens (avged per gen query) for layer 25: 0.41944444444444445
+Total gen text attn by gen tokens (avged per gen query) for layer 25: 0.0536885208553738
+
+****** Layer 26
+Total attn of first token wrt gen tokens (avged per gen query) for layer 26: 0.4270833333333333
+Total image attn by gen tokens (avged per gen query) for layer 26: 0.057569392522176105
+Total question text attn by gen tokens (avged per gen query) for layer 26: 0.006861060857772827
+Total prompt text attn by gen tokens (avged per gen query) for layer 26: 0.3659722222222222
+Total gen text attn by gen tokens (avged per gen query) for layer 26: 0.12943101459079318
+
+****** Layer 27
+Total attn of first token wrt gen tokens (avged per gen query) for layer 27: 0.48541666666666666
+Total image attn by gen tokens (avged per gen query) for layer 27: 0.018230431609683566
+Total question text attn by gen tokens (avged per gen query) for layer 27: 0.002143615484237671
+Total prompt text attn by gen tokens (avged per gen query) for layer 27: 0.39131944444444444
+Total gen text attn by gen tokens (avged per gen query) for layer 27: 0.09587920506795247
+
+****** Layer 28
+Total attn of first token wrt gen tokens (avged per gen query) for layer 28: 0.49409722222222224
+Total image attn by gen tokens (avged per gen query) for layer 28: 0.03065037727355957
+Total question text attn by gen tokens (avged per gen query) for layer 28: 0.003932007153828939
+Total prompt text attn by gen tokens (avged per gen query) for layer 28: 0.3684027777777778
+Total gen text attn by gen tokens (avged per gen query) for layer 28: 0.09123505486382379
+
+****** Layer 29
+Total attn of first token wrt gen tokens (avged per gen query) for layer 29: 0.48333333333333334
+Total image attn by gen tokens (avged per gen query) for layer 29: 0.058725028567843965
+Total question text attn by gen tokens (avged per gen query) for layer 29: 0.007088520129521688
+Total prompt text attn by gen tokens (avged per gen query) for layer 29: 0.33003472222222224
+Total gen text attn by gen tokens (avged per gen query) for layer 29: 0.1075227525499132
+
+****** Layer 30
+Total attn of first token wrt gen tokens (avged per gen query) for layer 30: 0.5263888888888889
+Total image attn by gen tokens (avged per gen query) for layer 30: 0.02733306090037028
+Total question text attn by gen tokens (avged per gen query) for layer 30: 0.004005716244379679
+Total prompt text attn by gen tokens (avged per gen query) for layer 30: 0.3284722222222222
+Total gen text attn by gen tokens (avged per gen query) for layer 30: 0.10287915335761176
+
+****** Layer 31
+Total attn of first token wrt gen tokens (avged per gen query) for layer 31: 0.32743055555555556
+Total image attn by gen tokens (avged per gen query) for layer 31: 0.09327959484524197
+Total question text attn by gen tokens (avged per gen query) for layer 31: 0.016104523340861
+Total prompt text attn by gen tokens (avged per gen query) for layer 31: 0.2876736111111111
+Total gen text attn by gen tokens (avged per gen query) for layer 31: 0.25289306640625
+
+################## (No Prompt) + Image + Question + Gen #############################
+
+
+#### Prompt: ` USER: <image> 
+ What is odd about this image? ASSISTANT: `
+
+The odd aspect of this image is that a man is sitting on a clothesline, which is an unconventional and unusual sight. Typically, clotheslines are used for hanging clothes to dry, and people do not sit on them. The man is also wearing a yellow shirt, which adds to the peculiar nature of the scene. The image also features a yellow taxi cab and a traffic light, which are more common elements in urban settings.
+
+****** Layer 0
+Total attn of first token wrt gen tokens (avged per gen query) for layer 0: 0.002147918051861702
+Total image attn by gen tokens (avged per gen query) for layer 0: 0.64176600030128
+Total question text attn by gen tokens (avged per gen query) for layer 0: 0.04101809034956262
+Total prompt text attn by gen tokens (avged per gen query) for layer 0: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 0: 0.287494273895913
+
+****** Layer 1
+Total attn of first token wrt gen tokens (avged per gen query) for layer 1: 0.00846181017287234
+Total image attn by gen tokens (avged per gen query) for layer 1: 0.295502338003605
+Total question text attn by gen tokens (avged per gen query) for layer 1: 0.0941152978450694
+Total prompt text attn by gen tokens (avged per gen query) for layer 1: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 1: 0.5459894626698596
+
+****** Layer 2
+Total attn of first token wrt gen tokens (avged per gen query) for layer 2: 0.7214095744680851
+Total image attn by gen tokens (avged per gen query) for layer 2: 0.0824136734008789
+Total question text attn by gen tokens (avged per gen query) for layer 2: 0.005467856818057121
+Total prompt text attn by gen tokens (avged per gen query) for layer 2: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 2: 0.18425148091417679
+
+****** Layer 3
+Total attn of first token wrt gen tokens (avged per gen query) for layer 3: 0.870345744680851
+Total image attn by gen tokens (avged per gen query) for layer 3: 0.025314594836945228
+Total question text attn by gen tokens (avged per gen query) for layer 3: 0.00350247101580843
+Total prompt text attn by gen tokens (avged per gen query) for layer 3: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 3: 0.09871530532836914
+
+****** Layer 4
+Total attn of first token wrt gen tokens (avged per gen query) for layer 4: 0.8404255319148937
+Total image attn by gen tokens (avged per gen query) for layer 4: 0.0201853741990759
+Total question text attn by gen tokens (avged per gen query) for layer 4: 0.007010514431811394
+Total prompt text attn by gen tokens (avged per gen query) for layer 4: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 4: 0.126578817976282
+
+****** Layer 5
+Total attn of first token wrt gen tokens (avged per gen query) for layer 5: 0.7832446808510638
+Total image attn by gen tokens (avged per gen query) for layer 5: 0.026001955600495032
+Total question text attn by gen tokens (avged per gen query) for layer 5: 0.00788708823792478
+Total prompt text attn by gen tokens (avged per gen query) for layer 5: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 5: 0.17073178798594374
+
+****** Layer 6
+Total attn of first token wrt gen tokens (avged per gen query) for layer 6: 0.8098404255319149
+Total image attn by gen tokens (avged per gen query) for layer 6: 0.02376871667009719
+Total question text attn by gen tokens (avged per gen query) for layer 6: 0.016943577756272987
+Total prompt text attn by gen tokens (avged per gen query) for layer 6: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 6: 0.13520067296129593
+
+****** Layer 7
+Total attn of first token wrt gen tokens (avged per gen query) for layer 7: 0.7845744680851063
+Total image attn by gen tokens (avged per gen query) for layer 7: 0.03143098252884885
+Total question text attn by gen tokens (avged per gen query) for layer 7: 0.014635278823527885
+Total prompt text attn by gen tokens (avged per gen query) for layer 7: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 7: 0.15635443748311795
+
+****** Layer 8
+Total attn of first token wrt gen tokens (avged per gen query) for layer 8: 0.706781914893617
+Total image attn by gen tokens (avged per gen query) for layer 8: 0.03865860370879478
+Total question text attn by gen tokens (avged per gen query) for layer 8: 0.020816503687107815
+Total prompt text attn by gen tokens (avged per gen query) for layer 8: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 8: 0.2144200954031437
+
+****** Layer 9
+Total attn of first token wrt gen tokens (avged per gen query) for layer 9: 0.659906914893617
+Total image attn by gen tokens (avged per gen query) for layer 9: 0.044917512447276015
+Total question text attn by gen tokens (avged per gen query) for layer 9: 0.015938692904533223
+Total prompt text attn by gen tokens (avged per gen query) for layer 9: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 9: 0.2605023485548953
+
+****** Layer 10
+Total attn of first token wrt gen tokens (avged per gen query) for layer 10: 0.5934175531914894
+Total image attn by gen tokens (avged per gen query) for layer 10: 0.0463685431378953
+Total question text attn by gen tokens (avged per gen query) for layer 10: 0.021193905079618415
+Total prompt text attn by gen tokens (avged per gen query) for layer 10: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 10: 0.30450504384142285
+
+****** Layer 11
+Total attn of first token wrt gen tokens (avged per gen query) for layer 11: 0.6356382978723404
+Total image attn by gen tokens (avged per gen query) for layer 11: 0.07149082549074863
+Total question text attn by gen tokens (avged per gen query) for layer 11: 0.02250003053786907
+Total prompt text attn by gen tokens (avged per gen query) for layer 11: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 11: 0.2444189558637903
+
+****** Layer 12
+Total attn of first token wrt gen tokens (avged per gen query) for layer 12: 0.6186835106382979
+Total image attn by gen tokens (avged per gen query) for layer 12: 0.04748200355692113
+Total question text attn by gen tokens (avged per gen query) for layer 12: 0.020199568981819963
+Total prompt text attn by gen tokens (avged per gen query) for layer 12: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 12: 0.2848426534774456
+
+****** Layer 13
+Total attn of first token wrt gen tokens (avged per gen query) for layer 13: 0.6040558510638298
+Total image attn by gen tokens (avged per gen query) for layer 13: 0.06543472979931121
+Total question text attn by gen tokens (avged per gen query) for layer 13: 0.0183134839889851
+Total prompt text attn by gen tokens (avged per gen query) for layer 13: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 13: 0.27574269315029715
+
+****** Layer 14
+Total attn of first token wrt gen tokens (avged per gen query) for layer 14: 0.542220744680851
+Total image attn by gen tokens (avged per gen query) for layer 14: 0.09601201402380112
+Total question text attn by gen tokens (avged per gen query) for layer 14: 0.026578081415054647
+Total prompt text attn by gen tokens (avged per gen query) for layer 14: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 14: 0.3087520396455805
+
+****** Layer 15
+Total attn of first token wrt gen tokens (avged per gen query) for layer 15: 0.5262632978723404
+Total image attn by gen tokens (avged per gen query) for layer 15: 0.0814767340396313
+Total question text attn by gen tokens (avged per gen query) for layer 15: 0.026185756034039435
+Total prompt text attn by gen tokens (avged per gen query) for layer 15: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 15: 0.33537061163719667
+
+****** Layer 16
+Total attn of first token wrt gen tokens (avged per gen query) for layer 16: 0.5678191489361702
+Total image attn by gen tokens (avged per gen query) for layer 16: 0.08017361925003376
+Total question text attn by gen tokens (avged per gen query) for layer 16: 0.0258605125102591
+Total prompt text attn by gen tokens (avged per gen query) for layer 16: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 16: 0.2975151995395092
+
+****** Layer 17
+Total attn of first token wrt gen tokens (avged per gen query) for layer 17: 0.6632313829787234
+Total image attn by gen tokens (avged per gen query) for layer 17: 0.0880458710041452
+Total question text attn by gen tokens (avged per gen query) for layer 17: 0.016908895462117296
+Total prompt text attn by gen tokens (avged per gen query) for layer 17: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 17: 0.21538835890749666
+
+****** Layer 18
+Total attn of first token wrt gen tokens (avged per gen query) for layer 18: 0.7240691489361702
+Total image attn by gen tokens (avged per gen query) for layer 18: 0.0648584467299441
+Total question text attn by gen tokens (avged per gen query) for layer 18: 0.013791056389504291
+Total prompt text attn by gen tokens (avged per gen query) for layer 18: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 18: 0.18386059619010764
+
+****** Layer 19
+Total attn of first token wrt gen tokens (avged per gen query) for layer 19: 0.7293882978723404
+Total image attn by gen tokens (avged per gen query) for layer 19: 0.0798737495503527
+Total question text attn by gen tokens (avged per gen query) for layer 19: 0.008731286576453676
+Total prompt text attn by gen tokens (avged per gen query) for layer 19: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 19: 0.16963752787163916
+
+****** Layer 20
+Total attn of first token wrt gen tokens (avged per gen query) for layer 20: 0.726063829787234
+Total image attn by gen tokens (avged per gen query) for layer 20: 0.10463139351378097
+Total question text attn by gen tokens (avged per gen query) for layer 20: 0.01572274908106378
+Total prompt text attn by gen tokens (avged per gen query) for layer 20: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 20: 0.13534107614070812
+
+****** Layer 21
+Total attn of first token wrt gen tokens (avged per gen query) for layer 21: 0.8038563829787234
+Total image attn by gen tokens (avged per gen query) for layer 21: 0.08276193699938186
+Total question text attn by gen tokens (avged per gen query) for layer 21: 0.010587041048293418
+Total prompt text attn by gen tokens (avged per gen query) for layer 21: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 21: 0.09667487854653216
+
+****** Layer 22
+Total attn of first token wrt gen tokens (avged per gen query) for layer 22: 0.7945478723404256
+Total image attn by gen tokens (avged per gen query) for layer 22: 0.08154389198790206
+Total question text attn by gen tokens (avged per gen query) for layer 22: 0.007236423644613713
+Total prompt text attn by gen tokens (avged per gen query) for layer 22: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 22: 0.11040524218944793
+
+****** Layer 23
+Total attn of first token wrt gen tokens (avged per gen query) for layer 23: 0.8371010638297872
+Total image attn by gen tokens (avged per gen query) for layer 23: 0.046380874958444146
+Total question text attn by gen tokens (avged per gen query) for layer 23: 0.006138779381488232
+Total prompt text attn by gen tokens (avged per gen query) for layer 23: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 23: 0.10599890161067882
+
+****** Layer 24
+Total attn of first token wrt gen tokens (avged per gen query) for layer 24: 0.7825797872340425
+Total image attn by gen tokens (avged per gen query) for layer 24: 0.09058372010575964
+Total question text attn by gen tokens (avged per gen query) for layer 24: 0.010143654777648602
+Total prompt text attn by gen tokens (avged per gen query) for layer 24: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 24: 0.09922186871792407
+
+****** Layer 25
+Total attn of first token wrt gen tokens (avged per gen query) for layer 25: 0.90625
+Total image attn by gen tokens (avged per gen query) for layer 25: 0.03543635632129426
+Total question text attn by gen tokens (avged per gen query) for layer 25: 0.004243024486176511
+Total prompt text attn by gen tokens (avged per gen query) for layer 25: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 25: 0.04702567546925646
+
+****** Layer 26
+Total attn of first token wrt gen tokens (avged per gen query) for layer 26: 0.7712765957446809
+Total image attn by gen tokens (avged per gen query) for layer 26: 0.07353960706832562
+Total question text attn by gen tokens (avged per gen query) for layer 26: 0.010586381592649095
+Total prompt text attn by gen tokens (avged per gen query) for layer 26: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 26: 0.13000404073836955
+
+****** Layer 27
+Total attn of first token wrt gen tokens (avged per gen query) for layer 27: 0.8789893617021277
+Total image attn by gen tokens (avged per gen query) for layer 27: 0.01849610501147331
+Total question text attn by gen tokens (avged per gen query) for layer 27: 0.0027106822805201755
+Total prompt text attn by gen tokens (avged per gen query) for layer 27: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 27: 0.09301598528598218
+
+****** Layer 28
+Total attn of first token wrt gen tokens (avged per gen query) for layer 28: 0.8670212765957447
+Total image attn by gen tokens (avged per gen query) for layer 28: 0.03199994817693183
+Total question text attn by gen tokens (avged per gen query) for layer 28: 0.005582316124692876
+Total prompt text attn by gen tokens (avged per gen query) for layer 28: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 28: 0.08379935710988146
+
+****** Layer 29
+Total attn of first token wrt gen tokens (avged per gen query) for layer 29: 0.8151595744680851
+Total image attn by gen tokens (avged per gen query) for layer 29: 0.06341504036112035
+Total question text attn by gen tokens (avged per gen query) for layer 29: 0.011687574234414608
+Total prompt text attn by gen tokens (avged per gen query) for layer 29: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 29: 0.09745695235881399
+
+****** Layer 30
+Total attn of first token wrt gen tokens (avged per gen query) for layer 30: 0.8603723404255319
+Total image attn by gen tokens (avged per gen query) for layer 30: 0.028633749231379083
+Total question text attn by gen tokens (avged per gen query) for layer 30: 0.005948322250487957
+Total prompt text attn by gen tokens (avged per gen query) for layer 30: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 30: 0.09441203259407206
+
+****** Layer 31
+Total attn of first token wrt gen tokens (avged per gen query) for layer 31: 0.5814494680851063
+Total image attn by gen tokens (avged per gen query) for layer 31: 0.11519833828540559
+Total question text attn by gen tokens (avged per gen query) for layer 31: 0.026952936294231008
+Total prompt text attn by gen tokens (avged per gen query) for layer 31: 0.0
+Total gen text attn by gen tokens (avged per gen query) for layer 31: 0.25359683341168343
+
+
+################## Image + Question + Prompt + Gen #############################
+
+#### Prompt: ` USER: <image> 
+ What is odd about this image? A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. ASSISTANT: `
+
+The odd aspect of this image is that a man is sitting on a clothesline, which is an unconventional and unusual place to sit. Typically, clotheslines are used for hanging clothes and are not meant for sitting or resting. The scene also includes a yellow taxi cab driving by, which adds to the overall peculiarity of the image.
+
+****** Layer 0
+Total attn of first token wrt gen tokens (avged per gen query) for layer 0: 0.002005912162162162
+Total image attn by gen tokens (avged per gen query) for layer 0: 0.5822823498700116
+Total question text attn by gen tokens (avged per gen query) for layer 0: 0.0332722857191756
+Total prompt text attn by gen tokens (avged per gen query) for layer 0: 0.12943412162162163
+Total gen text attn by gen tokens (avged per gen query) for layer 0: 0.2310563680287954
+
+****** Layer 1
+Total attn of first token wrt gen tokens (avged per gen query) for layer 1: 0.007264833192567568
+Total image attn by gen tokens (avged per gen query) for layer 1: 0.2453742929407068
+Total question text attn by gen tokens (avged per gen query) for layer 1: 0.06638956069946289
+Total prompt text attn by gen tokens (avged per gen query) for layer 1: 0.2590793918918919
+Total gen text attn by gen tokens (avged per gen query) for layer 1: 0.3865271130123654
+
+****** Layer 2
+Total attn of first token wrt gen tokens (avged per gen query) for layer 2: 0.7162162162162162
+Total image attn by gen tokens (avged per gen query) for layer 2: 0.08199870908582532
+Total question text attn by gen tokens (avged per gen query) for layer 2: 0.0035917702558878307
+Total prompt text attn by gen tokens (avged per gen query) for layer 2: 0.01340793918918919
+Total gen text attn by gen tokens (avged per gen query) for layer 2: 0.1774660316673485
+
+****** Layer 3
+Total attn of first token wrt gen tokens (avged per gen query) for layer 3: 0.8699324324324325
+Total image attn by gen tokens (avged per gen query) for layer 3: 0.023878585647892307
+Total question text attn by gen tokens (avged per gen query) for layer 3: 0.0028141567835936673
+Total prompt text attn by gen tokens (avged per gen query) for layer 3: 0.00803024704391892
+Total gen text attn by gen tokens (avged per gen query) for layer 3: 0.09295020232329497
+
+****** Layer 4
+Total attn of first token wrt gen tokens (avged per gen query) for layer 4: 0.8369932432432432
+Total image attn by gen tokens (avged per gen query) for layer 4: 0.019322636965158825
+Total question text attn by gen tokens (avged per gen query) for layer 4: 0.004481677268002485
+Total prompt text attn by gen tokens (avged per gen query) for layer 4: 0.00876926731418919
+Total gen text attn by gen tokens (avged per gen query) for layer 4: 0.1251277021459631
+
+****** Layer 5
+Total attn of first token wrt gen tokens (avged per gen query) for layer 5: 0.784206081081081
+Total image attn by gen tokens (avged per gen query) for layer 5: 0.022547850737700593
+Total question text attn by gen tokens (avged per gen query) for layer 5: 0.0049529276989601755
+Total prompt text attn by gen tokens (avged per gen query) for layer 5: 0.015321473817567568
+Total gen text attn by gen tokens (avged per gen query) for layer 5: 0.16559734859982053
+
+****** Layer 6
+Total attn of first token wrt gen tokens (avged per gen query) for layer 6: 0.7918074324324325
+Total image attn by gen tokens (avged per gen query) for layer 6: 0.020551965043351456
+Total question text attn by gen tokens (avged per gen query) for layer 6: 0.01680891094981013
+Total prompt text attn by gen tokens (avged per gen query) for layer 6: 0.031118032094594593
+Total gen text attn by gen tokens (avged per gen query) for layer 6: 0.13437487628008868
+
+****** Layer 7
+Total attn of first token wrt gen tokens (avged per gen query) for layer 7: 0.7723817567567568
+Total image attn by gen tokens (avged per gen query) for layer 7: 0.028424565856521193
+Total question text attn by gen tokens (avged per gen query) for layer 7: 0.014048460367563608
+Total prompt text attn by gen tokens (avged per gen query) for layer 7: 0.02544341216216216
+Total gen text attn by gen tokens (avged per gen query) for layer 7: 0.15218373891469594
+
+****** Layer 8
+Total attn of first token wrt gen tokens (avged per gen query) for layer 8: 0.7027027027027027
+Total image attn by gen tokens (avged per gen query) for layer 8: 0.03635581764014992
+Total question text attn by gen tokens (avged per gen query) for layer 8: 0.020608901977539062
+Total prompt text attn by gen tokens (avged per gen query) for layer 8: 0.029903927364864864
+Total gen text attn by gen tokens (avged per gen query) for layer 8: 0.19841847548613678
+
+****** Layer 9
+Total attn of first token wrt gen tokens (avged per gen query) for layer 9: 0.6583614864864865
+Total image attn by gen tokens (avged per gen query) for layer 9: 0.043068367081719475
+Total question text attn by gen tokens (avged per gen query) for layer 9: 0.01531884476945207
+Total prompt text attn by gen tokens (avged per gen query) for layer 9: 0.03447001689189189
+Total gen text attn by gen tokens (avged per gen query) for layer 9: 0.23930059896933065
+
+****** Layer 10
+Total attn of first token wrt gen tokens (avged per gen query) for layer 10: 0.5857263513513513
+Total image attn by gen tokens (avged per gen query) for layer 10: 0.04551115551510373
+Total question text attn by gen tokens (avged per gen query) for layer 10: 0.019847616956040665
+Total prompt text attn by gen tokens (avged per gen query) for layer 10: 0.0404613597972973
+Total gen text attn by gen tokens (avged per gen query) for layer 10: 0.2901451523239548
+
+****** Layer 11
+Total attn of first token wrt gen tokens (avged per gen query) for layer 11: 0.613597972972973
+Total image attn by gen tokens (avged per gen query) for layer 11: 0.07237077403712917
+Total question text attn by gen tokens (avged per gen query) for layer 11: 0.024032560554710595
+Total prompt text attn by gen tokens (avged per gen query) for layer 11: 0.040408572635135136
+Total gen text attn by gen tokens (avged per gen query) for layer 11: 0.2346190375250739
+
+****** Layer 12
+Total attn of first token wrt gen tokens (avged per gen query) for layer 12: 0.5945945945945946
+Total image attn by gen tokens (avged per gen query) for layer 12: 0.04963013288137075
+Total question text attn by gen tokens (avged per gen query) for layer 12: 0.021753440032134187
+Total prompt text attn by gen tokens (avged per gen query) for layer 12: 0.040302998310810814
+Total gen text attn by gen tokens (avged per gen query) for layer 12: 0.27818904051909576
+
+****** Layer 13
+Total attn of first token wrt gen tokens (avged per gen query) for layer 13: 0.575168918918919
+Total image attn by gen tokens (avged per gen query) for layer 13: 0.06558597410047376
+Total question text attn by gen tokens (avged per gen query) for layer 13: 0.018582234511504304
+Total prompt text attn by gen tokens (avged per gen query) for layer 13: 0.045291385135135136
+Total gen text attn by gen tokens (avged per gen query) for layer 13: 0.26972030948948217
+
+****** Layer 14
+Total attn of first token wrt gen tokens (avged per gen query) for layer 14: 0.5152027027027027
+Total image attn by gen tokens (avged per gen query) for layer 14: 0.0931418650859111
+Total question text attn by gen tokens (avged per gen query) for layer 14: 0.026739858292244578
+Total prompt text attn by gen tokens (avged per gen query) for layer 14: 0.052549619932432436
+Total gen text attn by gen tokens (avged per gen query) for layer 14: 0.29968223056277715
+
+****** Layer 15
+Total attn of first token wrt gen tokens (avged per gen query) for layer 15: 0.5025337837837838
+Total image attn by gen tokens (avged per gen query) for layer 15: 0.07879108996004672
+Total question text attn by gen tokens (avged per gen query) for layer 15: 0.024763029974860115
+Total prompt text attn by gen tokens (avged per gen query) for layer 15: 0.05107157939189189
+Total gen text attn by gen tokens (avged per gen query) for layer 15: 0.32272081117372253
+
+****** Layer 16
+Total attn of first token wrt gen tokens (avged per gen query) for layer 16: 0.5481418918918919
+Total image attn by gen tokens (avged per gen query) for layer 16: 0.0753786563873291
+Total question text attn by gen tokens (avged per gen query) for layer 16: 0.026012860439919138
+Total prompt text attn by gen tokens (avged per gen query) for layer 16: 0.04415646114864865
+Total gen text attn by gen tokens (avged per gen query) for layer 16: 0.288675746402225
+
+****** Layer 17
+Total attn of first token wrt gen tokens (avged per gen query) for layer 17: 0.6152871621621622
+Total image attn by gen tokens (avged per gen query) for layer 17: 0.08183900085655418
+Total question text attn by gen tokens (avged per gen query) for layer 17: 0.017145005432335107
+Total prompt text attn by gen tokens (avged per gen query) for layer 17: 0.06239442567567568
+Total gen text attn by gen tokens (avged per gen query) for layer 17: 0.20995761252738335
+
+****** Layer 18
+Total attn of first token wrt gen tokens (avged per gen query) for layer 18: 0.7010135135135135
+Total image attn by gen tokens (avged per gen query) for layer 18: 0.06095222524694494
+Total question text attn by gen tokens (avged per gen query) for layer 18: 0.012468718999140972
+Total prompt text attn by gen tokens (avged per gen query) for layer 18: 0.03663429054054054
+Total gen text attn by gen tokens (avged per gen query) for layer 18: 0.17885794510712494
+
+****** Layer 19
+Total attn of first token wrt gen tokens (avged per gen query) for layer 19: 0.6925675675675675
+Total image attn by gen tokens (avged per gen query) for layer 19: 0.07230446789715742
+Total question text attn by gen tokens (avged per gen query) for layer 19: 0.008395833743585122
+Total prompt text attn by gen tokens (avged per gen query) for layer 19: 0.05054370777027027
+Total gen text attn by gen tokens (avged per gen query) for layer 19: 0.1675319413881044
+
+****** Layer 20
+Total attn of first token wrt gen tokens (avged per gen query) for layer 20: 0.7014358108108109
+Total image attn by gen tokens (avged per gen query) for layer 20: 0.08849080833228859
+Total question text attn by gen tokens (avged per gen query) for layer 20: 0.014390781119063095
+Total prompt text attn by gen tokens (avged per gen query) for layer 20: 0.04782516891891892
+Total gen text attn by gen tokens (avged per gen query) for layer 20: 0.1363603231069204
+
+****** Layer 21
+Total attn of first token wrt gen tokens (avged per gen query) for layer 21: 0.7787162162162162
+Total image attn by gen tokens (avged per gen query) for layer 21: 0.07365315669291728
+Total question text attn by gen tokens (avged per gen query) for layer 21: 0.009226794983889605
+Total prompt text attn by gen tokens (avged per gen query) for layer 21: 0.03721494932432432
+Total gen text attn by gen tokens (avged per gen query) for layer 21: 0.09677279962075723
+
+****** Layer 22
+Total attn of first token wrt gen tokens (avged per gen query) for layer 22: 0.7668918918918919
+Total image attn by gen tokens (avged per gen query) for layer 22: 0.0725753758404706
+Total question text attn by gen tokens (avged per gen query) for layer 22: 0.006895776536013629
+Total prompt text attn by gen tokens (avged per gen query) for layer 22: 0.040223817567567564
+Total gen text attn by gen tokens (avged per gen query) for layer 22: 0.10861467670749973
+
+****** Layer 23
+Total attn of first token wrt gen tokens (avged per gen query) for layer 23: 0.8057432432432432
+Total image attn by gen tokens (avged per gen query) for layer 23: 0.04275885788170067
+Total question text attn by gen tokens (avged per gen query) for layer 23: 0.0059029395515854295
+Total prompt text attn by gen tokens (avged per gen query) for layer 23: 0.03755806587837838
+Total gen text attn by gen tokens (avged per gen query) for layer 23: 0.10512232136082005
+
+****** Layer 24
+Total attn of first token wrt gen tokens (avged per gen query) for layer 24: 0.7605574324324325
+Total image attn by gen tokens (avged per gen query) for layer 24: 0.07960075945467562
+Total question text attn by gen tokens (avged per gen query) for layer 24: 0.00922088445843877
+Total prompt text attn by gen tokens (avged per gen query) for layer 24: 0.042361697635135136
+Total gen text attn by gen tokens (avged per gen query) for layer 24: 0.09810514707823058
+
+****** Layer 25
+Total attn of first token wrt gen tokens (avged per gen query) for layer 25: 0.8699324324324325
+Total image attn by gen tokens (avged per gen query) for layer 25: 0.034984092454652525
+Total question text attn by gen tokens (avged per gen query) for layer 25: 0.004035687929875142
+Total prompt text attn by gen tokens (avged per gen query) for layer 25: 0.03724134290540541
+Total gen text attn by gen tokens (avged per gen query) for layer 25: 0.046575652586447226
+
+****** Layer 26
+Total attn of first token wrt gen tokens (avged per gen query) for layer 26: 0.7576013513513513
+Total image attn by gen tokens (avged per gen query) for layer 26: 0.06407184214205355
+Total question text attn by gen tokens (avged per gen query) for layer 26: 0.008466506326520766
+Total prompt text attn by gen tokens (avged per gen query) for layer 26: 0.04484269425675676
+Total gen text attn by gen tokens (avged per gen query) for layer 26: 0.11481723269900761
+
+****** Layer 27
+Total attn of first token wrt gen tokens (avged per gen query) for layer 27: 0.8424831081081081
+Total image attn by gen tokens (avged per gen query) for layer 27: 0.018778546436412913
+Total question text attn by gen tokens (avged per gen query) for layer 27: 0.0025351957694904224
+Total prompt text attn by gen tokens (avged per gen query) for layer 27: 0.03491870777027027
+Total gen text attn by gen tokens (avged per gen query) for layer 27: 0.09459436906350625
+
+****** Layer 28
+Total attn of first token wrt gen tokens (avged per gen query) for layer 28: 0.8268581081081081
+Total image attn by gen tokens (avged per gen query) for layer 28: 0.030509123931059968
+Total question text attn by gen tokens (avged per gen query) for layer 28: 0.0053081069443676925
+Total prompt text attn by gen tokens (avged per gen query) for layer 28: 0.04489548141891892
+Total gen text attn by gen tokens (avged per gen query) for layer 28: 0.08498780791823929
+
+****** Layer 29
+Total attn of first token wrt gen tokens (avged per gen query) for layer 29: 0.7766047297297297
+Total image attn by gen tokens (avged per gen query) for layer 29: 0.06087143356735642
+Total question text attn by gen tokens (avged per gen query) for layer 29: 0.010950628970120405
+Total prompt text attn by gen tokens (avged per gen query) for layer 29: 0.04750844594594594
+Total gen text attn by gen tokens (avged per gen query) for layer 29: 0.09373965134491792
+
+****** Layer 30
+Total attn of first token wrt gen tokens (avged per gen query) for layer 30: 0.808277027027027
+Total image attn by gen tokens (avged per gen query) for layer 30: 0.028250520293777052
+Total question text attn by gen tokens (avged per gen query) for layer 30: 0.005858775731679556
+Total prompt text attn by gen tokens (avged per gen query) for layer 30: 0.052153716216216214
+Total gen text attn by gen tokens (avged per gen query) for layer 30: 0.09637420886271708
+
+****** Layer 31
+Total attn of first token wrt gen tokens (avged per gen query) for layer 31: 0.4379222972972973
+Total image attn by gen tokens (avged per gen query) for layer 31: 0.09427551321081214
+Total question text attn by gen tokens (avged per gen query) for layer 31: 0.019732128929447482
+Total prompt text attn by gen tokens (avged per gen query) for layer 31: 0.18517736486486486
+Total gen text attn by gen tokens (avged per gen query) for layer 31: 0.24095847155596758

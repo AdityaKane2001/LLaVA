@@ -114,9 +114,10 @@ def main(args):
     }
     
     MODEL = checkpoint2name[args.model_path] # one of "image", "video"
-    EXPS = ["man_ironing_wrong_question" for _ in range(2)] # experiment description
+    EXPS = [args.exp_name for _ in range(2)] # experiment description
     # Model
     disable_torch_init()    
+    ans = list()
 
     for idx, query in enumerate([args.query_1, args.query_2]):
         print(f"########### {query}")
@@ -165,6 +166,8 @@ def main(args):
             args.conv_mode = conv_mode
 
         conv = conv_templates[args.conv_mode].copy()
+        # print(conv)
+        print(tokenizer(conv.system, return_tensors='pt').input_ids.shape)
         conv.append_message(conv.roles[0], qs)
         conv.append_message(conv.roles[1], None)
         prompt = conv.get_prompt()
@@ -216,7 +219,7 @@ def main(args):
         
         outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
         print(outputs)
-        
+        ans.append(outputs)
         plot_attn_vis(MODEL, EXPS[idx], q=query, ans=outputs, has_modality=True)
         
         ModalityBuffer.reset()
@@ -226,7 +229,7 @@ def main(args):
         del hook_cache
         
     image_sims, text_sims = compute_token_sims(MODEL, EXP1=EXPS[0], EXP2=EXPS[1])
-    print(f"Layerwise (img, text) similarities between the queries: '{args.query_1}' and '{args.query_2}'")
+    print(f"Layerwise (img, text) similarities between the queries: \n '{args.query_1}' and '{args.query_2}' \n with answers \n '{ans[0]}' and '{ans[1]}'")
     for idx, sim in enumerate(zip(image_sims, text_sims)):
         print(f"\t Layer {idx}: {sim}")    
     
@@ -244,7 +247,8 @@ if __name__ == "__main__":
     parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.5-7b")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-file", type=str, default="/home/akane38/LLaVA/llava/serve/examples/extreme_ironing.jpg")
-    parser.add_argument("--query-1", type=str, default="What is the capital of France?") # What is odd about this image?
+    parser.add_argument("--exp-name", type=str, default="man-ironing-debug") # What is odd about this image?
+    parser.add_argument("--query-1", type=str, default="What is the capital of the state of Maharashtra?") # What is odd about this image?
     parser.add_argument("--query-2", type=str, default="What is odd about this image?") # What is odd about this image?
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")

@@ -129,6 +129,51 @@ def eval_model(args):
     model, all_hooks = add_forward_hooks(model, hook_cache)
 
     qs = args.query
+    
+#     # print(qs)
+#     # print(tokenizer(qs, return_tensors="pt")["input_ids"])
+#     # print(tokenizer(qs, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """`USER: `"""
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """What is odd about this image?"""
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """USER: <image>"""
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """USER: <image>
+# """
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """USER: 
+# What is odd about this image? """
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+#     # raise ValueError()
+
+#     sys_prompt = """USER: <image>
+# What is odd about this image? """
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+    
+#     sys_prompt = """A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. """
+#     print(sys_prompt)
+#     # print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"])
+#     print(tokenizer(sys_prompt, return_tensors="pt")["input_ids"].shape)
+#     raise ValueError()
+    
     image_token_se = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN
     if IMAGE_PLACEHOLDER in qs:
         if model.config.mm_use_im_start_end:
@@ -141,6 +186,16 @@ def eval_model(args):
         else:
             qs = DEFAULT_IMAGE_TOKEN + "\n" + qs
 
+    # print(qs)
+    # print(tokenizer(qs, return_tensors="pt")["input_ids"])
+    # print(tokenizer(qs, return_tensors="pt")["input_ids"].shape)
+    
+    # qs = "USER: " + qs
+    # print(qs)
+    # print(tokenizer(qs, return_tensors="pt")["input_ids"])
+    # print(tokenizer(qs, return_tensors="pt")["input_ids"].shape)
+    # raise ValueError()
+    
     if "llama-2" in model_name.lower():
         conv_mode = "llava_llama_2"
     elif "mistral" in model_name.lower():
@@ -164,10 +219,16 @@ def eval_model(args):
         args.conv_mode = conv_mode
 
     conv = conv_templates[args.conv_mode].copy()
+    # conv.system = ""
     conv.append_message(conv.roles[0], qs)
     conv.append_message(conv.roles[1], None)
     prompt = conv.get_prompt()
+#     prompt = """USER: <image> 
+#  What is odd about this image? A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions. ASSISTANT:"""
 
+    print("#### Prompt: `", prompt, "`")
+    # raise ValueError()
+    
     image_files = image_parser(args)
     images = load_images(image_files)
     image_sizes = [x.size for x in images]
@@ -211,11 +272,6 @@ def eval_model(args):
     for hook in all_hooks:
         hook.remove()
     
-    print(output_ids)
-    try:
-        output_ids.keys()
-    except:
-        print(output_ids.shape)
     outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
     print(outputs)
     
@@ -235,7 +291,7 @@ if __name__ == "__main__":
     parser.add_argument("--model-path", type=str, default="liuhaotian/llava-v1.5-7b")
     parser.add_argument("--model-base", type=str, default=None)
     parser.add_argument("--image-file", type=str, default="/home/akane38/LLaVA/llava/serve/examples/extreme_ironing.jpg")
-    parser.add_argument("--query", type=str, default="") # What is odd about this image?
+    parser.add_argument("--query", type=str, default="What is odd about this image?") # What is odd about this image?
     parser.add_argument("--conv-mode", type=str, default=None)
     parser.add_argument("--sep", type=str, default=",")
     parser.add_argument("--temperature", type=float, default=0.)
