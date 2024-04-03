@@ -20,6 +20,7 @@ import torch.nn as nn
 
 from .multimodal_encoder.builder import build_vision_tower, build_multiple_vision_towers
 from .multimodal_projector.builder import build_vision_projector
+from .multimodal_projector.resampler import Resampler
 
 from llava.constants import IGNORE_INDEX, IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
 
@@ -31,8 +32,9 @@ class MultiVELlavaMetaModel:
     def __init__(self, config):
         super(MultiVELlavaMetaModel, self).__init__(config)
 
-        if hasattr(config, "mm_vision_tower"):
-            self.vision_tower = build_vision_tower(config, delay_load=True)
+        if hasattr(config, "mm_multiple_vision_towers"):
+            self.multiple_vision_towers = build_multiple_vision_towers(config, delay_load=True)
+            self.resampler = Resampler(8, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
             self.mm_projector = build_vision_projector(config)
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
@@ -40,6 +42,7 @@ class MultiVELlavaMetaModel:
                     torch.empty(config.hidden_size, dtype=self.dtype)
                 )
 
+    
     def _get_vision_tower(self):
         raise ValueError("This model has many vision towers. Use `get_multiple_vision_towers` instead.")
         vision_tower = getattr(self, 'vision_tower', None)
@@ -88,6 +91,7 @@ class MultiVELlavaMetaModel:
 
         # FIXME: Add resampler here
         if getattr(self, 'mm_projector', None) is None:
+            self.resampler = Resampler(8, multiple_vision_towers[0].hidden_size)
             self.mm_projector = build_vision_projector(self.config)
 
             if 'unpad' in mm_patch_merge_type:
@@ -124,7 +128,20 @@ class MultiVELlavaMetaForCausalLM(ABC):
         return self.get_model().get_multiple_vision_towers()
     
     def encode_images(self, images):
-        image_features = self.get_model().get_vision_tower()(images)
+        
+        vision_encoders = self.get_model().get_multiple_vision_towers()
+        
+        image_features = None
+        for idx, ve in enumerate(vision_encoders):
+            if image_features is None:
+                image_features = ve(images[idx])
+            else:
+                _image_features = ve(images[idx]).to(image_features.device)
+                image_features = torch.cat([image_features, _image_features], dim=-2)
+        # image_features = self.get_model().get_multiple_vision_towers()(images)
+        # print(image_features.shape)
+        if hasattr(self.get_model(), "resampler"):
+            image_features = self.get_model().resampler(image_features)
         image_features = self.get_model().mm_projector(image_features)
         return image_features
 
@@ -132,13 +149,32 @@ class MultiVELlavaMetaForCausalLM(ABC):
         self, input_ids, position_ids, attention_mask, past_key_values, labels,
         images, image_sizes=None
     ):
-        vision_tower = self.get_vision_tower()
-        if vision_tower is None or images is None or input_ids.shape[1] == 1:
+        # print(images)
+        
+        # raise ValueError()
+        multiple_vision_towers = self.get_multiple_vision_towers()
+        
+        if multiple_vision_towers is None or images is None or input_ids.shape[1] == 1:
             return input_ids, position_ids, attention_mask, past_key_values, None, labels
 
-        if type(images) is list or images.ndim == 5:
-            if type(images) is list:
-                images = [x.unsqueeze(0) if x.ndim == 3 else x for x in images]
+        # with single encoder:
+        #     images: torch.Tensor[8, 3, 336, 336]
+        #  or images: List[torch.Tensor[8, 3, 336, 336]]
+        # with multiple encoders:
+        #     images: List[torch.Tensor[8, 3, 336, 336], torch.Tensor[8, 3, 224, 224]]
+        #  or images: List[List[torch.Tensor[8, 3, 336, 336]], List[torch.Tensor[8, 3, 224, 224]]]
+        
+        # raise ValueError()
+        
+        
+        if type(images[0]) is list or images[0].ndim == 5:
+            # print("in if branch")
+            # FIXME: This if branch is not modified for multi-vision encoder setup,
+            # invoking this might lead to unexpected behaviour, failed experiments
+            # and heartbreaks
+            if type(images[0]) is list:
+                for enc_idx in range(len(images)):
+                    images[enc_idx] = [x.unsqueeze(0) if x.ndim == 3 else x for x in images[enc_idx]]
             concat_images = torch.cat([image for image in images], dim=0)
             image_features = self.encode_images(concat_images)
             split_sizes = [image.shape[0] for image in images]
@@ -185,6 +221,7 @@ class MultiVELlavaMetaForCausalLM(ABC):
             else:
                 raise ValueError(f"Unexpected mm_patch_merge_type: {self.config.mm_patch_merge_type}")
         else:
+            # print("in else branch")
             image_features = self.encode_images(images)
 
         # TODO: image start / end is not implemented here to support pretraining.

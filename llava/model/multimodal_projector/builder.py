@@ -1,7 +1,8 @@
 import torch
 import torch.nn as nn
 import re
-
+from functools import partial
+import numpy as np
 
 class IdentityMap(nn.Module):
     def __init__(self):
@@ -35,14 +36,16 @@ def build_vision_projector(config, delay_load=False, **kwargs):
 
     if projector_type == 'linear':
         return nn.Linear(config.mm_hidden_size, config.hidden_size)
-
+    
     mlp_gelu_match = re.match(r'^mlp(\d+)x_gelu$', projector_type)
     if mlp_gelu_match:
         mlp_depth = int(mlp_gelu_match.group(1))
-        modules = [nn.Linear(config.mm_hidden_size, config.hidden_size)]
+        modules = list()
+        modules.extend([nn.Linear(config.mm_hidden_size, config.hidden_size)])
         for _ in range(1, mlp_depth):
             modules.append(nn.GELU())
             modules.append(nn.Linear(config.hidden_size, config.hidden_size))
+        
         return nn.Sequential(*modules)
 
     if projector_type == 'identity':
