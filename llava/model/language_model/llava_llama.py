@@ -29,6 +29,7 @@ from ..llava_arch import MultiVELlavaMetaModel, MultiVELlavaMetaForCausalLM, Lla
 
 class LlavaConfig(LlamaConfig):
     model_type = "llava_llama"
+    resampler_grid_size = 24
 
 
 

@@ -26,7 +26,7 @@ from llava.constants import DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_IM_START_TOKEN, D
 
 def load_multi_ve_pretrained_model(model_path, model_base, model_name, load_8bit=False, load_4bit=False, device_map="auto", device="cuda", use_flash_attn=False, **kwargs):
     kwargs = {"device_map": device_map, **kwargs}
-    print(f"############ {model_name}")
+    # print(f"############ {model_name}")
     if device != "cuda":
         kwargs['device_map'] = {"": device}
 
@@ -164,6 +164,7 @@ def load_multi_ve_pretrained_model(model_path, model_base, model_name, load_8bit
             if not multiple_vision_towers[idx].is_loaded:
                 try:
                     multiple_vision_towers[idx].load_model(device_map=device_map)
+                    print("Device map auto successful!")
                 except ValueError: # device_map="auto" not supported
                     multiple_vision_towers[idx].load_model()
             if device_map != 'auto':

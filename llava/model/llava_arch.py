@@ -34,7 +34,7 @@ class MultiVELlavaMetaModel:
 
         if hasattr(config, "mm_multiple_vision_towers"):
             self.multiple_vision_towers = build_multiple_vision_towers(config, delay_load=True)
-            self.resampler = Resampler(8, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
+            self.resampler = Resampler(config.resampler_grid_size, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
             self.mm_projector = build_vision_projector(config)
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
@@ -91,7 +91,7 @@ class MultiVELlavaMetaModel:
 
         # FIXME: Add resampler here
         if getattr(self, 'mm_projector', None) is None:
-            self.resampler = Resampler(8, multiple_vision_towers[0].hidden_size)
+            self.resampler = Resampler(model_args.resampler_grid_size, multiple_vision_towers[0].hidden_size)
             self.mm_projector = build_vision_projector(self.config)
 
             if 'unpad' in mm_patch_merge_type:
