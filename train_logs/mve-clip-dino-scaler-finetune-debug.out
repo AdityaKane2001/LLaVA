@@ -1,0 +1,661 @@
+\n================================================= Thu Apr 11 04:52:57 PM UTC 2024 =========================================================\n
+[2024-04-11 12:52:59,443] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:01,988] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Detected CUDA_VISIBLE_DEVICES=4,5,6,7: setting --include=localhost:4,5,6,7
+[2024-04-11 12:53:01,988] [INFO] [runner.py:573:main] cmd = /home/akane38/miniconda3/envs/llava/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None llava/train/multi_ve_train_mem.py --deepspeed ./scripts/zero3.json --model_name_or_path lmsys/vicuna-7b-v1.5 --version v1 --data_path /data/data1/akane/LLaVA/data/llava_v1_5_mix665k.json --image_folder /data/data1/akane/LLaVA/data --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large --resampler_grid_size 24 --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/mm_projector.bin --pretrain_resampler /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/resampler.bin --scaled_clip_residual True --mm_projector_type mlp2x_gelu --mm_vision_select_layer -2 --mm_use_im_start_end False --mm_use_im_patch_token False --image_aspect_ratio pad --group_by_modality_length True --bf16 True --output_dir /data/data1/akane/mve-clip-dino-scaler-finetune/checkpoints/ --num_train_epochs 1 --per_device_train_batch_size 16 --per_device_eval_batch_size 4 --gradient_accumulation_steps 2 --evaluation_strategy no --save_strategy steps --save_steps 50000 --learning_rate 2e-5 --weight_decay 0. --warmup_ratio 0.03 --lr_scheduler_type cosine --logging_steps 1 --tf32 True --model_max_length 2048 --gradient_checkpointing True --dataloader_num_workers 4 --lazy_preprocess True --report_to wandb --run_name mve-clip-dino-scaler-finetune-7b
+[2024-04-11 12:53:04,042] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:05,659] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [4, 5, 6, 7]}
+[2024-04-11 12:53:05,659] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=4, node_rank=0
+[2024-04-11 12:53:05,659] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3]})
+[2024-04-11 12:53:05,659] [INFO] [launch.py:163:main] dist_world_size=4
+[2024-04-11 12:53:05,659] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=4,5,6,7
+[2024-04-11 12:53:09,455] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:09,613] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:09,639] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:09,715] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-11 12:53:10,648] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-11 12:53:10,877] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-11 12:53:10,878] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2024-04-11 12:53:10,920] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-11 12:53:10,935] [INFO] [comm.py:637:init_distributed] cdb=None
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[2024-04-11 12:53:23,296] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 291, num_elems = 6.74B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.11s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.14s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  3.73s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.09s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  3.80s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.15s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  3.84s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.18s/it]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:09<00:09,  9.32s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  4.81s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:10<00:00,  5.49s/it]
+[2024-04-11 12:53:34,796] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 682, num_elems = 7.04B
+[2024-04-11 12:53:37,295] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 1121, num_elems = 7.35B
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+LLM param is trainable: True
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+trainable=27412481
+frozen=0
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+LLM param is trainable: True
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+trainable=27412481
+frozen=0
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+LLM param is trainable: True
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+LLM param is trainable: True
+trainable=27412481
+frozen=0
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+trainable=27412481
+frozen=0
+##### Scaler learnt value
+tensor([0.])
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+##### Scaler learnt value
+tensor([0.])
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+Formatting inputs...Skip in lazy mode
+##### Scaler learnt value
+tensor([0.])
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+##### Scaler learnt value
+tensor([0.])
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+Parameter Offload: Total persistent parameters: 983041 in 614 params
+[2024-04-11 12:54:10,181] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 1249159
+Traceback (most recent call last):
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 1172, in init
+    wi.setup(kwargs)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 189, in setup
+    self._wl = wandb_setup.setup(settings=setup_settings)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 327, in setup
+    ret = _setup(settings=settings)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 320, in _setup
+    wl = _WandbSetup(settings=settings)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 303, in __init__
+    _WandbSetup._instance = _WandbSetup__WandbSetup(settings=settings, pid=pid)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 114, in __init__
+    self._setup()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 250, in _setup
+    self._setup_manager()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_setup.py", line 277, in _setup_manager
+    self._manager = wandb_manager._Manager(settings=self._settings)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_manager.py", line 139, in __init__
+    self._service.start()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/service/service.py", line 245, in start
+    self._launch_server()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/service/service.py", line 237, in _launch_server
+    self._wait_for_ports(fname, proc=internal_proc)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/service/service.py", line 116, in _wait_for_ports
+    time.sleep(0.2)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/akane38/LLaVA/llava/train/multi_ve_train_mem.py", line 4, in <module>
+    train(attn_implementation="flash_attention_2")
+  File "/home/akane38/LLaVA/llava/train/multi_ve_train.py", line 1199, in train
+    trainer.train()
+  File "/home/akane38/LLaVA/transformers/src/transformers/trainer.py", line 1553, in train
+    return inner_training_loop(
+  File "/home/akane38/LLaVA/transformers/src/transformers/trainer.py", line 1801, in _inner_training_loop
+    self.control = self.callback_handler.on_train_begin(args, self.state, self.control)
+  File "/home/akane38/LLaVA/transformers/src/transformers/trainer_callback.py", line 370, in on_train_begin
+    return self.call_event("on_train_begin", args, state, control)
+  File "/home/akane38/LLaVA/transformers/src/transformers/trainer_callback.py", line 414, in call_event
+    result = getattr(callback, event)(
+  File "/home/akane38/LLaVA/transformers/src/transformers/integrations/integration_utils.py", line 767, in on_train_begin
+    self.setup(args, state, model, **kwargs)
+  File "/home/akane38/LLaVA/transformers/src/transformers/integrations/integration_utils.py", line 740, in setup
+    self._wandb.init(
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/wandb/sdk/wandb_init.py", line 1197, in init
+    assert logger
+AssertionError
+[2024-04-11 12:54:10,395] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 1249159
+Traceback (most recent call last):
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/subprocess.py", line 1209, in wait
+    return self._wait(timeout=timeout)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/subprocess.py", line 1959, in _wait
+    (pid, sts) = self._try_wait(0)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/subprocess.py", line 1917, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/akane38/miniconda3/envs/llava/bin/deepspeed", line 6, in <module>
+    main()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/deepspeed/launcher/runner.py", line 589, in main
+    result.wait()
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/subprocess.py", line 1222, in wait
+    self._wait(timeout=sigint_timeout)
+  File "/home/akane38/miniconda3/envs/llava/lib/python3.10/subprocess.py", line 1953, in _wait
+    time.sleep(delay)
+KeyboardInterrupt
+[2024-04-11 12:54:10,740] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 1249160
+[2024-04-11 12:54:11,328] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 1249161
+[2024-04-11 12:54:11,843] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 1249162
+[2024-04-11 12:54:12,522] [INFO] [launch.py:324:sigkill_handler] Main process received SIGINT, exiting

@@ -3,32 +3,31 @@
 echo "\n================================================= $(date -u) =========================================================\n"
 export WANDB_PROJECT="multi-ve-llava"
 deepspeed llava/train/multi_ve_train_mem.py \
-    --deepspeed ./scripts/zero3.json \
+    --deepspeed ./scripts/zero2.json \
     --model_name_or_path lmsys/vicuna-7b-v1.5 \
-    --version v1 \
-    --data_path /data/data1/akane/LLaVA/data/llava_v1_5_mix665k.json \
-    --image_folder /data/data1/akane/LLaVA/data \
+    --version plain \
+    --data_path /data/data1/akane/LLaVA/data/blip_laion_cc_sbu_558k.json \
+    --image_folder /data/data1/akane/LLaVA/data/blip_laion_558k \
     --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large \
-    --resampler_grid_size 24\
-    --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/mm_projector.bin \
-    --pretrain_resampler /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/resampler.bin \
-    --scaled_clip_residual True \
+    --resampler_grid_size 24 \
     --mm_projector_type mlp2x_gelu \
+    --tune_mm_mlp_adapter True \
+    --tune_mm_resampler True \
+    --scaled_clip_residual True \
     --mm_vision_select_layer -2 \
     --mm_use_im_start_end False \
     --mm_use_im_patch_token False \
-    --image_aspect_ratio pad \
-    --group_by_modality_length True \
     --bf16 True \
-    --output_dir /data/data1/akane/mve-clip-dino-scaler-finetune/checkpoints/ \
+    --output_dir /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints \
     --num_train_epochs 1 \
-    --per_device_train_batch_size 16 \
+    --per_device_train_batch_size 32 \
     --per_device_eval_batch_size 4 \
     --gradient_accumulation_steps 2 \
     --evaluation_strategy "no" \
     --save_strategy "steps" \
-    --save_steps 50000 \
-    --learning_rate 2e-5 \
+    --save_steps 24000 \
+    --save_total_limit 1 \
+    --learning_rate 1e-3 \
     --weight_decay 0. \
     --warmup_ratio 0.03 \
     --lr_scheduler_type "cosine" \
@@ -39,4 +38,4 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb \
-    --run_name mve-clip-dino-scaler-finetune-7b
+    --run_name mve-clip-dino-pretrain-7b

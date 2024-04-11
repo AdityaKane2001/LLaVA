@@ -1,0 +1,363 @@
+
+================================================= Tue Apr  9 08:43:03 PM UTC 2024 =========================================================
+
+[2024-04-09 16:43:05,052] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-09 16:43:06,886] [WARNING] [runner.py:202:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Detected CUDA_VISIBLE_DEVICES=6,7: setting --include=localhost:6,7
+[2024-04-09 16:43:06,886] [INFO] [runner.py:573:main] cmd = /home/akane38/miniconda3/envs/llava/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None llava/train/multi_ve_train_mem.py --deepspeed ./scripts/zero3.json --model_name_or_path lmsys/vicuna-7b-v1.5 --version v1 --data_path /data/data1/akane/LLaVA/data/llava_v1_5_mix665k.json --image_folder /data/data1/akane/LLaVA/data --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large --resampler_grid_size 24 --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-pretrain/checkpoints/mm_projector.bin --pretrain_resampler /data/data1/akane/mve-clip-dino-pretrain/checkpoints/resampler.bin --mm_projector_type mlp2x_gelu --mm_vision_select_layer -2 --mm_use_im_start_end False --mm_use_im_patch_token False --image_aspect_ratio pad --group_by_modality_length True --bf16 True --output_dir /data/data1/akane/mve-clip-dino-finetune-debug/checkpoints/ --num_train_epochs 1 --per_device_train_batch_size 8 --per_device_eval_batch_size 4 --gradient_accumulation_steps 4 --evaluation_strategy no --save_strategy steps --save_steps 50000 --learning_rate 2e-5 --weight_decay 0. --warmup_ratio 0.03 --lr_scheduler_type cosine --logging_steps 1 --tf32 True --model_max_length 2048 --gradient_checkpointing True --dataloader_num_workers 4 --lazy_preprocess True --report_to wandb --run_name mve-clip-dino-finetune-7b
+[2024-04-09 16:43:08,937] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-09 16:43:11,167] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [6, 7]}
+[2024-04-09 16:43:11,167] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=2, node_rank=0
+[2024-04-09 16:43:11,167] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1]})
+[2024-04-09 16:43:11,167] [INFO] [launch.py:163:main] dist_world_size=2
+[2024-04-09 16:43:11,167] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=6,7
+[2024-04-09 16:43:14,439] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-09 16:43:14,469] [INFO] [real_accelerator.py:161:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-04-09 16:43:15,619] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-04-09 16:43:15,619] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2024-04-09 16:43:15,638] [INFO] [comm.py:637:init_distributed] cdb=None
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+You are using a model of type llama to instantiate a model of type llava_llama. This is not supported for all configurations of models and can yield errors.
+You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[2024-04-09 16:43:22,312] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 291, num_elems = 6.74B
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/_utils.py:831: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  return self.fget.__get__(instance, owner)()
+Loading checkpoint shards:  50%|█████     | 1/2 [00:06<00:06,  6.15s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  3.82s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:08<00:00,  4.17s/it]
+Loading checkpoint shards:  50%|█████     | 1/2 [00:10<00:10, 10.06s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:11<00:00,  5.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:11<00:00,  5.91s/it]
+[2024-04-09 16:43:34,654] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 682, num_elems = 7.04B
+[2024-04-09 16:43:37,058] [INFO] [partition_parameters.py:348:__exit__] finished initializing model - num_params = 1121, num_elems = 7.35B
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([576, 1024]), 589824
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([3072, 1024]), 3145728
+Resampler param: torch.Size([3072]), 3072
+Resampler param: torch.Size([1024, 1024]), 1048576
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param: torch.Size([1024]), 1024
+Resampler param is trainable: True
+Projector param is trainable: True
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+MultiVELlavaLlamaForCausalLM(
+  (model): MultiVELlavaLlamaModel(
+    (embed_tokens): Embedding(32000, 4096, padding_idx=0)
+    (layers): ModuleList(
+      (0-31): 32 x LlamaDecoderLayer(
+        (self_attn): LlamaFlashAttention2(
+          (q_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (k_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (v_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (o_proj): Linear(in_features=4096, out_features=4096, bias=False)
+          (rotary_emb): LlamaRotaryEmbedding()
+        )
+        (mlp): LlamaMLP(
+          (gate_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (up_proj): Linear(in_features=4096, out_features=11008, bias=False)
+          (down_proj): Linear(in_features=11008, out_features=4096, bias=False)
+          (act_fn): SiLU()
+        )
+        (input_layernorm): LlamaRMSNorm()
+        (post_attention_layernorm): LlamaRMSNorm()
+      )
+    )
+    (norm): LlamaRMSNorm()
+    (multiple_vision_towers): ModuleList(
+      (0): CLIPVisionTower(
+        (vision_tower): CLIPVisionModel(
+          (vision_model): CLIPVisionTransformer(
+            (embeddings): CLIPVisionEmbeddings(
+              (patch_embedding): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14), bias=False)
+              (position_embedding): Embedding(577, 1024)
+            )
+            (pre_layrnorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (encoder): CLIPEncoder(
+              (layers): ModuleList(
+                (0-23): 24 x CLIPEncoderLayer(
+                  (self_attn): CLIPAttention(
+                    (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                    (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+                  )
+                  (layer_norm1): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                  (mlp): CLIPMLP(
+                    (activation_fn): QuickGELUActivation()
+                    (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                    (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                  )
+                  (layer_norm2): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+                )
+              )
+            )
+            (post_layernorm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+      (1): DINOVisionTower(
+        (vision_tower): Dinov2Model(
+          (embeddings): Dinov2Embeddings(
+            (patch_embeddings): Dinov2PatchEmbeddings(
+              (projection): Conv2d(3, 1024, kernel_size=(14, 14), stride=(14, 14))
+            )
+            (dropout): Dropout(p=0.0, inplace=False)
+          )
+          (encoder): Dinov2Encoder(
+            (layer): ModuleList(
+              (0-23): 24 x Dinov2Layer(
+                (norm1): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (attention): Dinov2Attention(
+                  (attention): Dinov2SelfAttention(
+                    (query): Linear(in_features=1024, out_features=1024, bias=True)
+                    (key): Linear(in_features=1024, out_features=1024, bias=True)
+                    (value): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                  (output): Dinov2SelfOutput(
+                    (dense): Linear(in_features=1024, out_features=1024, bias=True)
+                    (dropout): Dropout(p=0.0, inplace=False)
+                  )
+                )
+                (layer_scale1): Dinov2LayerScale()
+                (drop_path1): Identity()
+                (norm2): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+                (mlp): Dinov2MLP(
+                  (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+                  (activation): GELUActivation()
+                  (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+                )
+                (layer_scale2): Dinov2LayerScale()
+                (drop_path2): Identity()
+              )
+            )
+          )
+          (layernorm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+        )
+      )
+    )
+    (resampler): Resampler(
+      (kv_proj): Identity()
+      (attn): MultiheadAttention(
+        (out_proj): NonDynamicallyQuantizableLinear(in_features=1024, out_features=1024, bias=True)
+      )
+      (ln_q): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_kv): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+      (ln_post): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+    )
+    (mm_projector): Sequential(
+      (0): Linear(in_features=1024, out_features=4096, bias=True)
+      (1): GELU(approximate='none')
+      (2): Linear(in_features=4096, out_features=4096, bias=True)
+    )
+  )
+  (lm_head): Linear(in_features=4096, out_features=32000, bias=False)
+)
+trainable=27412480
+frozen=0
+trainable=27412480
+frozen=0
+Formatting inputs...Skip in lazy mode
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/akane38/LLaVA/transformers/src/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+Parameter Offload: Total persistent parameters: 983040 in 613 params
+wandb: Currently logged in as: compyle. Use `wandb login --relogin` to force relogin
+wandb: wandb version 0.16.6 is available!  To upgrade, please run:
+wandb:  $ pip install wandb --upgrade
+wandb: Tracking run with wandb version 0.16.3
+wandb: Run data is saved locally in /home/akane38/LLaVA/wandb/run-20240409_164410-6mvdw2o6
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run mve-clip-dino-finetune-7b
+wandb: ⭐️ View project at https://wandb.ai/compyle/multi-ve-llava
+wandb: 🚀 View run at https://wandb.ai/compyle/multi-ve-llava/runs/6mvdw2o6
+  0%|          | 0/10395 [00:00<?, ?it/s]/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/utils/checkpoint.py:61: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+/home/akane38/miniconda3/envs/llava/lib/python3.10/site-packages/torch/utils/checkpoint.py:61: UserWarning: None of the inputs have requires_grad=True. Gradients will be None
+  warnings.warn(
+  0%|          | 1/10395 [00:26<77:20:59, 26.79s/it]                                                    {'loss': 0.3125, 'learning_rate': 6.41025641025641e-08, 'epoch': 0.0}
+  0%|          | 1/10395 [00:26<77:20:59, 26.79s/it]  0%|          | 2/10395 [00:38<51:53:54, 17.98s/it]                                                    {'loss': 1.4429, 'learning_rate': 1.282051282051282e-07, 'epoch': 0.0}
+  0%|          | 2/10395 [00:38<51:53:54, 17.98s/it]  0%|          | 3/10395 [00:50<43:54:32, 15.21s/it]                                                    {'loss': 1.3461, 'learning_rate': 1.9230769230769234e-07, 'epoch': 0.0}
+  0%|          | 3/10395 [00:50<43:54:32, 15.21s/it]  0%|          | 4/10395 [01:03<41:30:24, 14.38s/it]                                                    {'loss': 1.4063, 'learning_rate': 2.564102564102564e-07, 'epoch': 0.0}
+  0%|          | 4/10395 [01:03<41:30:24, 14.38s/it]  0%|          | 5/10395 [01:15<39:16:52, 13.61s/it]                                                    {'loss': 1.3657, 'learning_rate': 3.205128205128205e-07, 'epoch': 0.0}
+  0%|          | 5/10395 [01:15<39:16:52, 13.61s/it]  0%|          | 6/10395 [01:28<38:22:04, 13.30s/it]                                                    {'loss': 1.4113, 'learning_rate': 3.846153846153847e-07, 'epoch': 0.0}
+  0%|          | 6/10395 [01:28<38:22:04, 13.30s/it]  0%|          | 7/10395 [01:41<37:34:07, 13.02s/it]                                                    {'loss': 1.329, 'learning_rate': 4.4871794871794876e-07, 'epoch': 0.0}
+  0%|          | 7/10395 [01:41<37:34:07, 13.02s/it]  0%|          | 8/10395 [01:53<37:07:55, 12.87s/it]                                                    {'loss': 1.3294, 'learning_rate': 5.128205128205128e-07, 'epoch': 0.0}
+  0%|          | 8/10395 [01:53<37:07:55, 12.87s/it]  0%|          | 9/10395 [02:05<36:36:23, 12.69s/it]                                                    {'loss': 1.3329, 'learning_rate': 5.76923076923077e-07, 'epoch': 0.0}
+  0%|          | 9/10395 [02:05<36:36:23, 12.69s/it]  0%|          | 10/10395 [02:18<36:21:36, 12.60s/it]                                                     {'loss': 1.4081, 'learning_rate': 6.41025641025641e-07, 'epoch': 0.0}
+  0%|          | 10/10395 [02:18<36:21:36, 12.60s/it]  0%|          | 11/10395 [02:30<36:22:28, 12.61s/it]                                                     {'loss': 1.3874, 'learning_rate': 7.051282051282052e-07, 'epoch': 0.0}
+  0%|          | 11/10395 [02:30<36:22:28, 12.61s/it]  0%|          | 12/10395 [02:42<35:46:22, 12.40s/it]                                                     {'loss': 1.3019, 'learning_rate': 7.692307692307694e-07, 'epoch': 0.0}
+  0%|          | 12/10395 [02:42<35:46:22, 12.40s/it]  0%|          | 13/10395 [02:55<36:06:28, 12.52s/it]                                                     {'loss': 1.336, 'learning_rate': 8.333333333333333e-07, 'epoch': 0.0}
+  0%|          | 13/10395 [02:55<36:06:28, 12.52s/it]  0%|          | 14/10395 [03:07<35:42:59, 12.39s/it]                                                     {'loss': 1.3079, 'learning_rate': 8.974358974358975e-07, 'epoch': 0.0}
+  0%|          | 14/10395 [03:07<35:42:59, 12.39s/it]  0%|          | 15/10395 [03:20<35:53:35, 12.45s/it]                                                     {'loss': 1.2989, 'learning_rate': 9.615384615384617e-07, 'epoch': 0.0}
+  0%|          | 15/10395 [03:20<35:53:35, 12.45s/it]  0%|          | 16/10395 [03:32<35:28:38, 12.31s/it]                                                     {'loss': 1.2918, 'learning_rate': 1.0256410256410257e-06, 'epoch': 0.0}
+  0%|          | 16/10395 [03:32<35:28:38, 12.31s/it]  0%|          | 17/10395 [03:44<35:18:40, 12.25s/it]                                                     {'loss': 1.2897, 'learning_rate': 1.0897435897435899e-06, 'epoch': 0.0}
+  0%|          | 17/10395 [03:44<35:18:40, 12.25s/it]  0%|          | 18/10395 [03:56<35:17:46, 12.25s/it]                                                     {'loss': 1.2333, 'learning_rate': 1.153846153846154e-06, 'epoch': 0.0}
+  0%|          | 18/10395 [03:56<35:17:46, 12.25s/it]  0%|          | 19/10395 [04:08<35:12:04, 12.21s/it]                                                     {'loss': 1.2173, 'learning_rate': 1.217948717948718e-06, 'epoch': 0.0}
+  0%|          | 19/10395 [04:08<35:12:04, 12.21s/it]  0%|          | 20/10395 [04:20<34:42:19, 12.04s/it]                                                     {'loss': 1.2546, 'learning_rate': 1.282051282051282e-06, 'epoch': 0.0}
+  0%|          | 20/10395 [04:20<34:42:19, 12.04s/it]  0%|          | 21/10395 [04:32<35:08:49, 12.20s/it]                                                     {'loss': 1.2187, 'learning_rate': 1.3461538461538462e-06, 'epoch': 0.0}
+  0%|          | 21/10395 [04:32<35:08:49, 12.20s/it]  0%|          | 22/10395 [04:45<35:43:52, 12.40s/it]                                                     {'loss': 1.1414, 'learning_rate': 1.4102564102564104e-06, 'epoch': 0.0}
+  0%|          | 22/10395 [04:45<35:43:52, 12.40s/it]  0%|          | 23/10395 [04:58<35:44:47, 12.41s/it]                                                     {'loss': 1.2089, 'learning_rate': 1.4743589743589745e-06, 'epoch': 0.0}
+  0%|          | 23/10395 [04:58<35:44:47, 12.41s/it]  0%|          | 24/10395 [05:11<36:05:33, 12.53s/it]                                                     {'loss': 1.2536, 'learning_rate': 1.5384615384615387e-06, 'epoch': 0.0}
+  0%|          | 24/10395 [05:11<36:05:33, 12.53s/it]  0%|          | 25/10395 [05:24<37:02:44, 12.86s/it]                                                     {'loss': 1.2175, 'learning_rate': 1.602564102564103e-06, 'epoch': 0.0}
+  0%|          | 25/10395 [05:24<37:02:44, 12.86s/it]  0%|          | 26/10395 [05:37<36:43:14, 12.75s/it]                                                     {'loss': 1.1458, 'learning_rate': 1.6666666666666667e-06, 'epoch': 0.0}
+  0%|          | 26/10395 [05:37<36:43:14, 12.75s/it]  0%|          | 27/10395 [05:49<36:11:57, 12.57s/it]                                                     {'loss': 1.1108, 'learning_rate': 1.7307692307692308e-06, 'epoch': 0.0}
+  0%|          | 27/10395 [05:49<36:11:57, 12.57s/it]  0%|          | 28/10395 [06:02<36:24:12, 12.64s/it]                                                     {'loss': 1.1844, 'learning_rate': 1.794871794871795e-06, 'epoch': 0.0}
+  0%|          | 28/10395 [06:02<36:24:12, 12.64s/it]  0%|          | 29/10395 [06:14<35:48:40, 12.44s/it]                                                     {'loss': 1.1441, 'learning_rate': 1.8589743589743592e-06, 'epoch': 0.0}
+  0%|          | 29/10395 [06:14<35:48:40, 12.44s/it]  0%|          | 30/10395 [06:26<36:03:12, 12.52s/it]                                                     {'loss': 1.0868, 'learning_rate': 1.9230769230769234e-06, 'epoch': 0.0}
+  0%|          | 30/10395 [06:26<36:03:12, 12.52s/it]  0%|          | 31/10395 [06:39<36:03:23, 12.52s/it]                                                     {'loss': 1.1323, 'learning_rate': 1.987179487179487e-06, 'epoch': 0.0}
+  0%|          | 31/10395 [06:39<36:03:23, 12.52s/it]  0%|          | 32/10395 [06:51<35:35:46, 12.37s/it]                                                     {'loss': 1.1102, 'learning_rate': 2.0512820512820513e-06, 'epoch': 0.0}
+  0%|          | 32/10395 [06:51<35:35:46, 12.37s/it]  0%|          | 33/10395 [07:04<35:51:20, 12.46s/it]                                                     {'loss': 1.1522, 'learning_rate': 2.1153846153846155e-06, 'epoch': 0.0}
+  0%|          | 33/10395 [07:04<35:51:20, 12.46s/it]  0%|          | 34/10395 [07:15<35:21:42, 12.29s/it]                                                     {'loss': 1.2011, 'learning_rate': 2.1794871794871797e-06, 'epoch': 0.0}
+  0%|          | 34/10395 [07:15<35:21:42, 12.29s/it]  0%|          | 35/10395 [07:28<35:23:29, 12.30s/it]                                                     {'loss': 1.1598, 'learning_rate': 2.243589743589744e-06, 'epoch': 0.0}
+  0%|          | 35/10395 [07:28<35:23:29, 12.30s/it]  0%|          | 36/10395 [07:40<35:42:45, 12.41s/it]                                                     {'loss': 1.101, 'learning_rate': 2.307692307692308e-06, 'epoch': 0.0}
+  0%|          | 36/10395 [07:40<35:42:45, 12.41s/it]  0%|          | 37/10395 [07:53<35:53:37, 12.48s/it]                                                     {'loss': 1.1229, 'learning_rate': 2.371794871794872e-06, 'epoch': 0.0}
+  0%|          | 37/10395 [07:53<35:53:37, 12.48s/it]  0%|          | 38/10395 [08:06<36:02:32, 12.53s/it]                                                     {'loss': 1.1297, 'learning_rate': 2.435897435897436e-06, 'epoch': 0.0}
+  0%|          | 38/10395 [08:06<36:02:32, 12.53s/it]  0%|          | 39/10395 [08:19<37:02:27, 12.88s/it]                                                     {'loss': 1.0063, 'learning_rate': 2.5e-06, 'epoch': 0.0}
+  0%|          | 39/10395 [08:19<37:02:27, 12.88s/it]  0%|          | 40/10395 [08:32<36:33:24, 12.71s/it]                                                     {'loss': 1.0774, 'learning_rate': 2.564102564102564e-06, 'epoch': 0.0}
+  0%|          | 40/10395 [08:32<36:33:24, 12.71s/it]  0%|          | 41/10395 [08:44<35:57:35, 12.50s/it]                                                     {'loss': 1.0672, 'learning_rate': 2.6282051282051286e-06, 'epoch': 0.0}
+  0%|          | 41/10395 [08:44<35:57:35, 12.50s/it]  0%|          | 42/10395 [09:02<40:31:50, 14.09s/it]                                                     {'loss': 0.2821, 'learning_rate': 2.6923076923076923e-06, 'epoch': 0.0}
+  0%|          | 42/10395 [09:02<40:31:50, 14.09s/it]  0%|          | 43/10395 [09:14<38:54:03, 13.53s/it]                                                     {'loss': 1.1412, 'learning_rate': 2.756410256410257e-06, 'epoch': 0.0}
+  0%|          | 43/10395 [09:14<38:54:03, 13.53s/it]  0%|          | 44/10395 [09:26<37:53:54, 13.18s/it]                                                     {'loss': 1.0145, 'learning_rate': 2.8205128205128207e-06, 'epoch': 0.0}
+  0%|          | 44/10395 [09:26<37:53:54, 13.18s/it]  0%|          | 45/10395 [09:39<37:32:48, 13.06s/it]                                                     {'loss': 1.0237, 'learning_rate': 2.8846153846153845e-06, 'epoch': 0.0}
+  0%|          | 45/10395 [09:39<37:32:48, 13.06s/it]  0%|          | 46/10395 [09:52<37:12:39, 12.94s/it]                                                     {'loss': 1.0033, 'learning_rate': 2.948717948717949e-06, 'epoch': 0.0}
+  0%|          | 46/10395 [09:52<37:12:39, 12.94s/it][2024-04-09 16:54:23,887] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 3486437
+[2024-04-09 16:54:23,887] [INFO] [launch.py:315:sigkill_handler] Killing subprocess 3486438
+[2024-04-09 16:54:24,638] [ERROR] [launch.py:321:sigkill_handler] ['/home/akane38/miniconda3/envs/llava/bin/python', '-u', 'llava/train/multi_ve_train_mem.py', '--local_rank=1', '--deepspeed', './scripts/zero3.json', '--model_name_or_path', 'lmsys/vicuna-7b-v1.5', '--version', 'v1', '--data_path', '/data/data1/akane/LLaVA/data/llava_v1_5_mix665k.json', '--image_folder', '/data/data1/akane/LLaVA/data', '--multiple_vision_towers', 'openai/clip-vit-large-patch14-336', 'facebook/dinov2-large', '--resampler_grid_size', '24', '--pretrain_mm_mlp_adapter', '/data/data1/akane/mve-clip-dino-pretrain/checkpoints/mm_projector.bin', '--pretrain_resampler', '/data/data1/akane/mve-clip-dino-pretrain/checkpoints/resampler.bin', '--mm_projector_type', 'mlp2x_gelu', '--mm_vision_select_layer', '-2', '--mm_use_im_start_end', 'False', '--mm_use_im_patch_token', 'False', '--image_aspect_ratio', 'pad', '--group_by_modality_length', 'True', '--bf16', 'True', '--output_dir', '/data/data1/akane/mve-clip-dino-finetune-debug/checkpoints/', '--num_train_epochs', '1', '--per_device_train_batch_size', '8', '--per_device_eval_batch_size', '4', '--gradient_accumulation_steps', '4', '--evaluation_strategy', 'no', '--save_strategy', 'steps', '--save_steps', '50000', '--learning_rate', '2e-5', '--weight_decay', '0.', '--warmup_ratio', '0.03', '--lr_scheduler_type', 'cosine', '--logging_steps', '1', '--tf32', 'True', '--model_max_length', '2048', '--gradient_checkpointing', 'True', '--dataloader_num_workers', '4', '--lazy_preprocess', 'True', '--report_to', 'wandb', '--run_name', 'mve-clip-dino-finetune-7b'] exits with return code = -15

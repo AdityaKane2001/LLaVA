@@ -36,6 +36,9 @@ class MultiVELlavaMetaModel:
             self.multiple_vision_towers = build_multiple_vision_towers(config, delay_load=True)
             self.resampler = Resampler(config.resampler_grid_size, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
             self.mm_projector = build_vision_projector(config)
+            if hasattr(config, "scaled_clip_residual") and config.scaled_clip_residual:
+                # print("Created scaler")
+                self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
@@ -59,6 +62,7 @@ class MultiVELlavaMetaModel:
         mm_vision_select_layer = model_args.mm_vision_select_layer
         mm_vision_select_feature = model_args.mm_vision_select_feature
         pretrain_mm_mlp_adapter = model_args.pretrain_mm_mlp_adapter
+        pretrain_resampler = model_args.pretrain_resampler
         mm_patch_merge_type = model_args.mm_patch_merge_type
 
         self.config.mm_multiple_vision_towers = multiple_vision_towers
@@ -88,6 +92,7 @@ class MultiVELlavaMetaModel:
         self.config.mm_vision_select_layer = mm_vision_select_layer
         self.config.mm_vision_select_feature = mm_vision_select_feature
         self.config.mm_patch_merge_type = mm_patch_merge_type
+        self.config.scaled_clip_residual = getattr(model_args, "scaled_clip_residual", False)
 
         # FIXME: Add resampler here
         if getattr(self, 'mm_projector', None) is None:
@@ -104,12 +109,23 @@ class MultiVELlavaMetaModel:
             for p in self.mm_projector.parameters():
                 p.requires_grad = True
 
+        if hasattr(self.config, "scaled_clip_residual") and self.config.scaled_clip_residual:
+            # print("Creating scaler")
+            self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
+        
         if pretrain_mm_mlp_adapter is not None:
             mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
             def get_w(weights, keyword):
                 return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
 
             self.mm_projector.load_state_dict(get_w(mm_projector_weights, 'mm_projector'))
+        
+        if pretrain_resampler is not None:
+            resampler_weights = torch.load(pretrain_resampler, map_location='cpu')
+            def get_w(weights, keyword):
+                return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
+
+            self.resampler.load_state_dict(get_w(resampler_weights, 'resampler'))
 
         
 
@@ -132,9 +148,13 @@ class MultiVELlavaMetaForCausalLM(ABC):
         vision_encoders = self.get_model().get_multiple_vision_towers()
         
         image_features = None
+        clip_image_features = None
         for idx, ve in enumerate(vision_encoders):
             if image_features is None:
                 image_features = ve(images[idx])
+                if idx == 0:
+                    # print(f"Found CLIP image features: {image_features.shape}")
+                    clip_image_features = image_features
             else:
                 _image_features = ve(images[idx]).to(image_features.device)
                 image_features = torch.cat([image_features, _image_features], dim=-2)
@@ -142,6 +162,12 @@ class MultiVELlavaMetaForCausalLM(ABC):
         # print(image_features.shape)
         if hasattr(self.get_model(), "resampler"):
             image_features = self.get_model().resampler(image_features)
+        
+        if hasattr(self.get_model(), "clip_residual_scaler"):
+            # print(f"Adding CLIP image features: {clip_image_features.shape} + {image_features.shape}")
+            
+            image_features = clip_image_features + (self.get_model().clip_residual_scaler * image_features)
+        
         image_features = self.get_model().mm_projector(image_features)
         return image_features
 
@@ -383,12 +409,18 @@ class MultiVELlavaMetaForCausalLM(ABC):
                     input_embeddings[-num_new_tokens:] = embed_tokens_weight
                 else:
                     raise ValueError(f"Unexpected embed_tokens_weight shape. Pretrained: {embed_tokens_weight.shape}. Current: {input_embeddings.shape}. Numer of new tokens: {num_new_tokens}.")
+            
+            # FIXME: Resize token embeddings not supported for resampler yet
+            # if model_args.pretrain_resampler:
+            #     resampler_weights = torch.load(model_args.pretrain_resampler)
+                
         elif model_args.mm_use_im_patch_token:
             if model_args.tune_mm_mlp_adapter:
                 for p in self.get_input_embeddings().parameters():
                     p.requires_grad = False
                 for p in self.get_output_embeddings().parameters():
                     p.requires_grad = False
+
 
 
 
