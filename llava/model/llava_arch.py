@@ -36,6 +36,14 @@ class MultiVELlavaMetaModel:
             self.multiple_vision_towers = build_multiple_vision_towers(config, delay_load=True)
             self.resampler = Resampler(config.resampler_grid_size, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
             self.mm_projector = build_vision_projector(config)
+            
+            if hasattr(config, "use_brave_adapters") and config.use_brave_adapters:
+                # Each adapter will project to CLIP's hidden dim
+                self.brave_adapters = nn.ModuleList([
+                    nn.Linear(self.multiple_vision_towers[idx].hidden_size, self.multiple_vision_towers[0].hidden_size)
+                    for idx in range(len(self.multiple_vision_towers))
+                ])
+            
             if hasattr(config, "scaled_clip_residual") and config.scaled_clip_residual:
                 # print("Created scaler")
                 self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
@@ -93,6 +101,7 @@ class MultiVELlavaMetaModel:
         self.config.mm_vision_select_feature = mm_vision_select_feature
         self.config.mm_patch_merge_type = mm_patch_merge_type
         self.config.scaled_clip_residual = getattr(model_args, "scaled_clip_residual", False)
+        self.config.use_brave_adapters = getattr(model_args, "use_brave_adapters", False)
 
         # FIXME: Add resampler here
         if getattr(self, 'mm_projector', None) is None:
@@ -109,6 +118,13 @@ class MultiVELlavaMetaModel:
             for p in self.mm_projector.parameters():
                 p.requires_grad = True
 
+        if hasattr(self.config, "use_brave_adapters") and self.config.use_brave_adapters:
+            print("Init brave adapters")
+            self.brave_adapters = nn.ModuleList([
+                nn.Linear(self.multiple_vision_towers[idx].hidden_size, self.multiple_vision_towers[0].hidden_size)
+                for idx in  range(len(self.multiple_vision_towers))
+            ])
+        
         if hasattr(self.config, "scaled_clip_residual") and self.config.scaled_clip_residual:
             # print("Creating scaler")
             self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
@@ -152,22 +168,30 @@ class MultiVELlavaMetaForCausalLM(ABC):
         for idx, ve in enumerate(vision_encoders):
             if image_features is None:
                 image_features = ve(images[idx])
+                if hasattr(self.get_model(), "brave_adapters"):
+                    # print(f"Using {idx}th brave adapter")
+                    image_features = self.get_model().brave_adapters[idx](image_features)
                 if idx == 0:
                     # print(f"Found CLIP image features: {image_features.shape}")
                     clip_image_features = image_features
             else:
                 _image_features = ve(images[idx]).to(image_features.device)
+                if hasattr(self.get_model(), "brave_adapters"):
+                    # print(f"Using {idx}th brave adapter")
+                    _image_features = self.get_model().brave_adapters[idx](_image_features)
                 image_features = torch.cat([image_features, _image_features], dim=-2)
-        # image_features = self.get_model().get_multiple_vision_towers()(images)
-        # print(image_features.shape)
+        
+        
         if hasattr(self.get_model(), "resampler"):
             image_features = self.get_model().resampler(image_features)
         
         if hasattr(self.get_model(), "clip_residual_scaler"):
-            # print(f"Adding CLIP image features: {clip_image_features.shape} + {image_features.shape}")
+            print(f"Adding CLIP image features: {clip_image_features.shape} + {image_features.shape}")
             
             image_features = clip_image_features + (self.get_model().clip_residual_scaler * image_features)
-        
+        # else:
+        #     print("Scaler absent")
+            
         image_features = self.get_model().mm_projector(image_features)
         return image_features
 

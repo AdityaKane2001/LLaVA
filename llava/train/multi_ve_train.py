@@ -55,6 +55,7 @@ class ModelArguments:
     model_name_or_path: Optional[str] = field(default="facebook/opt-125m")
     version: Optional[str] = field(default="v0")
     freeze_backbone: bool = field(default=False)
+    use_brave_adapters : bool = field(default=False)
     tune_mm_mlp_adapter: bool = field(default=False)
     tune_mm_resampler: bool = field(default=False)
     scaled_clip_residual: bool = field(default=False)
@@ -1115,6 +1116,7 @@ def train(attn_implementation=None):
         model.config.tokenizer_padding_side = tokenizer.padding_side
         model.config.tokenizer_model_max_length = tokenizer.model_max_length
 
+        model.config.use_brave_adapters = training_args.use_brave_adapters = model_args.use_brave_adapters
         model.config.tune_mm_mlp_adapter = training_args.tune_mm_mlp_adapter = model_args.tune_mm_mlp_adapter
         model.config.tune_mm_resampler = training_args.tune_mm_resampler = model_args.tune_mm_resampler
         model.config.scaled_clip_residual = training_args.scaled_clip_residual = model_args.scaled_clip_residual
@@ -1124,26 +1126,42 @@ def train(attn_implementation=None):
                 print(f"Projector param: {p.data.shape}, {p.data.numel()}")
                 p.requires_grad = True
         
-        # Resampler and scaler should always be trainable irrespective of PT/IT
+        # Resampler, brave adapters and scaler should always be 
+        # trainable irrespective of PT/IT
         if model.config.scaled_clip_residual:
             model.get_model().clip_residual_scaler.requires_grad_(True)
+            print("scaler set to trainable")
 
+        if model_args.use_brave_adapters:
+            model.get_model().brave_adapters.requires_grad_(True)
+        
         for p in model.get_model().resampler.parameters():
             # print(f"Resampler param: {p.data.shape}, {p.data.numel()}")
             p.requires_grad = True
+            
         
         #### Has grad checks
         for param in model.get_model().resampler.parameters():
             print(f"Resampler param is trainable: {param.requires_grad}")
             break
         
+        for param in model.get_model().brave_adapters.parameters():
+            print(f"Brave adapters param is trainable: {param.requires_grad}")
+            break
+        
         for param in model.get_model().mm_projector.parameters():
             print(f"Projector param is trainable: {param.requires_grad}")
             break
         
+        
         for param in model.get_model().parameters():
             print(f"LLM param is trainable: {param.requires_grad}")
             break
+        
+        for idx in range(len(model.get_multiple_vision_towers())):
+            for param in model.get_multiple_vision_towers()[idx].parameters():
+                print(f"VE {idx} param is trainable: {param.requires_grad}")
+                break
         
         model.config.freeze_mm_mlp_adapter = training_args.freeze_mm_mlp_adapter
         if training_args.freeze_mm_mlp_adapter:

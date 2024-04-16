@@ -10,8 +10,9 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --image_folder /data/data1/akane/LLaVA/data \
     --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large \
     --resampler_grid_size 24\
-    --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/mm_projector.bin \
-    --pretrain_resampler /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/resampler.bin \
+    --use_brave_adapters True \
+    --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-brave-pretrain/checkpoints/mm_projector.bin \
+    --pretrain_resampler /data/data1/akane/mve-clip-dino-brave-pretrain/checkpoints/resampler.bin \
     --scaled_clip_residual True \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
@@ -20,7 +21,7 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir /data/data1/akane/mve-clip-dino-scaler-finetune/checkpoints/ \
+    --output_dir /data/data1/akane/mve-clip-dino-brave-finetune/checkpoints/ \
     --num_train_epochs 1 \
     --per_device_train_batch_size 16 \
     --per_device_eval_batch_size 4 \
@@ -39,4 +40,4 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb \
-    --run_name mve-clip-dino-scaler-finetune-7b
+    --run_name mve-clip-dino-brave-finetune-7b

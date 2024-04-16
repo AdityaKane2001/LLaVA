@@ -9,16 +9,17 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --data_path /data/data1/akane/LLaVA/data/blip_laion_cc_sbu_558k.json \
     --image_folder /data/data1/akane/LLaVA/data/blip_laion_558k \
     --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large \
+    --use_brave_adapters True \
     --resampler_grid_size 24 \
     --mm_projector_type mlp2x_gelu \
     --tune_mm_mlp_adapter True \
     --tune_mm_resampler True \
-    --scaled_clip_residual True \
+    --scaled_clip_residual False \
     --mm_vision_select_layer -2 \
     --mm_use_im_start_end False \
     --mm_use_im_patch_token False \
     --bf16 True \
-    --output_dir /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints \
+    --output_dir /data/data1/akane/mve-clip-dino-brave-pretrain/checkpoints \
     --num_train_epochs 1 \
     --per_device_train_batch_size 32 \
     --per_device_eval_batch_size 4 \
@@ -38,4 +39,4 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb \
-    --run_name mve-clip-dino-pretrain-7b
+    --run_name mve-clip-dino-brave-pretrain-7b
