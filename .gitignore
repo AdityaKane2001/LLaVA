@@ -4,6 +4,9 @@ __pycache__
 *.egg-info
 dist
 
+# MMVP
+mmvp_bench/*
+
 # Log
 *.log
 *.log.*
