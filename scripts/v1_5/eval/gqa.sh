@@ -6,7 +6,8 @@ IFS=',' read -ra GPULIST <<< "$gpu_list"
 CHUNKS=${#GPULIST[@]}
 
 # CKPT="llava-v1.5-13b"
-CKPT="mve-clip-dino-finetune-2"
+# /data/data1/akane/mve-clip-dino-router-finetune/checkpoints/
+CKPT="mve-clip-dino-router-finetune"
 SPLIT="llava_gqa_testdev_balanced"
 GQADIR="/data/data1/akane/LLaVA/data/eval/gqa/data"
 

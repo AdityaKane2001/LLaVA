@@ -5,7 +5,7 @@ IFS=',' read -ra GPULIST <<< "$gpu_list"
 
 CHUNKS=${#GPULIST[@]}
 
-CKPT="mve-clip-dino-finetune"
+CKPT="mve-clip-dino-router-finetune"
 SPLIT="llava_vqav2_mscoco_test-dev2015"
 
 for IDX in $(seq 0 $((CHUNKS-1))); do
@@ -32,5 +32,4 @@ for IDX in $(seq 0 $((CHUNKS-1))); do
     cat /data/data1/akane/LLaVA/data/eval/vqav2/answers/$SPLIT/$CKPT/${CHUNKS}_${IDX}.jsonl >> "$output_file"
 done
 
-python scripts/convert_vqav2_for_submission.py --split $SPLIT --ckpt $CKPT
-
+python scripts/convert_vqav2_for_submission.py --dir "/data/data1/akane/LLaVA/data/eval/vqav2" --split $SPLIT --ckpt $CKPT

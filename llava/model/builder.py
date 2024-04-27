@@ -169,6 +169,8 @@ def load_multi_ve_pretrained_model(model_path, model_base, model_name, load_8bit
                     multiple_vision_towers[idx].load_model()
             if device_map != 'auto':
                 multiple_vision_towers[idx].to(device=device_map, dtype=torch.float16)
+            if hasattr(multiple_vision_towers[idx], "dummy_vision_tower"):
+                multiple_vision_towers[idx].to(device="cuda", dtype=torch.float16)
             image_processor = multiple_vision_towers[idx].image_processor
             multiple_image_processors.append(image_processor)
 

@@ -9,10 +9,9 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --data_path /data/data1/akane/LLaVA/data/llava_v1_5_mix665k.json \
     --image_folder /data/data1/akane/LLaVA/data \
     --multiple_vision_towers openai/clip-vit-large-patch14-336 facebook/dinov2-large \
-    --resampler_grid_size 24\
-    --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/mm_projector.bin \
-    --pretrain_resampler /data/data1/akane/mve-clip-dino-scaler-pretrain/checkpoints/resampler.bin \
-    --scaled_clip_residual True \
+    --pretrain_mm_mlp_adapter /data/data1/akane/mve-clip-dino-router-pretrain/checkpoints/mm_projector.bin \
+    --pretrain_multiple_vision_adapters /data/data1/akane/mve-clip-dino-router-pretrain/checkpoints/multiple_vision_adapters.bin \
+    --pretrain_router /data/data1/akane/mve-clip-dino-router-pretrain/checkpoints/router.bin \
     --mm_projector_type mlp2x_gelu \
     --mm_vision_select_layer -2 \
     --mm_use_im_start_end False \
@@ -20,7 +19,7 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --image_aspect_ratio pad \
     --group_by_modality_length True \
     --bf16 True \
-    --output_dir /data/data1/akane/mve-clip-dino-scaler-finetune/checkpoints/ \
+    --output_dir /data/data1/akane/mve-clip-dino-router-finetune/checkpoints/ \
     --num_train_epochs 1 \
     --per_device_train_batch_size 16 \
     --per_device_eval_batch_size 4 \
@@ -39,4 +38,4 @@ deepspeed llava/train/multi_ve_train_mem.py \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
     --report_to wandb \
-    --run_name mve-clip-dino-scaler-finetune-7b
+    --run_name mve-clip-dino-router-finetune-7b

@@ -19,7 +19,7 @@ import torch
 import torch.nn as nn
 
 from .multimodal_encoder.builder import build_vision_tower, build_multiple_vision_towers
-from .multimodal_projector.builder import build_vision_projector
+from .multimodal_projector.builder import build_vision_projector, build_wide_vision_projector
 from .multimodal_projector.resampler import Resampler
 
 from llava.constants import IGNORE_INDEX, IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_PATCH_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
@@ -34,18 +34,23 @@ class MultiVELlavaMetaModel:
 
         if hasattr(config, "mm_multiple_vision_towers"):
             self.multiple_vision_towers = build_multiple_vision_towers(config, delay_load=True)
-            self.resampler = Resampler(config.resampler_grid_size, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
-            self.mm_projector = build_vision_projector(config)
-            if hasattr(config, "scaled_clip_residual") and config.scaled_clip_residual:
-                # print("Created scaler")
-                self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
+            
+            self.multiple_vision_adapters = nn.ModuleList([build_vision_projector(config) for _ in range(len(self.get_multiple_vision_towers()))])
+            
+            self.router = nn.Linear(config.hidden_size, 1)
+            self.mm_projector = build_wide_vision_projector(config)
+            
+            # self.resampler = Resampler(config.resampler_grid_size, self.multiple_vision_towers[0].hidden_size).to(dtype=torch.float16)
+            # if hasattr(config, "scaled_clip_residual") and config.scaled_clip_residual:
+            #     # print("Created scaler")
+            #     self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
 
             if 'unpad' in getattr(config, 'mm_patch_merge_type', ''):
                 self.image_newline = nn.Parameter(
                     torch.empty(config.hidden_size, dtype=self.dtype)
                 )
+        
 
-    
     def _get_vision_tower(self):
         raise ValueError("This model has many vision towers. Use `get_multiple_vision_towers` instead.")
         vision_tower = getattr(self, 'vision_tower', None)
@@ -53,6 +58,12 @@ class MultiVELlavaMetaModel:
             vision_tower = vision_tower[0]
         return vision_tower
 
+    def get_multiple_vision_adapters(self):
+        return getattr(self, "multiple_vision_adapters", None)
+    
+    def get_router(self):
+        return getattr(self, "router", None)
+    
     def get_multiple_vision_towers(self):
         multiple_vision_towers = getattr(self, 'multiple_vision_towers', None)
         return multiple_vision_towers
@@ -62,14 +73,17 @@ class MultiVELlavaMetaModel:
         mm_vision_select_layer = model_args.mm_vision_select_layer
         mm_vision_select_feature = model_args.mm_vision_select_feature
         pretrain_mm_mlp_adapter = model_args.pretrain_mm_mlp_adapter
-        pretrain_resampler = model_args.pretrain_resampler
+        pretrain_multiple_vision_adapters = model_args.pretrain_multiple_vision_adapters
+        pretrain_router = model_args.pretrain_router
         mm_patch_merge_type = model_args.mm_patch_merge_type
+        # pretrain_resampler = model_args.pretrain_resampler
 
         self.config.mm_multiple_vision_towers = multiple_vision_towers
+        
 
         if self.get_multiple_vision_towers() is None:
             multiple_vision_towers = build_multiple_vision_towers(model_args)
-
+            
             if fsdp is not None and len(fsdp) > 0:
                 self.multiple_vision_towers = [multiple_vision_towers]
             else:
@@ -85,19 +99,21 @@ class MultiVELlavaMetaModel:
         # FIXME: We assume that all image towers have same output dim 
         # Currently this is fine, since we are using VIT-L for all towers, but
         # need to provision safely for other cases
-        
+        self.config.mm_hidden_size = multiple_vision_towers[0].hidden_size
         self.config.use_mm_proj = True
         self.config.mm_projector_type = getattr(model_args, 'mm_projector_type', 'linear')
-        self.config.mm_hidden_size = multiple_vision_towers[0].hidden_size 
         self.config.mm_vision_select_layer = mm_vision_select_layer
         self.config.mm_vision_select_feature = mm_vision_select_feature
-        self.config.mm_patch_merge_type = mm_patch_merge_type
-        self.config.scaled_clip_residual = getattr(model_args, "scaled_clip_residual", False)
+        self.config.mm_patch_merge_type = mm_patch_merge_type 
+        
+        # self.config.scaled_clip_residual = getattr(model_args, "scaled_clip_residual", False)
 
         # FIXME: Add resampler here
         if getattr(self, 'mm_projector', None) is None:
-            self.resampler = Resampler(model_args.resampler_grid_size, multiple_vision_towers[0].hidden_size)
-            self.mm_projector = build_vision_projector(self.config)
+            # self.resampler = Resampler(model_args.resampler_grid_size, multiple_vision_towers[0].hidden_size)
+            self.mm_projector = build_wide_vision_projector(self.config)
+            self.multiple_vision_adapters = nn.ModuleList([build_vision_projector(self.config) for _ in range(len(multiple_vision_towers))])
+            self.router = nn.Linear(self.config.hidden_size, 1)
 
             if 'unpad' in mm_patch_merge_type:
                 embed_std = 1 / torch.sqrt(torch.tensor(self.config.hidden_size, dtype=self.dtype))
@@ -109,25 +125,36 @@ class MultiVELlavaMetaModel:
             for p in self.mm_projector.parameters():
                 p.requires_grad = True
 
-        if hasattr(self.config, "scaled_clip_residual") and self.config.scaled_clip_residual:
-            # print("Creating scaler")
-            self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
+        # if hasattr(self.config, "scaled_clip_residual") and self.config.scaled_clip_residual:
+        #     # print("Creating scaler")
+        #     self.clip_residual_scaler = torch.nn.Parameter(data=torch.zeros((1,)), requires_grad=True)
+        
+        def get_w(weights, keyword):
+            return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
         
         if pretrain_mm_mlp_adapter is not None:
+            print("Loading MLP adapter weights")
             mm_projector_weights = torch.load(pretrain_mm_mlp_adapter, map_location='cpu')
-            def get_w(weights, keyword):
-                return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
-
             self.mm_projector.load_state_dict(get_w(mm_projector_weights, 'mm_projector'))
         
-        if pretrain_resampler is not None:
-            resampler_weights = torch.load(pretrain_resampler, map_location='cpu')
-            def get_w(weights, keyword):
-                return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
+        if pretrain_multiple_vision_adapters is not None:
+            print("Loading multiple vision adapter weights")
 
-            self.resampler.load_state_dict(get_w(resampler_weights, 'resampler'))
+            multiple_vision_adapters_weights = torch.load(pretrain_multiple_vision_adapters)
+            self.multiple_vision_adapters.load_state_dict(get_w(multiple_vision_adapters_weights, "multiple_vision_adapters"))
+            
+        if pretrain_router is not None:
+            print("Loading router weights")
 
+            router_weights = torch.load(pretrain_router)
+            self.router.load_state_dict(get_w(router_weights, "router"))
         
+        # if pretrain_resampler is not None:
+        #     resampler_weights = torch.load(pretrain_resampler, map_location='cpu')
+        #     def get_w(weights, keyword):
+        #         return {k.split(keyword + '.')[1]: v for k, v in weights.items() if keyword in k}
+
+        #     self.resampler.load_state_dict(get_w(resampler_weights, 'resampler'))
 
 
 class MultiVELlavaMetaForCausalLM(ABC):
@@ -145,31 +172,58 @@ class MultiVELlavaMetaForCausalLM(ABC):
     
     def encode_images(self, images):
         
-        vision_encoders = self.get_model().get_multiple_vision_towers()
+        multiple_vision_towers = self.get_model().get_multiple_vision_towers()
+        multiple_vision_adapters = self.get_model().get_multiple_vision_adapters()
+        router = self.get_model().get_router()
         
-        image_features = None
-        clip_image_features = None
-        for idx, ve in enumerate(vision_encoders):
-            if image_features is None:
-                image_features = ve(images[idx])
-                if idx == 0:
-                    # print(f"Found CLIP image features: {image_features.shape}")
-                    clip_image_features = image_features
-            else:
-                _image_features = ve(images[idx]).to(image_features.device)
-                image_features = torch.cat([image_features, _image_features], dim=-2)
-        # image_features = self.get_model().get_multiple_vision_towers()(images)
-        # print(image_features.shape)
-        if hasattr(self.get_model(), "resampler"):
-            image_features = self.get_model().resampler(image_features)
+        multiple_encoder_features = list()
         
-        if hasattr(self.get_model(), "clip_residual_scaler"):
-            # print(f"Adding CLIP image features: {clip_image_features.shape} + {image_features.shape}")
-            
-            image_features = clip_image_features + (self.get_model().clip_residual_scaler * image_features)
+        for idx, ve in enumerate(multiple_vision_towers):
+            _image_features = ve(images[idx])
+            _image_features = multiple_vision_adapters[idx](_image_features)
+            multiple_encoder_features.append(_image_features)
+            # print(f"{idx}th VE: {_image_features.shape}")
+        
+        
+        multiple_encoder_features = torch.stack(multiple_encoder_features, dim=-2) 
+        # print(f"{multiple_encoder_features.shape=}")
+        # [B, N, E, D]
+        
+        router_weights = router(multiple_encoder_features).squeeze() # [B, N, E]
+        # print(f"{router_weights.shape=}")
+        
+        router_weights = nn.functional.softmax(router_weights, dim=-1)
+        
+        weighted_encoder_features = multiple_encoder_features * router_weights[..., None]
+        # print(f"{weighted_encoder_features.shape=}")
+        
+        image_features = weighted_encoder_features.sum(dim=-2)
+        # print(f"{image_features.shape=}")
+        
         
         image_features = self.get_model().mm_projector(image_features)
         return image_features
+
+    ### Old encode_image logic
+    # image_features = None
+    # clip_image_features = None
+    # for idx, ve in enumerate(vision_encoders):
+    #     if image_features is None:
+    #         image_features = ve(images[idx])
+    #         if idx == 0:
+    #             # print(f"Found CLIP image features: {image_features.shape}")
+    #             clip_image_features = image_features
+    #     else:
+    #         _image_features = ve(images[idx]).to(image_features.device)
+    #         image_features = torch.cat([image_features, _image_features], dim=-2)
+    
+    # image_features = self.get_model().get_multiple_vision_towers()(images)
+    # print(image_features.shape)
+    # if hasattr(self.get_model(), "resampler"):
+    #     image_features = self.get_model().resampler(image_features)
+    
+    # if hasattr(self.get_model(), "clip_residual_scaler"):
+    #     image_features = clip_image_features + (self.get_model().clip_residual_scaler * image_features)
 
     def prepare_inputs_labels_for_multimodal(
         self, input_ids, position_ids, attention_mask, past_key_values, labels,
@@ -247,7 +301,6 @@ class MultiVELlavaMetaForCausalLM(ABC):
             else:
                 raise ValueError(f"Unexpected mm_patch_merge_type: {self.config.mm_patch_merge_type}")
         else:
-            # print("in else branch")
             image_features = self.encode_images(images)
 
         # TODO: image start / end is not implemented here to support pretraining.

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CKPT="mve-clip-dino-finetune-2"
+CKPT="mve-clip-dino-router-finetune"
 
 python -um llava.eval.multi_ve_model_vqa_loader \
     --model-path /data/data1/akane/$CKPT/checkpoints \

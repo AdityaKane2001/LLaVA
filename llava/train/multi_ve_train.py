@@ -56,19 +56,21 @@ class ModelArguments:
     version: Optional[str] = field(default="v0")
     freeze_backbone: bool = field(default=False)
     tune_mm_mlp_adapter: bool = field(default=False)
-    tune_mm_resampler: bool = field(default=False)
-    scaled_clip_residual: bool = field(default=False)
     multiple_vision_towers: Optional[List[str]] = field(default=None)
-    resampler_grid_size: Optional[int] = field(default=24)
     mm_vision_select_layer: Optional[int] = field(default=-1)   # default to the last layer
     pretrain_mm_mlp_adapter: Optional[str] = field(default=None)
-    pretrain_resampler: Optional[str] = field(default=None)
+    pretrain_router: Optional[str] = field(default=None)
+    pretrain_multiple_vision_adapters: Optional[str] = field(default=None)
     mm_projector_type: Optional[str] = field(default='linear')
     mm_use_im_start_end: bool = field(default=False)
     mm_use_im_patch_token: bool = field(default=True)
     mm_patch_merge_type: Optional[str] = field(default='flat')
     mm_vision_select_feature: Optional[str] = field(default="patch")
 
+    # tune_mm_resampler: bool = field(default=False)
+    # scaled_clip_residual: bool = field(default=False)
+    # resampler_grid_size: Optional[int] = field(default=24)
+    # pretrain_resampler: Optional[str] = field(default=None)
 
 @dataclass
 class DataArguments:
@@ -173,7 +175,7 @@ def get_mm_adapter_state_maybe_zero_3(named_params, keys_to_match):
 def find_all_linear_names(model):
     cls = torch.nn.Linear
     lora_module_names = set()
-    multimodal_keywords = ['mm_projector', 'vision_tower', 'vision_resampler']
+    multimodal_keywords = ['mm_projector', 'vision_tower'] # , 'vision_resampler'
     for name, module in model.named_modules():
         if any(mm_keyword in name for mm_keyword in multimodal_keywords):
             continue
@@ -193,8 +195,9 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
     return_flag = False
     
     if getattr(trainer.args, "tune_mm_mlp_adapter", False):
-        print("Saving mm adapter")
-        # Only save Adapter
+        rank0_print("Saving router, vision adapters and mm projector")
+        
+        # Saving mm projector 
         keys_to_match = ['mm_projector']
         if getattr(trainer.args, "use_im_start_end", False):
             keys_to_match.extend(['embed_tokens', 'embed_in'])
@@ -211,25 +214,57 @@ def safe_save_model_for_hf_trainer(trainer: transformers.Trainer,
                 torch.save(weight_to_save, os.path.join(mm_projector_folder, f'{current_folder}.bin'))
             else:
                 torch.save(weight_to_save, os.path.join(output_dir, f'mm_projector.bin'))
-        return_flag = return_flag or True
-
-    if getattr(trainer.args, "tune_mm_resampler", False):
-        print("Saving resampler")
-        keys_to_match = ['resampler']
-
+        
+        # Saving router
+        keys_to_match = ['router'] 
         weight_to_save = get_mm_adapter_state_maybe_zero_3(trainer.model.named_parameters(), keys_to_match)
-        trainer.model.config.save_pretrained(output_dir)
-
+        
         current_folder = output_dir.split('/')[-1]
         parent_folder = os.path.dirname(output_dir)
         if trainer.args.local_rank == 0 or trainer.args.local_rank == -1:
             if current_folder.startswith('checkpoint-'):
-                resampler_folder = os.path.join(parent_folder, "resampler")
-                os.makedirs(resampler_folder, exist_ok=True)
-                torch.save(weight_to_save, os.path.join(resampler_folder, f'{current_folder}.bin'))
+                router_folder = os.path.join(parent_folder, "router")
+                os.makedirs(router_folder, exist_ok=True)
+                torch.save(weight_to_save, os.path.join(router_folder, f'{current_folder}.bin'))
             else:
-                torch.save(weight_to_save, os.path.join(output_dir, f'resampler.bin'))
+                torch.save(weight_to_save, os.path.join(output_dir, f'router.bin'))
+        
+        
+        # Saving multiple vision adapters
+        keys_to_match = ['multiple_vision_adapters'] 
+        weight_to_save = get_mm_adapter_state_maybe_zero_3(trainer.model.named_parameters(), keys_to_match)
+        
+        current_folder = output_dir.split('/')[-1]
+        parent_folder = os.path.dirname(output_dir)
+        if trainer.args.local_rank == 0 or trainer.args.local_rank == -1:
+            if current_folder.startswith('checkpoint-'):
+                multiple_vision_adapters_folder = os.path.join(parent_folder, "multiple_vision_adapters")
+                os.makedirs(multiple_vision_adapters_folder, exist_ok=True)
+                torch.save(weight_to_save, os.path.join(multiple_vision_adapters_folder, f'{current_folder}.bin'))
+            else:
+                torch.save(weight_to_save, os.path.join(output_dir, f'multiple_vision_adapters.bin'))
+        
+        
+        
         return_flag = return_flag or True
+
+    # if getattr(trainer.args, "tune_mm_resampler", False):
+    #     print("Saving resampler")
+    #     keys_to_match = ['resampler']
+
+    #     weight_to_save = get_mm_adapter_state_maybe_zero_3(trainer.model.named_parameters(), keys_to_match)
+    #     trainer.model.config.save_pretrained(output_dir)
+
+    #     current_folder = output_dir.split('/')[-1]
+    #     parent_folder = os.path.dirname(output_dir)
+    #     if trainer.args.local_rank == 0 or trainer.args.local_rank == -1:
+    #         if current_folder.startswith('checkpoint-'):
+    #             resampler_folder = os.path.join(parent_folder, "resampler")
+    #             os.makedirs(resampler_folder, exist_ok=True)
+    #             torch.save(weight_to_save, os.path.join(resampler_folder, f'{current_folder}.bin'))
+    #         else:
+    #             torch.save(weight_to_save, os.path.join(output_dir, f'resampler.bin'))
+    #     return_flag = return_flag or True
     
     if return_flag:
         return
@@ -1116,33 +1151,47 @@ def train(attn_implementation=None):
         model.config.tokenizer_model_max_length = tokenizer.model_max_length
 
         model.config.tune_mm_mlp_adapter = training_args.tune_mm_mlp_adapter = model_args.tune_mm_mlp_adapter
-        model.config.tune_mm_resampler = training_args.tune_mm_resampler = model_args.tune_mm_resampler
-        model.config.scaled_clip_residual = training_args.scaled_clip_residual = model_args.scaled_clip_residual
+        # model.config.tune_mm_resampler = training_args.tune_mm_resampler = model_args.tune_mm_resampler
+        # model.config.scaled_clip_residual = training_args.scaled_clip_residual = model_args.scaled_clip_residual
         if model_args.tune_mm_mlp_adapter:
             model.requires_grad_(False)
             for p in model.get_model().mm_projector.parameters():
-                print(f"Projector param: {p.data.shape}, {p.data.numel()}")
+                p.requires_grad = True
+            
+            for p in model.get_model().get_multiple_vision_adapters().parameters():
+                p.requires_grad = True
+            
+            for p in model.get_model().get_router().parameters():
                 p.requires_grad = True
         
         # Resampler and scaler should always be trainable irrespective of PT/IT
-        if model.config.scaled_clip_residual:
-            model.get_model().clip_residual_scaler.requires_grad_(True)
+        # if model.config.scaled_clip_residual:
+        #     model.get_model().clip_residual_scaler.requires_grad_(True)
 
-        for p in model.get_model().resampler.parameters():
-            # print(f"Resampler param: {p.data.shape}, {p.data.numel()}")
-            p.requires_grad = True
+        # for p in model.get_model().resampler.parameters():
+        #     # print(f"Resampler param: {p.data.shape}, {p.data.numel()}")
+        #     p.requires_grad = True
         
         #### Has grad checks
-        for param in model.get_model().resampler.parameters():
-            print(f"Resampler param is trainable: {param.requires_grad}")
+        # for param in model.get_model().resampler.parameters():
+        #     print(f"Resampler param is trainable: {param.requires_grad}")
+        #     break
+        
+        for param in model.get_model().get_router().parameters():
+            rank0_print(f"Router param is trainable: {param.requires_grad}")
             break
         
+        for param in model.get_model().get_multiple_vision_adapters().parameters():
+            rank0_print(f"Vision adapters param is trainable: {param.requires_grad}")
+            break
+        
+        
         for param in model.get_model().mm_projector.parameters():
-            print(f"Projector param is trainable: {param.requires_grad}")
+            rank0_print(f"Projector param is trainable: {param.requires_grad}")
             break
         
         for param in model.get_model().parameters():
-            print(f"LLM param is trainable: {param.requires_grad}")
+            rank0_print(f"LLM param is trainable: {param.requires_grad}")
             break
         
         model.config.freeze_mm_mlp_adapter = training_args.freeze_mm_mlp_adapter
@@ -1162,14 +1211,14 @@ def train(attn_implementation=None):
 
     trainable = 0
     frozen = 0
-    print(model)
+    rank0_print(model)
     for param in model.parameters():
         if param.requires_grad:
             trainable += param.numel()
         else:
             frozen += param.numel()
-    print(f"{trainable=}")
-    print(f"{frozen=}")
+    rank0_print(f"{trainable=}")
+    rank0_print(f"{frozen=}")
     
     if training_args.bits in [4, 8]:
         from peft.tuners.lora import LoraLayer

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from transformers import Dinov2Model, AutoImageProcessor, Dinov2Config
+from transformers import Dinov2Model, AutoImageProcessor, Dinov2Config, CLIPImageProcessor, CLIPVisionConfig
 
 
 class DINOVisionTower(nn.Module):
@@ -11,6 +11,7 @@ class DINOVisionTower(nn.Module):
         self.is_loaded = False
 
         self.vision_tower_name = vision_tower
+        self.clip_vision_tower_name = "openai/clip-vit-large-patch14-336"
         self.select_layer = args.mm_vision_select_layer
         self.select_feature = getattr(args, 'mm_vision_select_feature', 'patch')
 
@@ -19,21 +20,24 @@ class DINOVisionTower(nn.Module):
         elif getattr(args, 'unfreeze_mm_vision_tower', False):
             self.load_model()
         else:
-            self.cfg_only = Dinov2Config.from_pretrained(self.vision_tower_name)
+            self.cfg_only = CLIPVisionConfig.from_pretrained(self.clip_vision_tower_name)
 
     def load_model(self, device_map=None):
         if self.is_loaded:
             print('{} is already loaded, `load_model` called again, skipping.'.format(self.vision_tower_name))
             return
 
-        self.image_processor = AutoImageProcessor.from_pretrained(self.vision_tower_name)
-        self.vision_tower = Dinov2Model.from_pretrained(self.vision_tower_name, device_map=device_map) #
+        self.image_processor = CLIPImageProcessor.from_pretrained(self.clip_vision_tower_name)
+        self.dummy_vision_tower = Dinov2Model.from_pretrained(self.vision_tower_name, device_map=device_map) #
+        
+        self.vision_tower = torch.hub.load('facebookresearch/dinov2', 'dinov2_vitl14')
+
         self.vision_tower.requires_grad_(False)
 
         self.is_loaded = True
 
     def feature_select(self, image_forward_outs):
-        image_features = image_forward_outs.hidden_states[self.select_layer]
+        image_features = image_forward_outs["x_prenorm"]
         if self.select_feature == 'patch':
             image_features = image_features[:, 1:]
         elif self.select_feature == 'cls_patch':
@@ -47,11 +51,11 @@ class DINOVisionTower(nn.Module):
         if type(images) is list:
             image_features = []
             for image in images:
-                image_forward_out = self.vision_tower(image.to(device=self.device, dtype=self.dtype).unsqueeze(0), output_hidden_states=True)
+                image_forward_out = self.vision_tower.forward_features(image.to(device=self.device, dtype=self.dtype).unsqueeze(0))
                 image_feature = self.feature_select(image_forward_out).to(image.dtype)
                 image_features.append(image_feature)
         else:
-            image_forward_outs = self.vision_tower(images.to(device=self.device, dtype=self.dtype), output_hidden_states=True)
+            image_forward_outs = self.vision_tower.forward_features(images.to(device=self.device, dtype=self.dtype))
             image_features = self.feature_select(image_forward_outs).to(images.dtype)
 
         return image_features
@@ -62,11 +66,11 @@ class DINOVisionTower(nn.Module):
 
     @property
     def dtype(self):
-        return self.vision_tower.dtype
+        return self.dummy_vision_tower.dtype
 
     @property
     def device(self):
-        return self.vision_tower.device
+        return self.dummy_vision_tower.device
 
     @property
     def config(self):
