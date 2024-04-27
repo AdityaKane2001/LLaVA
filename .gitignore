@@ -5,7 +5,7 @@ __pycache__
 dist
 
 # MMVP
-mmvp_bench/*
+mmvp_bench
 
 # Log
 *.log
