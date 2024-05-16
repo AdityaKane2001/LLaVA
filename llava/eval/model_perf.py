@@ -4,6 +4,7 @@ import os
 import json
 from tqdm import tqdm
 import shortuuid
+import time
 
 from llava.constants import IMAGE_TOKEN_INDEX, DEFAULT_IMAGE_TOKEN, DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN
 from llava.conversation import conv_templates, SeparatorStyle
@@ -79,51 +80,49 @@ def create_data_loader(questions, image_folder, tokenizer, image_processor, mode
 def eval_model(args):
     # Model
     disable_torch_init()
-    print(f"############## {args.r=}")
-    model_path = os.path.expanduser(args.model_path)
-    model_name = get_model_name_from_path(model_path)
-    tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, args.model_base, model_name, r=args.r)
+    
+    for _r in range(0, 25):
+        args.r = _r
+        print(f"############## {args.r=}")
+        model_path = os.path.expanduser(args.model_path)
+        model_name = get_model_name_from_path(model_path)
+        tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, args.model_base, model_name, r=args.r)
 
-    questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
-    questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
-    answers_file = os.path.expanduser(args.answers_file)
-    os.makedirs(os.path.dirname(answers_file), exist_ok=True)
-    ans_file = open(answers_file, "w")
+        questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
+        questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
+        answers_file = os.path.expanduser(args.answers_file)
+        os.makedirs(os.path.dirname(answers_file), exist_ok=True)
+        ans_file = open(answers_file, "w")
 
-    if 'plain' in model_name and 'finetune' not in model_name.lower() and 'mmtag' not in args.conv_mode:
-        args.conv_mode = args.conv_mode + '_mmtag'
-        print(f'It seems that this is a plain model, but it is not using a mmtag prompt, auto switching to {args.conv_mode}.')
+        if 'plain' in model_name and 'finetune' not in model_name.lower() and 'mmtag' not in args.conv_mode:
+            args.conv_mode = args.conv_mode + '_mmtag'
+            print(f'It seems that this is a plain model, but it is not using a mmtag prompt, auto switching to {args.conv_mode}.')
 
-    data_loader = create_data_loader(questions, args.image_folder, tokenizer, image_processor, model.config)
+        data_loader = create_data_loader(questions, args.image_folder, tokenizer, image_processor, model.config)
 
-    for (input_ids, image_tensor, image_sizes), line in tqdm(zip(data_loader, questions), total=len(questions)):
-        idx = line["question_id"]
-        cur_prompt = line["text"]
+        for (input_ids, image_tensor, image_sizes), line in tqdm(zip(data_loader, questions), total=len(questions)):
+            idx = line["question_id"]
+            cur_prompt = line["text"]
 
-        input_ids = input_ids.to(device='cuda', non_blocking=True)
-
-        with torch.inference_mode():
-            output_ids = model.generate(
-                input_ids,
-                images=image_tensor.to(dtype=torch.float16, device='cuda', non_blocking=True),
-                image_sizes=image_sizes,
-                do_sample=True if args.temperature > 0 else False,
-                temperature=args.temperature,
-                top_p=args.top_p,
-                num_beams=args.num_beams,
-                max_new_tokens=args.max_new_tokens,
-                use_cache=True)
-
-        outputs = tokenizer.batch_decode(output_ids, skip_special_tokens=True)[0].strip()
-
-        ans_id = shortuuid.uuid()
-        ans_file.write(json.dumps({"question_id": idx,
-                                   "prompt": cur_prompt,
-                                   "text": outputs,
-                                   "answer_id": ans_id,
-                                   "model_id": model_name,
-                                   "metadata": {}}) + "\n")
-        # ans_file.flush()
+            input_ids = input_ids.to(device='cuda', non_blocking=True)
+            times = list()
+            with torch.inference_mode():
+                for _ in range(25):
+                    start = time.time()
+                    output_ids = model.generate(
+                        input_ids,
+                        images=image_tensor.to(dtype=torch.float16, device='cuda', non_blocking=True),
+                        image_sizes=image_sizes,
+                        do_sample=True if args.temperature > 0 else False,
+                        temperature=args.temperature,
+                        top_p=args.top_p,
+                        num_beams=args.num_beams,
+                        max_new_tokens=args.max_new_tokens,
+                        use_cache=True)
+                    times.append(time.time() - start)
+            print(f"Average gen time: {sum(times) / len(times)}")
+            break
+            # ans_file.flush()
     ans_file.close()
 
 if __name__ == "__main__":
